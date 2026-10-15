@@ -2,7 +2,7 @@
 
 | Suite | Command | What it proves |
 |---|---|---|
-| Acceptance tests | `python -m unittest discover -s tests -t . -v` | AC1-AC14 plus security tests: 34 tests against a live server on a random port with an isolated data directory |
+| Acceptance tests | `python -m unittest discover -s tests -t . -v` | 74 tests. `tests/test_acceptance.py` (34) covers AC1-AC14 against a live server. `tests/test_workflow.py` (40) covers routing, missing questions, provenance, context budgets, stale-cache invalidation, redaction, prompt-injection input, command injection and traversal, timeouts, missing tools, malformed reports, partial coverage, a blocked-network journey, two synthetic stacks, the three demos, Jira (mocked) and API origin checks |
 | Quality evaluation | `python -m compass eval` | 25 seeded scenarios, 5 context pairs, 37 seeded personas, 16 prompt-routing stories. Writes `reports/eval-report.md` and `.json`. Exits non-zero below 80%. |
 | Compliance | `python -m compass compliance` | Schema allow-list, no PII or code, no free text, synthetic labels, no ranking API |
 | CI | `.github/workflows/ci.yml` | All of the above on Windows and Linux, Python 3.9 and 3.12 |

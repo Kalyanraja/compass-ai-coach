@@ -1,0 +1,7 @@
+{
+  "synthetic": true,
+  "note": "SYNTHETIC fixture metadata used by Compass demos and tests. Declares the intentionally seeded defect so the test-creation workflow can show which tests detect it.",
+  "seeded_defects": [
+    {"id": "SD-1", "file": "login_service/auth.py", "line": 35, "description": "A wrong password with the same length as the real one is accepted."}
+  ]
+}

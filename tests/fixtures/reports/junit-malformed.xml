@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- HAND-WRITTEN FIXTURE. Deliberately truncated and invalid XML for parser error-handling tests. -->
+<testsuites name="compass-malformed" tests="2">
+  <testsuite name="broken.suite" tests="2" failures="1">
+    <testcase classname="broken.suite.Case" name="first_case" time="0.010"/>
+    <testcase classname="broken.suite.Case" name="second_case" time="0.020">
+      <failure message="unterminated attribute

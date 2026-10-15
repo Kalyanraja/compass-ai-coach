@@ -1,0 +1,1643 @@
+{
+  "schema_version": "1.0.0",
+  "generated": "2026-10-15",
+  "note": "Metadata only. Not executable plugin definitions. Every entry is inactive (enabled=false, approval_state=not-requested) until reviewed and approved through your enterprise process.",
+  "tools": [
+    {
+      "id": "ai-engineering-coach",
+      "name": "AI-Engineering-Coach",
+      "repository_url": "https://github.com/microsoft/AI-Engineering-Coach",
+      "category": "workflow",
+      "proposed_use": "Reference for coaching UX and prompt anti-pattern rules; 45 rule definitions adapted into the agent kit.",
+      "integration_status": "adapted-content",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "8c78e96316a81496884dc937a4214cb6f52c4bff",
+        "latest_release_tag": null,
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE",
+          "NOTICE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "VS Code (extension)"
+      ],
+      "model_or_key_requirements": "None for core analysis; some optional features call the Copilot language model.",
+      "network_policy": "Core analysis local; optional features use Copilot LM.",
+      "provenance": "git ls-remote https://github.com/microsoft/AI-Engineering-Coach and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "feature-api",
+        "uat-defect",
+        "test-creation"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Community project by Microsoft employees, not an official product. Compass does not ingest session logs."
+    },
+    {
+      "id": "ecc",
+      "name": "ECC",
+      "repository_url": "https://github.com/affaan-m/ECC",
+      "category": "workflow",
+      "proposed_use": "Reference for review, security and context-management practices.",
+      "integration_status": "reference",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "b92f181b3b748d1abbc2afd94af6aa7d8c8fca29",
+        "latest_release_tag": "v2.2.3",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Host-specific plugin installs"
+      ],
+      "model_or_key_requirements": "Depends on host agent.",
+      "network_policy": "Host dependent; not run by Compass.",
+      "provenance": "git ls-remote https://github.com/affaan-m/ECC and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "security-review"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Host-specific behavior: full hook support only in Claude Code; Copilot gets instructions/prompts only. Do not assume Claude hooks work in Copilot."
+    },
+    {
+      "id": "spec-kit",
+      "name": "spec-kit",
+      "repository_url": "https://github.com/github/spec-kit",
+      "category": "workflow",
+      "proposed_use": "Spec, plan, tasks and checklist templates adapted into work packages and the agent kit.",
+      "integration_status": "adapted-content",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "6e7348de375f62922349e3bb20640edfda2383ad",
+        "latest_release_tag": "v1.2.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "None for templates"
+      ],
+      "model_or_key_requirements": "AI execution needs an agent; templates do not.",
+      "network_policy": "Templates are static files.",
+      "provenance": "git ls-remote https://github.com/github/spec-kit and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "feature-api"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "superpowers",
+      "name": "superpowers",
+      "repository_url": "https://github.com/obra/superpowers",
+      "category": "workflow",
+      "proposed_use": "Debugging, TDD and verification-before-completion practices adapted into workflow packs and skills.",
+      "integration_status": "adapted-content",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "bb92a77741419a4ab5f06e711a283343f1ada0c3",
+        "latest_release_tag": "v7.0.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "None for text"
+      ],
+      "model_or_key_requirements": "Needs an agent to execute skills.",
+      "network_policy": "Static text.",
+      "provenance": "git ls-remote https://github.com/obra/superpowers and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "uat-defect",
+        "test-creation"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "bmad-method",
+      "name": "BMAD-METHOD",
+      "repository_url": "https://github.com/bmad-code-org/BMAD-METHOD",
+      "category": "workflow",
+      "proposed_use": "Reference for product-to-delivery role prompts; not adopted.",
+      "integration_status": "reference",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "8f0d50e1817fdd8fcf05a20c524218222d13cd8d",
+        "latest_release_tag": "v6.12.4",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Node.js installer (not run)"
+      ],
+      "model_or_key_requirements": "Needs an agent.",
+      "network_policy": "Installer fetches packages; not run.",
+      "provenance": "git ls-remote https://github.com/bmad-code-org/BMAD-METHOD and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "openspec",
+      "name": "OpenSpec",
+      "repository_url": "https://github.com/Fission-AI/OpenSpec",
+      "category": "workflow",
+      "proposed_use": "Reference for specification and change proposals; ideas inform acceptance criteria in work packages.",
+      "integration_status": "reference",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "f80d860fc510ba4f51180c8ddde35b91b32de657",
+        "latest_release_tag": "v1.14.2",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Node.js CLI (not run)"
+      ],
+      "model_or_key_requirements": "Needs an agent.",
+      "network_policy": "Not run.",
+      "provenance": "git ls-remote https://github.com/Fission-AI/OpenSpec and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "feature-api"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "megalinter",
+      "name": "megalinter",
+      "repository_url": "https://github.com/oxsecurity/megalinter",
+      "category": "security",
+      "proposed_use": "Optional consolidated lint and security runner for teams that already use it.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "f3b843634946d172314dc7e6984959546c3d476f",
+        "latest_release_tag": "v10.1.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "AGPL-3.0",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "many"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Docker image"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Pulls Docker images and linters; offline requires a pre-provisioned image.",
+      "provenance": "git ls-remote https://github.com/oxsecurity/megalinter and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "AGPL-3.0: review obligations before redistribution or modification."
+    },
+    {
+      "id": "cloudflare-security-audit-skill",
+      "name": "security-audit-skill",
+      "repository_url": "https://github.com/cloudflare/security-audit-skill",
+      "category": "security",
+      "proposed_use": "Methodology and findings verdicts (confirmed, needs_validation, rejected) adopted for Compass audit-claim states.",
+      "integration_status": "reference",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "c1c8a8c1471069fb0e188eeaff69b8e8db6564a8",
+        "latest_release_tag": null,
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Coding agent with sub-agents, Node.js validator, OS sandbox"
+      ],
+      "model_or_key_requirements": "Needs an agent model.",
+      "network_policy": "Agent-dependent.",
+      "provenance": "git ls-remote https://github.com/cloudflare/security-audit-skill and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "security-review"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Agent-guided audit methodology, NOT an offline vulnerability scanner."
+    },
+    {
+      "id": "trailofbits-skills",
+      "name": "skills",
+      "repository_url": "https://github.com/trailofbits/skills",
+      "category": "security",
+      "proposed_use": "Reference for differential review, false-positive checks and testing practices; ideas only, no text copied.",
+      "integration_status": "reference",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "1f68e03536f7980d4c0e6869596f708043a19443",
+        "latest_release_tag": null,
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": null,
+        "rules_or_content_license": "CC-BY-SA-4.0",
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "c",
+        "cpp",
+        "rust",
+        "python",
+        "go",
+        "github-actions"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Claude Code plugin marketplace"
+      ],
+      "model_or_key_requirements": "Needs an agent.",
+      "network_policy": "Not run.",
+      "provenance": "git ls-remote https://github.com/trailofbits/skills and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "security-review"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "CC-BY-SA-4.0 share-alike: any adapted text must carry attribution and the same license, so Compass paraphrases ideas only and copies no text."
+    },
+    {
+      "id": "skill-scanner",
+      "name": "skill-scanner",
+      "repository_url": "https://github.com/cisco-ai-defense/skill-scanner",
+      "category": "security",
+      "proposed_use": "Optional review of third-party agent skills before activation.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "8554b119bd118583f1a235e4e7aad8f2005ef904",
+        "latest_release_tag": "2.3.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "Apache-2.0",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "agent-skills"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Python package (not installed)"
+      ],
+      "model_or_key_requirements": "Some analyzers may use an LLM; check before enabling.",
+      "network_policy": "Check analyzer settings; run offline only with local analyzers.",
+      "provenance": "git ls-remote https://github.com/cisco-ai-defense/skill-scanner and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "security-review"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "A scanner approval is not a trust guarantee; human review still required."
+    },
+    {
+      "id": "gitleaks",
+      "name": "gitleaks",
+      "repository_url": "https://github.com/gitleaks/gitleaks",
+      "category": "security",
+      "proposed_use": "Local secret-pattern scanning of selected files before export and during evidence checks.",
+      "integration_status": "runtime-adapter-candidate",
+      "reviewed_revision": {
+        "default_branch": "master",
+        "commit": "b58d3f102cf3a2c84cb7f923d05c25c9b1aed84b",
+        "latest_release_tag": "v8.30.1",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "gitleaks binary (approved install)"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "No network needed for directory scans.",
+      "provenance": "git ls-remote https://github.com/gitleaks/gitleaks and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "security-review",
+        "feature-api",
+        "uat-defect",
+        "test-creation"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Adapter implemented; runs only if an approved binary is configured. Verified fixture output: v8.30.1."
+    },
+    {
+      "id": "semgrep",
+      "name": "semgrep",
+      "repository_url": "https://github.com/semgrep/semgrep",
+      "category": "security",
+      "proposed_use": "Source pattern checks with pinned LOCAL rules and --metrics off.",
+      "integration_status": "runtime-adapter-candidate",
+      "reviewed_revision": {
+        "default_branch": "develop",
+        "commit": "51602ad27f09ef9342a5620601de5ef8f572fbc6",
+        "latest_release_tag": "v1.181.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "LGPL-2.1",
+        "rules_or_content_license": "Semgrep Rules License (registry rules); not used",
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "python",
+        "java",
+        "javascript",
+        "typescript",
+        "go",
+        "csharp",
+        "many"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "semgrep CLI (approved install)"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Local rules file sends no metrics; adapter also forces --metrics off. Never use --config auto or registry rules offline.",
+      "provenance": "git ls-remote https://github.com/semgrep/semgrep and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "security-review"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Engine LGPL-2.1; Semgrep Registry rules have their own Semgrep Rules License; Compass ships its own local rules. Verified fixture output: v1.181.0."
+    },
+    {
+      "id": "trivy",
+      "name": "trivy",
+      "repository_url": "https://github.com/aquasecurity/trivy",
+      "category": "security",
+      "proposed_use": "Optional dependency, container and IaC checks.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "032ac48ccfa5c06d96e6ed1add07456231b5ed9a",
+        "latest_release_tag": "v0.76.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "Apache-2.0",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE",
+          "NOTICE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "many"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "trivy binary + pre-provisioned DB"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Downloads vulnerability DB by default; air-gapped use needs --skip-db-update and a separately provisioned DB.",
+      "provenance": "git ls-remote https://github.com/aquasecurity/trivy and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "security-review"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Report DB date and staleness; never fetch during offline runs."
+    },
+    {
+      "id": "osv-scanner",
+      "name": "osv-scanner",
+      "repository_url": "https://github.com/google/osv-scanner",
+      "category": "security",
+      "proposed_use": "Optional dependency vulnerability matching against OSV data.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "f455353546889009663c1f8b640d5880a01c889a",
+        "latest_release_tag": "v2.7.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "Apache-2.0",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "many"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "osv-scanner binary + local DB"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Queries osv.dev by default; offline mode needs a pre-downloaded local database.",
+      "provenance": "git ls-remote https://github.com/google/osv-scanner and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "security-review"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "OSV data has its own terms; record DB date."
+    },
+    {
+      "id": "syft",
+      "name": "syft",
+      "repository_url": "https://github.com/anchore/syft",
+      "category": "security",
+      "proposed_use": "Optional SBOM inventory.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "30200f1d691d4e7e9f78a55e7e7298aeb2672216",
+        "latest_release_tag": "v1.54.1",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "Apache-2.0",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "many"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "syft binary"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Local scans; may contact registries for images.",
+      "provenance": "git ls-remote https://github.com/anchore/syft and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "checkov",
+      "name": "checkov",
+      "repository_url": "https://github.com/bridgecrewio/checkov",
+      "category": "security",
+      "proposed_use": "Optional infrastructure-as-code checks.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "7a6782e3d81e19f1bdd9213129f3138767691f5f",
+        "latest_release_tag": "3.3.29",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "Apache-2.0",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "terraform",
+        "cloudformation",
+        "kubernetes"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Python package"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Can call platform APIs if an API key is set; keep unset.",
+      "provenance": "git ls-remote https://github.com/bridgecrewio/checkov and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "zizmor",
+      "name": "zizmor",
+      "repository_url": "https://github.com/zizmorcore/zizmor",
+      "category": "security",
+      "proposed_use": "Optional GitHub Actions workflow checks.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "5eb37696bbf148d4fe74a84fc5073efe14e537a4",
+        "latest_release_tag": "v1.31.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "github-actions"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "zizmor binary"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Some audits use the GitHub API; offline mode available.",
+      "provenance": "git ls-remote https://github.com/zizmorcore/zizmor and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "security-review"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "owasp-asvs",
+      "name": "ASVS",
+      "repository_url": "https://github.com/OWASP/ASVS",
+      "category": "security",
+      "proposed_use": "Versioned security acceptance requirements referenced by ID (v5.0.0) in the security-review stage.",
+      "integration_status": "adapted-content",
+      "reviewed_revision": {
+        "default_branch": "master",
+        "commit": "2b47a9dd16760ee484a6672d197f1f7e25d9c632",
+        "latest_release_tag": null,
+        "checked_on": "2026-10-15",
+        "latest_release_note": "Latest stable release is 5.0.0 (May 2025) per the project README; newest semver-style git tag found was v4.0.1, so tag naming differs."
+      },
+      "license": {
+        "code_spdx": null,
+        "rules_or_content_license": "CC-BY-SA-4.0",
+        "model_license_note": null,
+        "files": [
+          "LICENSE.md"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "None"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Static content.",
+      "provenance": "git ls-remote https://github.com/OWASP/ASVS and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "security-review"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Content CC-BY-SA-4.0. Compass cites requirement IDs and paraphrases; latest stable 5.0.0 (May 2025); ID format v5.0.0-<chapter>.<section>.<req>."
+    },
+    {
+      "id": "rtk",
+      "name": "rtk",
+      "repository_url": "https://github.com/rtk-ai/rtk",
+      "category": "context",
+      "proposed_use": "Optional filter for noisy command output before handoff.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "develop",
+        "commit": "5eb0509690a6f0110bb9bdd453fcf75c480e0d05",
+        "latest_release_tag": "v1.0.1",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "Apache-2.0",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "rtk binary"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Telemetry is opt-in; set RTK_TELEMETRY_DISABLED=1. Do not use any proxy/passthrough-tracking mode.",
+      "provenance": "git ls-remote https://github.com/rtk-ai/rtk and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "context-packaging"
+      ],
+      "enabled": false,
+      "verification": "partially-verified",
+      "review_notes": "No separate 'rtk-oss' edition found in the README (checked 2026-10-15); marked unverified. Do not enable any API proxy."
+    },
+    {
+      "id": "repomix",
+      "name": "repomix",
+      "repository_url": "https://github.com/yamadashy/repomix",
+      "category": "context",
+      "proposed_use": "Optional selected-file context packaging; Compass has its own built-in budgeter.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "55c6de6aebde4c38877fbcaf005c4cc396bf6e2d",
+        "latest_release_tag": "v1.18.1",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Node.js package"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Use the local CLI only; never the public website for office code. Has a remote-repo mode; do not use.",
+      "provenance": "git ls-remote https://github.com/yamadashy/repomix and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "context-packaging"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "ripgrep",
+      "name": "ripgrep",
+      "repository_url": "https://github.com/BurntSushi/ripgrep",
+      "category": "context",
+      "proposed_use": "Fast local text search for the context budgeter; Compass falls back to Python search when absent.",
+      "integration_status": "runtime-adapter-candidate",
+      "reviewed_revision": {
+        "default_branch": "master",
+        "commit": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+        "latest_release_tag": "15.2.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT OR Unlicense",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "COPYING",
+          "LICENSE-MIT",
+          "UNLICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "rg binary"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "None.",
+      "provenance": "git ls-remote https://github.com/BurntSushi/ripgrep and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "context-packaging"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Dual MIT/Unlicense."
+    },
+    {
+      "id": "ast-grep",
+      "name": "ast-grep",
+      "repository_url": "https://github.com/ast-grep/ast-grep",
+      "category": "context",
+      "proposed_use": "Optional structural code search.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "48b54b3120b70fa9e8cbb40a03bf3bfebe6bf50a",
+        "latest_release_tag": "0.51.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "many"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "ast-grep binary"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "None.",
+      "provenance": "git ls-remote https://github.com/ast-grep/ast-grep and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "context-packaging"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "aider",
+      "name": "aider",
+      "repository_url": "https://github.com/Aider-AI/aider",
+      "category": "context",
+      "proposed_use": "Repository-map design reference for the project map.",
+      "integration_status": "reference",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "5dc9490bb35f9729ef2c95d00a19ccd30c26339c",
+        "latest_release_tag": "v0.86.2",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "Apache-2.0",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE.txt"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "many"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Not installed"
+      ],
+      "model_or_key_requirements": "Aider itself needs a model API.",
+      "network_policy": "Not run.",
+      "provenance": "git ls-remote https://github.com/Aider-AI/aider and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "context-packaging"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "llmlingua",
+      "name": "LLMLingua",
+      "repository_url": "https://github.com/microsoft/LLMLingua",
+      "category": "context",
+      "proposed_use": "Experimental model-based prompt compression; disabled because it is lossy on decisive code.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "5a4c78ae18ab17a98cf997e8259354e546081d64",
+        "latest_release_tag": "v0.2.2",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": "Model weights carry their own licenses; review separately.",
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Python + model weights"
+      ],
+      "model_or_key_requirements": "Requires a local model; model license separate.",
+      "network_policy": "Model download required.",
+      "provenance": "git ls-remote https://github.com/microsoft/LLMLingua and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Never applied to decisive code by default."
+    },
+    {
+      "id": "playwright",
+      "name": "playwright",
+      "repository_url": "https://github.com/microsoft/playwright",
+      "category": "testing",
+      "proposed_use": "Browser testing; used to verify the Compass UI in development and in the test-creation pack guidance.",
+      "integration_status": "reference",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "5ad202df4f484d593ab42a4a16e6c75f666fef38",
+        "latest_release_tag": "v1.64.1",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "Apache-2.0",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE",
+          "NOTICE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "typescript",
+        "javascript",
+        "python",
+        "java",
+        "dotnet"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Browsers installed"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Browser download at install time.",
+      "provenance": "git ls-remote https://github.com/microsoft/playwright and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "test-creation"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "spectral",
+      "name": "spectral",
+      "repository_url": "https://github.com/stoplightio/spectral",
+      "category": "testing",
+      "proposed_use": "OpenAPI/JSON/YAML linting with a LOCAL ruleset.",
+      "integration_status": "runtime-adapter-candidate",
+      "reviewed_revision": {
+        "default_branch": "develop",
+        "commit": "95ab37eeea1f69ee9ae1a43b88f3ed1df007f190",
+        "latest_release_tag": "v6.17.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "Apache-2.0",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "openapi",
+        "asyncapi",
+        "json",
+        "yaml"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "spectral CLI (Node.js, approved install)"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Use a local ruleset; avoid remote extends/URLs.",
+      "provenance": "git ls-remote https://github.com/stoplightio/spectral and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "feature-api"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Adapter implemented; Compass also ships a built-in OpenAPI lite check. Verified fixture output: v6.17.0."
+    },
+    {
+      "id": "schemathesis",
+      "name": "schemathesis",
+      "repository_url": "https://github.com/schemathesis/schemathesis",
+      "category": "testing",
+      "proposed_use": "Optional API behavior testing from specs against LOCAL synthetic services only.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "master",
+        "commit": "da53539eec32db77bab7ce9d37088b51dc9f1e88",
+        "latest_release_tag": "v4.31.1",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "openapi",
+        "graphql"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Python package"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Must never target UAT/production or external hosts.",
+      "provenance": "git ls-remote https://github.com/schemathesis/schemathesis and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "feature-api"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "axe-core",
+      "name": "axe-core",
+      "repository_url": "https://github.com/dequelabs/axe-core",
+      "category": "testing",
+      "proposed_use": "Optional automated accessibility checks for web UI tasks.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "develop",
+        "commit": "f01bf5ce56ffcf1411d14d14ed75d1fb86f8023c",
+        "latest_release_tag": "v4.14.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MPL-2.0",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE",
+          "LICENSE-3RD-PARTY.txt"
+        ],
+        "notes": "LICENSE-3RD-PARTY.txt lists bundled MIT components."
+      },
+      "supported_stacks": [
+        "web"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Node.js/browser"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "None.",
+      "provenance": "git ls-remote https://github.com/dequelabs/axe-core and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "MPL-2.0."
+    },
+    {
+      "id": "stryker-js",
+      "name": "stryker-js",
+      "repository_url": "https://github.com/stryker-mutator/stryker-js",
+      "category": "testing",
+      "proposed_use": "Optional mutation testing to judge whether JS/TS tests are meaningful.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "master",
+        "commit": "c931a93237816901f1e9f48da411170beeb3dfca",
+        "latest_release_tag": "v10.0.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "Apache-2.0",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "javascript",
+        "typescript"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Node.js package"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "None.",
+      "provenance": "git ls-remote https://github.com/stryker-mutator/stryker-js and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "test-creation"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "ruff",
+      "name": "ruff",
+      "repository_url": "https://github.com/astral-sh/ruff",
+      "category": "testing",
+      "proposed_use": "Optional Python lint/format check; preferred over AI for formatting chores.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "4683270c69cbdaf6ad64d3f983fc458d5a43b41f",
+        "latest_release_tag": "0.17.1",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "python"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "ruff binary"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "None.",
+      "provenance": "git ls-remote https://github.com/astral-sh/ruff and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "biome",
+      "name": "biome",
+      "repository_url": "https://github.com/biomejs/biome",
+      "category": "testing",
+      "proposed_use": "Optional web lint/format check; preferred over AI for formatting chores.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "49bc11cc0e986ef9d85da50e84d06caf196409ce",
+        "latest_release_tag": null,
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "Apache-2.0 OR MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE-APACHE",
+          "LICENSE-MIT"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "javascript",
+        "typescript",
+        "json",
+        "css"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "biome binary"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "None.",
+      "provenance": "git ls-remote https://github.com/biomejs/biome and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Dual MIT/Apache-2.0."
+    },
+    {
+      "id": "pre-commit",
+      "name": "pre-commit",
+      "repository_url": "https://github.com/pre-commit/pre-commit",
+      "category": "testing",
+      "proposed_use": "Reference only; Compass never installs git hooks.",
+      "integration_status": "reference",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "20b1e7cb12b836f010a56ad854a3eb8059afe5b2",
+        "latest_release_tag": "v4.7.0",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "local_prerequisites": [
+        "Python package"
+      ],
+      "model_or_key_requirements": "None.",
+      "network_policy": "Fetches hook repos at install.",
+      "provenance": "git ls-remote https://github.com/pre-commit/pre-commit and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Do not install hooks automatically."
+    },
+    {
+      "id": "awesome-copilot",
+      "name": "awesome-copilot",
+      "repository_url": "https://github.com/github/awesome-copilot",
+      "category": "host-model",
+      "proposed_use": "Copilot instructions, prompts, agents and skills examples; a reviewed subset is vendored in the agent kit.",
+      "integration_status": "adapted-content",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "36e95dfda72140a68f577d5c894a551607606bd3",
+        "latest_release_tag": null,
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "varies"
+      ],
+      "local_prerequisites": [
+        "None"
+      ],
+      "model_or_key_requirements": "Needs Copilot.",
+      "network_policy": "Static text.",
+      "provenance": "git ls-remote https://github.com/github/awesome-copilot and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [
+        "feature-api",
+        "uat-defect",
+        "test-creation"
+      ],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "vscode-extension-samples",
+      "name": "vscode-extension-samples",
+      "repository_url": "https://github.com/microsoft/vscode-extension-samples",
+      "category": "host-model",
+      "proposed_use": "Webview and chat patterns for a future VS Code extension shell.",
+      "integration_status": "reference",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "65c1c44800eeac6fb065a54823ee5ae62c79540a",
+        "latest_release_tag": null,
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "typescript"
+      ],
+      "platforms": [
+        "varies"
+      ],
+      "local_prerequisites": [
+        "Node.js"
+      ],
+      "model_or_key_requirements": "Optional Copilot LM API.",
+      "network_policy": "Not run.",
+      "provenance": "git ls-remote https://github.com/microsoft/vscode-extension-samples and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "promptfoo",
+      "name": "promptfoo",
+      "repository_url": "https://github.com/promptfoo/promptfoo",
+      "category": "host-model",
+      "proposed_use": "Optional prompt/output evaluation harness using manual-input or local providers.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "8570ed47327c7866beba017144b6197a720c96f4",
+        "latest_release_tag": "0.124.1",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": null,
+        "files": [
+          "LICENSE"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "varies"
+      ],
+      "local_prerequisites": [
+        "Node.js package"
+      ],
+      "model_or_key_requirements": "Providers may need keys; manual-input provider does not.",
+      "network_policy": "Disable telemetry and hosted sharing; config flags are not a network firewall.",
+      "provenance": "git ls-remote https://github.com/promptfoo/promptfoo and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": ""
+    },
+    {
+      "id": "llama-cpp",
+      "name": "llama.cpp",
+      "repository_url": "https://github.com/ggml-org/llama.cpp",
+      "category": "host-model",
+      "proposed_use": "Optional local model inference for wording polish only.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "master",
+        "commit": "620d2225cc436ab0b001e3200e590e3b286ef9ab",
+        "latest_release_tag": null,
+        "checked_on": "2026-10-15",
+        "latest_release_note": "Releases use bNNNN build tags; no current semver release tag."
+      },
+      "license": {
+        "code_spdx": "MIT",
+        "rules_or_content_license": null,
+        "model_license_note": "Model weights carry their own licenses; review separately.",
+        "files": [
+          "LICENSE",
+          "licenses"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "any"
+      ],
+      "platforms": [
+        "varies"
+      ],
+      "local_prerequisites": [
+        "Binary + approved model file"
+      ],
+      "model_or_key_requirements": "Requires an approved local model; model license separate.",
+      "network_policy": "None at inference; model download is a separate approved step.",
+      "provenance": "git ls-remote https://github.com/ggml-org/llama.cpp and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Disabled by default."
+    },
+    {
+      "id": "web-llm",
+      "name": "web-llm",
+      "repository_url": "https://github.com/mlc-ai/web-llm",
+      "category": "host-model",
+      "proposed_use": "Optional in-browser local inference; not used.",
+      "integration_status": "optional-capability",
+      "reviewed_revision": {
+        "default_branch": "main",
+        "commit": "c42c36670cfc426c75e53ee297443882f1ae8d84",
+        "latest_release_tag": "v0.2.86",
+        "checked_on": "2026-10-15"
+      },
+      "license": {
+        "code_spdx": "Apache-2.0",
+        "rules_or_content_license": null,
+        "model_license_note": "Model weights carry their own licenses; review separately.",
+        "files": [
+          "LICENSE",
+          "licenses"
+        ],
+        "notes": ""
+      },
+      "supported_stacks": [
+        "web"
+      ],
+      "platforms": [
+        "varies"
+      ],
+      "local_prerequisites": [
+        "WebGPU browser + cached model"
+      ],
+      "model_or_key_requirements": "Requires model weights; model license separate.",
+      "network_policy": "Downloads model assets unless pre-provisioned.",
+      "provenance": "git ls-remote https://github.com/mlc-ai/web-llm and LICENSE file(s) at HEAD, checked 2026-10-15; docs reviewed where noted.",
+      "approval_state": "not-requested",
+      "selected_workflows": [],
+      "enabled": false,
+      "verification": "verified",
+      "review_notes": "Disabled by default."
+    }
+  ]
+}

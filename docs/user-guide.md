@@ -41,3 +41,15 @@ See [agent-kit/README.md](../agent-kit/README.md). In short, run `agent-kit\inst
 - **Copilot Chat:** type `/pr-readiness`, `/test-plan`, `/write-tests` or `/jira-to-plan`.
 - **Claude Code:** skills load automatically by description.
 - **Devin:** paste the playbooks into *Settings > Playbooks* and attach them with `!macro`.
+
+## Workflow coach (engineers)
+
+1. **Goal:** pick the project folder, then paste the story or defect, fetch it from Jira, or click a demo. Choose the workflow or let Compass detect it.
+2. **Project facts:** what Compass found, each with a clickable `file:line` source. *Inferred* facts are conventions you should confirm. *Unknown* means Compass will not guess.
+3. **Questions:** at most three at a time, each with the reason it matters. Answer or skip.
+4. **Tool:** say what data is involved and how complex the task is. Compass applies approval and data rules first, then fit. You can pick another allowed tool.
+5. **Work package:** choose Lean, Balanced or Deep. Review the included and excluded files, the redactions and any untrusted-text warnings. Remove or add files. Tick the review box, then copy or download. Nothing is sent anywhere.
+6. **Evidence:** run local checks (static, never runs your code), optionally run your tests with explicit approval, import reports (JUnit XML, unittest output, gitleaks, Semgrep, Spectral, diffs), or verify a defect fix on temporary copies.
+7. **Result and lesson:** each acceptance criterion is passed, failed or not checked, with evidence. You also get the next action, one lesson and a short exercise. Delete the journey when you're done.
+
+For tasks outside the three workflows (documents, emails, SQL, refactors), use **Quick prompt**. Copilot and Claude Code are approved for office work.

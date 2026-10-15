@@ -1,0 +1,157 @@
+{
+  "id": "uat-defect",
+  "version": "1.0.0",
+  "status": "working",
+  "title": "Investigate a UAT defect",
+  "summary": "Move from symptom to reproduced, root-caused and verified fix. A fix is accepted only with reproduction evidence.",
+  "detect_keywords": [
+    "defect",
+    "bug",
+    "fails",
+    "failing",
+    "error",
+    "uat",
+    "broken",
+    "incident",
+    "wrong",
+    "500",
+    "exception",
+    "cannot",
+    "can sign in",
+    "regression"
+  ],
+  "supported_stacks": [
+    "python",
+    "java-maven",
+    "java-gradle",
+    "node",
+    "dotnet"
+  ],
+  "required_facts": [
+    "stack",
+    "build_file",
+    "test_framework",
+    "test_command",
+    "agent_instructions"
+  ],
+  "questions": [
+    {
+      "id": "expected_actual",
+      "priority": 1,
+      "text": "What happened, and what should have happened?",
+      "why": "Expected behavior is the definition of a successful fix.",
+      "ask_if": {
+        "text_lacks": "expected result|expected:|expected behaviou?r|should have|instead of|actual result|actual:"
+      },
+      "fills": "expected_actual"
+    },
+    {
+      "id": "repro",
+      "priority": 1,
+      "text": "How can it be reproduced with synthetic or approved test data (steps or inputs)?",
+      "why": "A failing reproduction lets you prove the fix instead of guessing.",
+      "ask_if": {
+        "text_lacks": "steps to reproduce|reproduc|\\brepro\\b|\\bwhen I (do|click|enter|type|submit)\\b"
+      },
+      "fills": "repro"
+    },
+    {
+      "id": "env_change",
+      "priority": 2,
+      "text": "Where does it fail (environment, version) and what changed since it last worked?",
+      "why": "Recent changes are the fastest route to root cause.",
+      "ask_if": {
+        "text_lacks": "\\bsince\\b|after the (deploy|release|upgrade)|\\bversion\\b|changed in"
+      },
+      "fills": "env_change"
+    },
+    {
+      "id": "evidence",
+      "priority": 3,
+      "text": "Do you have sanitized evidence (error message, log line without personal data)?",
+      "why": "Evidence narrows hypotheses. Remove customer data and secrets first.",
+      "ask_if": {
+        "text_lacks": "log|stack trace|error message|exception"
+      },
+      "fills": "evidence"
+    },
+    {
+      "id": "test_command",
+      "priority": 3,
+      "text": "How do you run the tests for this project?",
+      "why": "Reproduction must be a test you can run before and after the fix.",
+      "ask_if": {
+        "fact_not_confirmed": "test_command"
+      },
+      "fills": "test_command"
+    }
+  ],
+  "decisive_context": [
+    "suspect_source",
+    "existing_tests"
+  ],
+  "context_keywords": [
+    "auth",
+    "login",
+    "password",
+    "error",
+    "exception"
+  ],
+  "staged_actions": [
+    {
+      "stage": "Investigate",
+      "instruction": "Using the evidence below, list 2-3 plausible causes and the check that would distinguish them. Do not change code yet."
+    },
+    {
+      "stage": "Reproduce",
+      "instruction": "Write a regression test that fails on the current code for the reported behavior. Run it and paste the failing output."
+    },
+    {
+      "stage": "Fix",
+      "instruction": "Make the minimal change that makes the regression test pass. Do not weaken or delete existing tests."
+    },
+    {
+      "stage": "Verify",
+      "instruction": "Run {test_command}. Show the regression test failing before and passing after, and the full suite passing."
+    }
+  ],
+  "acceptance": [
+    {
+      "id": "AC-DEF-1",
+      "text": "The change includes (or names) a regression test for the reported behavior.",
+      "check": "defect.repro_test_in_change"
+    },
+    {
+      "id": "AC-DEF-2",
+      "text": "That regression test fails before the fix (reproduction evidence).",
+      "check": "defect.fails_before"
+    },
+    {
+      "id": "AC-DEF-3",
+      "text": "It passes after the fix, and the full suite passes.",
+      "check": "defect.passes_after"
+    },
+    {
+      "id": "AC-SEC-1",
+      "text": "No secrets or credentials in the changed or exported files.",
+      "check": "security.secrets"
+    }
+  ],
+  "checks": [
+    "tests",
+    "diff",
+    "security.secrets",
+    "security.patterns"
+  ],
+  "evidence_requirements": [
+    "The fix as a diff",
+    "A test run before the fix",
+    "A test run after the fix"
+  ],
+  "teaching_tip": "A fix without a failing test first is a guess. Reproduce the defect as a test, then fix it, then show the same test passing.",
+  "exercise": {
+    "prompt": "What single piece of evidence would prove this defect is fixed?",
+    "answer_hint": "A test that fails on the old code and passes on the new code."
+  },
+  "security_stage": "security-review"
+}

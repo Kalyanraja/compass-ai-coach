@@ -2,89 +2,97 @@
 
 **Trusted, private workflow coaching for GenAI adoption.**
 
-Engineering organizations have rolled out GitHub Copilot, Claude Code, Devin and similar tools, but access and usage counts do not show which workflows work or where help is needed. Compass turns synthetic (or properly authorized) usage metadata and delivery signals into:
+Engineers already have GitHub Copilot, Claude Code and Devin. Access and usage counts don't show which workflows work, which tool fits which task, or whether the output is actually correct. Compass is a local coach that closes that gap. It works without API keys, MCP servers, a cloud backend or model downloads.
 
-- **Private, persona-specific coaching for engineers.** One next-best action at a time: a prompt, an agent, a workflow or a learning step. Every recommendation has an observation, a suggested action, a rationale with cited evidence, and an outcome to monitor.
-- **A prompt coach.** Paste a Jira story (or import a Jira CSV export, no API needed). Compass names what is missing, asks up to three questions, picks the right tool (Copilot, Claude Code, Devin, a writing assistant, or no AI at all) and writes a ready-to-paste prompt.
-- **Aggregated, k-anonymous insights for managers and leaders.** Team patterns, common workflow gaps and enablement opportunities. No individual data, no drill-down, no ranking.
-- **A drop-in agent kit** that works in any repository with no MCP servers and no API keys: Copilot instructions and prompt files, Claude Code skills, Devin playbooks and a 54-prompt library.
+| Experience | What it does |
+|---|---|
+| **Workflow coach** | Goal, then project facts (with file:line sources), up to 3 missing questions, the approved tool for the task, a reviewed work package sized to a budget, local checks and imported evidence, and finally a verdict, the next action and one lesson. Three guided workflows: feature/API change, UAT defect investigation, meaningful test creation. Security review runs as a shared stage. |
+| **Private coaching** | Next-best actions from GenAI usage and delivery signals. Each has an observation, an action, a rationale with sources, and an outcome to monitor. Only the engineer sees them. |
+| **Team and portfolio insights** | k-anonymous (k ≥ 5) team patterns and enablement opportunities. No drill-down to people, no ranking. |
+| **Agent kit** | Drop-in Copilot instructions and prompt files, Claude Code skills, Devin playbooks and a 54-prompt library for any repository. No MCP needed. |
 
 > **Enablement, not evaluation.** Compass never scores, ranks, compares, profiles or labels people.
 
-![Engineer coaching view](docs/screenshots/2-coach.png)
+![Workflow coach: evidence step](docs/screenshots/workflow/tests-6-evidence.png)
 
-## Run it in one step
+## Start
 
-| Platform | Do this |
+| How | Command |
 |---|---|
-| Windows | Double-click **`Start-Coach.bat`** |
-| macOS / Linux | `./start-coach.sh` |
-| Any | `python -m compass` |
+| Windows | Double-click **`Start-Coach.bat`**, or drag a project folder onto it |
+| Open straight into a project and a Jira issue | `Start-Coach.bat C:\code\my-repo ABC-123` |
+| Any OS | `python -m compass` (add `--project <folder> --jira <KEY>`) |
+| Check your setup | `python -m compass doctor` |
 
-Requirements: Python 3.9+ only. Standard library only, so there is nothing to `pip install`. It runs fully offline, uses no API keys, and binds to `127.0.0.1`. Your browser opens at <http://127.0.0.1:8765/>.
+You need Python 3.9+ and nothing else: no pip install and no internet. On first run, open **Setup** and answer 8 questions:
+1. Which AI tools you may use
+2. Which of them may see internal code
+3. Which project folders Compass may read
+4. Jira (off, Cloud or Data Center)
+5. Local scanners
+6. Whether tests may run when you approve them
+7. Default work-package size
+8. Whether to allow a local cache
 
-Run the tests and the quality evaluation: `Run-Tests.bat`, or
+## Three demos in five minutes (synthetic projects)
 
-```
-python -m unittest discover -s tests -t . -v
-python -m compass eval
-```
+| Demo | What you see |
+|---|---|
+| **Catch a missing API requirement** (`examples/java-orders-api`) | The story says nothing about auth, errors or headers. Compass detects the project standard (`standards/api-standard.md:10`) and asks for them. The checks then flag the spec: no `X-Correlation-Id`, no 400 on POST, no auth (`openapi.yaml:11`). Verdict: *Not accepted yet*. |
+| **Reject a fix without reproduction evidence** (`examples/py-login-service`) | Compass runs the tests on temporary copies. The fix without a test is *Not accepted: no reproduction evidence*. The fix with a regression test that fails before and passes after is *Accepted with evidence*. Your files are never changed. |
+| **A test that catches a seeded defect** (`examples/py-login-service`) | `test_wrong_password_same_length_is_rejected` detects the planted defect at `auth.py:35`. The smoke tests pass on broken code and are flagged as weak. Security candidates are reported: a synthetic credential and `shell=True`. |
 
-## Current results
+## Results (measured; see [docs/measurements.md](docs/measurements.md))
 
 | Check | Result |
 |---|---|
-| Recommendation quality across seeded scenarios (target 80%) | **25 / 25 pass** ([report](reports/eval-report.md)) |
-| Context awareness (same signal, different persona, different action) | **5 / 5** |
-| Seeded synthetic personas surface their seeded pattern | **37 / 37** |
-| Prompt coach task type and tool routing | **16 / 16** |
-| Acceptance tests mapped to AC1-AC14 | **34 / 34 pass** |
-| Data-minimization and no-ranking checks | **all pass** |
+| Tests (`python -m unittest discover -s tests -t . -v`) | **74 / 74 pass**: AC1-AC14 plus workflow, security-boundary, egress-blocked, timeout and Jira tests |
+| Recommendation quality eval (target 80%) | **25 / 25**, plus 5/5 context pairs, 37/37 seeded personas, 16/16 routing stories |
+| Real scanners via the approval flow | gitleaks 8.30.1, Semgrep 1.181.0 (local rules, metrics off), Spectral 6.17.0 (local ruleset) |
+| Context size, 386-file repo, Deep budget | about 15k estimated tokens vs about 454k for pasting the whole repo (estimates, not billing) |
 
-The scenarios were written by the team, and the rules were tuned on them. Treat these as regression tests rather than held-out accuracy. See [docs/testing.md](docs/testing.md) for how to add held-out scenarios from the organizers' sample data.
+The team wrote the eval scenarios and tuned the rules on them, so treat the eval as regression tests, not held-out accuracy. [docs/testing.md](docs/testing.md) explains how to add held-out scenarios.
 
-## What is inside
+## How it fits your tools (no MCP, no API)
+
+```mermaid
+flowchart LR
+  J[Jira: paste, CSV or read-only fetch] --> C[Compass on your laptop<br/>127.0.0.1, stdlib Python]
+  R[Your project folder<br/>allowed roots only] --> C
+  C -->|you copy the reviewed work package| CP[GitHub Copilot<br/>VS Code]
+  C -->|you copy| CL[Claude Code<br/>VS Code]
+  C -->|you paste + playbook| DV[Devin web]
+  CP & CL & DV -->|you bring back diff / test report / scan| C
+  K[agent-kit: prompts, skills, playbooks] -.installed into repos.-> CP & CL & DV
+```
+
+## What's inside
 
 ```
-compass/            Python service (stdlib only): engine, aggregation, prompt coach, API, eval
+compass/            Python service: coaching engine, aggregation, prompt coach, API
+compass/workflow/   Workflow coach: workspace + facts, packs + questions + tool policy, context budgeter,
+                    work package, evidence + adapters, safe runner, cache, journey
+workflows/packs/    Versioned workflow manifests (3 working, 1 shared security stage, 3 planned)
+catalog/            Approved-capability catalog + 37-tool reviewed registry (all inactive) + JSON schema
+compass_rules/      Pinned local Semgrep and Spectral rules
 web/                Browser UI (vanilla JS, no CDN, works offline)
 agent-kit/          Drop-in files for Copilot, Claude Code and Devin + prompt library
-eval/               Seeded scenarios for the quality evaluation
-tests/              Acceptance tests mapped to AC1-AC14
-reports/            Generated evaluation report (Markdown + JSON)
-data/               Sample Jira CSV export + synthetic dataset as CSV
-docs/               Architecture, setup, demo script, business case, NFRs, rubric mapping
-Start-Coach.bat     One-click launcher
+examples/           Synthetic fixture projects (Java API, Python login service, unknown stack)
+tests/              74 tests; fixtures include real scanner outputs
+docs/               Architecture, workflow coach design, setup, Jira, offline tools, measurements,
+                    hand-off for Devin/Copilot/Claude, presentation, business case, NFRs
 ```
-
-## Four experiences
-
-| Role | What they see | What they can never see |
-|---|---|---|
-| Engineer | Own recommendations, before/after simulation, trends, prompt coach, own feedback and history (deletable) | Anyone else's data |
-| Engineering manager | Own team's aggregated adoption, medians, gaps shared by 5 or more engineers, enablement opportunities | Any individual's recommendations, prompts, history, dismissals or feedback |
-| Engineering leader | Portfolio patterns, practices discovered in the data (labeled non-causal), teams listed alphabetically | Rankings, individual data, small teams (suppressed) |
-| AI enablement team | Quality evaluation, compliance checks, access audit, practice catalog | Individual data |
-
-These boundaries are enforced in the API, not just hidden in the UI. Engineer endpoints take the identity from the signed session and never from a parameter. The aggregation module only opens `signals.db` read-only and has no access to `private.db`.
 
 ## Documentation
 
-- [Architecture](docs/architecture.md): components, data flow, privacy boundary, human review points
-- [Setup and operations](docs/setup.md): install, configuration, running under corporate restrictions
-- [User guide](docs/user-guide.md)
-- [Five-minute demo script](docs/demo-script.md)
-- [Acceptance criteria traceability (AC1-AC14)](docs/acceptance-criteria.md)
-- [Scoring rubric mapping](docs/rubric-mapping.md)
-- [Business case and ROI](docs/business-case.md)
-- [NFRs, security and operational model](docs/nfr-security.md)
-- [Responsible AI and guardrails](docs/responsible-ai.md)
-- [Data dictionary](docs/data-dictionary.md)
-- [Testing](docs/testing.md)
-- [Roadmap](docs/roadmap.md)
-- [Research evidence brief (54 sourced claims)](docs/research/evidence.md)
-- [Agent kit](agent-kit/README.md) and [tool routing guide](agent-kit/tool-routing-guide.md)
+- **Start here:** [Setup](docs/setup.md) · [User guide](docs/user-guide.md) · [Demo script](docs/demo-script.md) · [Presentation (.pptx)](docs/presentation/Compass-Hackathon.pptx)
+- **Design:** [Architecture](docs/architecture.md) · [Workflow coach design and decisions](docs/workflow-coach.md) · [Data dictionary](docs/data-dictionary.md)
+- **Evidence:** [Measurements](docs/measurements.md) · [Implementation report](docs/IMPLEMENTATION-REPORT.md) · [Acceptance criteria traceability](docs/acceptance-criteria.md) · [Testing](docs/testing.md) · [Eval report](reports/eval-report.md)
+- **Judging:** [Scoring rubric mapping](docs/rubric-mapping.md) · [Business case](docs/business-case.md) · [NFRs and security](docs/nfr-security.md) · [Responsible AI](docs/responsible-ai.md) · [Roadmap](docs/roadmap.md)
+- **Operations:** [Offline use and scanner preparation](docs/offline-and-tools.md) · [Jira](docs/jira.md) · [Source manifest (37 tools)](docs/third-party/source-manifest.md)
+- **Hand-off:** [Devin](docs/handoff/devin.md) · [Copilot](docs/handoff/copilot.md) · [Claude Code](docs/handoff/claude.md)
+- **Agent kit:** [Agent kit](agent-kit/README.md) · [Tool routing guide](agent-kit/tool-routing-guide.md) · [Research brief (54 sourced claims)](docs/research/evidence.md)
 
 ## License
 
-MIT. See [LICENSE](LICENSE). Third-party material in `agent-kit/vendor/` keeps its original MIT license; see [NOTICE.md](NOTICE.md).
+MIT. See [LICENSE](LICENSE). Third-party material in `agent-kit/vendor/` keeps its original MIT license; see [NOTICE.md](NOTICE.md) and the [source manifest](docs/third-party/source-manifest.md).

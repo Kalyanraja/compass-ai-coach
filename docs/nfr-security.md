@@ -36,3 +36,18 @@
 ## Performance assumptions
 
 Signals refresh weekly, so recommendations change weekly. Expected load is under one request per engineer per day, which is small.
+
+## Workflow coach security boundaries
+
+| Threat | Control | Test |
+|---|---|---|
+| Another website calls the local API (CSRF, DNS rebinding) | Host header must be loopback; Origin must match; POST requires `application/json`; `Sec-Fetch-Site` cross-site is refused | `Api.test_cross_origin_and_non_json_refused` |
+| Reading outside the project | Allowed roots only; path traversal, symlinks, `.env`, keys and credential folders are refused | `Boundaries.*` |
+| Command injection | Named templates, regex-validated arguments, no shell, paths confined, minimal environment | `Boundaries.test_command_injection_rejected`, `test_minimal_environment` |
+| Runaway processes | Timeout, process-group kill, CPU and file-size limits (POSIX), output cap, cancel endpoint | `Timeouts.*` |
+| Tampered scanner binary | SHA-256 recorded at approval and re-checked before every run | Devin session 2 tamper test |
+| Prompt injection in project files | Fenced as untrusted data, flagged, cannot change settings | `UntrustedInput.*` |
+| Secret leakage in exports | Redaction before preview with a list of what was redacted; a review checkbox is required before copy | `Redaction.*` |
+| Over-claiming | Missing tool = not checked; malformed report = blocked; findings are candidates; "passed" is not a certification | `MissingToolsAndReports.*`, `CombinedSecrets.*` |
+| Stale results | The cache is opt-in and its key covers sources, settings, rules and packs; stale entries are deleted | `Cache.*` |
+| Jira token exposure | Token from an environment variable or session memory only; never written or logged; https host pinned | `Jira.*` |

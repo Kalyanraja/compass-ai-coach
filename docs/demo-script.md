@@ -1,21 +1,29 @@
 # Five-minute demo script
 
-Before you start: run `python -m compass --reset` so the private store is empty, open <http://127.0.0.1:8765/>, and keep a backup screen recording ready.
+**Before you start**
+1. Run `python -m compass --reset` (clean private store).
+2. Open Setup, tick "allow test execution", and Save.
+3. Sign in as engineer **Falcon**.
+4. Keep a backup screen recording ready.
+
+All demo projects are synthetic.
 
 | Time | Show | Say |
 |---|---|---|
-| 0:00-0:35 | Title page | "We all have Copilot, Claude Code and Devin. Usage dashboards tell us who logged in, not whether work got better. DORA found delivery stability drops as AI adoption rises unless teams keep good habits. Compass coaches the habits, privately." |
-| 0:35-1:50 | **Engineer** > persona **Falcon** (senior, Java, high complexity) | Point at the privacy banner. Walk through the first card: **Observation** (median PR 716 lines, 3.2 review rounds), **Suggested action** (Claude Code plan mode, slice into PRs under 400 lines, separate API contract changes), **Why** (SmartBear/Cisco review evidence), **Outcome to watch**. Open *Evidence* to show record ids, which give traceability. Click **Show before and after**: synthetic actuals vs. the simulated projection, clearly labeled. |
-| 1:50-2:15 | Same card: **Dismiss** (reason "Not now"), then *Dismissed* > **Restore** | "The engineer stays in control. This is stored privately. Watch: the manager view will not change." |
-| 2:15-3:05 | **Prompt coach** > Load sample Jira stories > **DEMO-101** | It detects a feature/API task, shows 5 of 8 brief elements present, and asks about auth, constraints and verification. Type an answer for auth. It recommends Claude Code for this high-complexity persona and explains why. **Write my prompt**, then **Copy**. Then click DEMO-106 (formatting): "No AI needed, use the formatter." Then DEMO-104: "Repo-wide upgrade goes to Devin with a playbook." |
-| 3:05-3:50 | Switch role > **Manager, Team Echo** | k stamp. Gaps shared by 5 or more engineers: plan-then-implement and context pack, each with a team-level enablement opportunity and kit files. "4 other patterns are hidden." No list of people, no drill-down. Click **Request an engineer's private coaching**: the server refuses with 403. This is the memorable moment. |
-| 3:50-4:10 | Switch role > **Manager, Team Delta** | "Three engineers is below the threshold, so nothing is shown. The leader view also excludes Delta from totals, so nobody can work it out by subtraction." |
-| 4:10-4:40 | Switch role > **AI enablement** > *Enablement* | 25/25 scenarios (target 80%), context pairs, compliance checks all PASS. The access audit shows the 403 from the manager's attempt, logged without any user id. |
-| 4:40-5:00 | **How it works** diagram | "Python standard library, runs offline with no API keys, and a drop-in agent kit for any repo. Enablement, not evaluation." |
+| 0:00-0:30 | Title / sign-in page | "We all have Copilot, Claude Code and Devin, but usage doesn't tell us whether work got better. People give agents half a story, pick whichever tool is open, and accept output nobody checked. Compass coaches the workflow, locally, with no API keys." |
+| 0:30-1:45 | **Workflow coach > Catch a missing API requirement > Start** | *Facts*: Java/Maven from `pom.xml:10`; the team standard at `standards/api-standard.md:10` requires `X-Correlation-Id`; auth is unknown. *Questions*: who may call it, which errors, the header. "The story said none of this." *Tool*: approval and data rules first, then fit; I can override within policy. *Work package*: spec and standard included in full, size and bytes shown, nothing sent anywhere. *Evidence > Run local checks*: missing header at `openapi.yaml:11`, no 400, no auth. *Result*: **Not accepted yet**, next action, one lesson. |
+| 1:45-2:45 | **Reject a fix without reproduction evidence** | Defect LOGIN-7 has no repro steps, so Compass asks for expected vs actual and steps. *Evidence > Fix without a test > Verify*: tests run on temporary copies. **Not accepted: no reproduction evidence**, and it names the existing test that does reproduce it. Then *Fix with a regression test*: fails before, passes after, full suite green: **Accepted with evidence**. "My files were never touched." |
+| 2:45-3:30 | **A test that catches a seeded defect** | *Evidence*, tick "run the project's tests" (explicit approval). `test_wrong_password_same_length_is_rejected` detects the planted defect at `auth.py:35`, while the smoke tests pass on broken code and are flagged weak. Security candidates: a synthetic credential at `settings.ini:7` and `shell=True` at `admin.py:8`, both labeled candidates. |
+| 3:30-4:05 | **My coaching** | Private next-best actions from usage and delivery signals, with the 4 elements and evidence records. "Only I see this." |
+| 4:05-4:35 | Switch role > **Manager, Team Echo** > *Request an engineer's private coaching* | Team patterns only, with k ≥ 5. The button tries to read an individual's coaching and the server refuses with 403. Team Delta (3 people) shows nothing. |
+| 4:35-5:00 | **Tool catalog** and **How it works** | "37 reviewed open-source tools, all inactive until approved; real gitleaks, Semgrep and Spectral adapters; everything runs offline. Enablement, not evaluation." |
 
 ## Likely questions
 
-- **Is this live AI?** The coaching core is deterministic by design: explainable, testable, zero token cost, offline. The agent kit and generated prompts are what make Copilot, Claude Code and Devin better. An optional approved-LLM hook exists (`COMPASS_LLM_URL`).
-- **Real data?** No. Synthetic only, per the brief. The schema is metadata-only, and the compliance checks prove it. Real data would come from authorized metadata exports; see [roadmap.md](roadmap.md).
-- **Why k = 5?** It matches common people-analytics practice (Microsoft Viva Insights requires a minimum of 5). It is configurable through `COMPASS_K_ANON`.
-- **Can a manager game it?** There is no endpoint that returns individual data, and engineer identity comes from the signed session. Tests prove both.
+- **Is this live AI?** The coach is deterministic on purpose: explainable, testable, offline, zero tokens. It makes the AI tools you already have work better by giving them complete, reviewed work packages and by checking what comes back. An approved-LLM hook exists (`COMPASS_LLM_URL`) and is off by default.
+- **Can it read any folder?** No. Only folders you allow in Setup. It refuses path traversal, symlinks and credential files.
+- **Does it send code to anyone?** No. You preview and copy the package yourself. Secrets are redacted and listed before export.
+- **Can it run arbitrary commands?** No. It only runs named templates with validated arguments and no shell. Test runs need the Setup switch and per-run approval. Scanners must be approved and hash-matched.
+- **What if a scanner isn't installed?** It shows as "not checked", never "passed".
+- **Jira?** Off by default. Paste the story or import a CSV export, or enable a read-only fetch with your own token from an environment variable.
+- **Why k = 5?** It matches common people-analytics practice (Microsoft Viva Insights minimum 5), and it is configurable upward.

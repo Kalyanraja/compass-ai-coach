@@ -410,10 +410,13 @@ class Handler(BaseHTTPRequestHandler):
                     raise ApiError(401, "sign in required")
                 if ctx["role"] not in roles:
                     raise ApiError(403, f"the {ctx['role']} role cannot access this endpoint")
+            self._check_origin(method)
             body = {}
             if method == "POST":
+                if not (self.headers.get("Content-Type") or "").lower().startswith("application/json"):
+                    raise ApiError(415, "send JSON (Content-Type: application/json)")
                 n = int(self.headers.get("Content-Length") or 0)
-                if n > 1_000_000:
+                if n > 4_000_000:
                     raise ApiError(413, "request too large")
                 body = json.loads(self.rfile.read(n) or b"{}") if n else {}
             result = fn(ctx, parse_qs(url.query), body)
@@ -429,6 +432,20 @@ class Handler(BaseHTTPRequestHandler):
             self._send(500, {"error": "internal error", "detail": type(e).__name__})
         finally:
             audit(role, method, path, status)
+
+    def _check_origin(self, method):
+        """Block DNS-rebinding and cross-site requests to the local API."""
+        host = (self.headers.get("Host") or "").lower()
+        port = self.server.server_address[1]
+        allowed_hosts = {f"127.0.0.1:{port}", f"localhost:{port}", f"[::1]:{port}"}
+        bound = self.server.server_address[0]
+        if bound in ("127.0.0.1", "localhost", "::1") and host not in allowed_hosts:
+            raise ApiError(403, "unexpected Host header")
+        origin = self.headers.get("Origin")
+        if origin and origin.lower() not in {f"http://{h}" for h in allowed_hosts}:
+            raise ApiError(403, "cross-origin requests are not allowed")
+        if method == "POST" and (self.headers.get("Sec-Fetch-Site") or "same-origin") not in ("same-origin", "none"):
+            raise ApiError(403, "cross-site requests are not allowed")
 
     def _static(self, path):
         if path in ("", "/"):
@@ -448,10 +465,10 @@ class Handler(BaseHTTPRequestHandler):
         self._dispatch("POST")
 
 
-def serve(host: str = config.HOST, port: int = config.PORT, open_browser: bool = False):
+def serve(host: str = config.HOST, port: int = config.PORT, open_browser: bool = False, deep_link: str = ""):
     db.init()
     httpd = ThreadingHTTPServer((host, port), Handler)
-    url = f"http://{host}:{port}/"
+    url = f"http://{host}:{port}/" + deep_link
     print(f"Compass is running at {url}  (Ctrl+C to stop)")
     print(f"Privacy threshold k = {config.K_ANON}. Data: synthetic. LLM enhancer: {'on' if llm.enabled() else 'off'}.")
     if open_browser:
@@ -463,3 +480,7 @@ def serve(host: str = config.HOST, port: int = config.PORT, open_browser: bool =
         print("\nStopped.")
     finally:
         httpd.server_close()
+
+
+# Workflow-coach routes register themselves into ROUTES.
+from . import api_workflow  # noqa: E402,F401

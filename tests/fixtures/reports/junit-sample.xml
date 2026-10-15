@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- HAND-WRITTEN FIXTURE. Not produced by a real test run.
+     Written for Compass parser tests: 3 testcases (1 passed, 1 failed, 1 skipped). -->
+<testsuites name="compass-sample" tests="3" failures="1" errors="0" skipped="1" time="0.420">
+  <testsuite name="orders.api" tests="3" failures="1" errors="0" skipped="1" time="0.420" timestamp="2026-10-15T10:00:00">
+    <testcase classname="orders.api.GetOrder" name="returns_200_for_existing_order" time="0.120"/>
+    <testcase classname="orders.api.GetOrder" name="returns_400_for_malformed_id" time="0.250">
+      <failure message="Expected status 400 but got 500" type="AssertionError">AssertionError: Expected status 400 but got 500
+  at orders/api/test_get_order.py:42</failure>
+    </testcase>
+    <testcase classname="orders.api.GetOrder" name="returns_401_without_token" time="0.000">
+      <skipped message="Auth not configured in synthetic environment"/>
+    </testcase>
+  </testsuite>
+</testsuites>

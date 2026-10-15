@@ -1,0 +1,47 @@
+# Local Spectral ruleset for the Compass synthetic fixtures.
+# "spectral:oas" is the OpenAPI ruleset bundled inside the installed
+# @stoplight/spectral-rulesets package, so it resolves without network access.
+# Do not add http(s) URLs to "extends" if you need offline runs.
+extends:
+  - spectral:oas
+rules:
+  # SYNTHETIC TRAINING STANDARD: this is not an industry rule. It exists so
+  # Compass can demonstrate a team-specific API convention.
+  compass-operation-correlation-id:
+    description: "SYNTHETIC TRAINING STANDARD: every operation must declare an X-Correlation-Id header parameter."
+    message: "{{path}} is missing an X-Correlation-Id header parameter (SYNTHETIC TRAINING STANDARD)."
+    severity: error
+    given: "$.paths[*][get,put,post,delete,patch,options,head,trace]"
+    then:
+      field: parameters
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            type: object
+            required: [name, in]
+            properties:
+              name:
+                const: X-Correlation-Id
+              in:
+                const: header
+  # SYNTHETIC TRAINING STANDARD: every operation must document a 400 response.
+  compass-operation-400-response:
+    description: "SYNTHETIC TRAINING STANDARD: every operation must document a 400 response."
+    message: "Operation is missing a 400 response (SYNTHETIC TRAINING STANDARD)."
+    severity: warn
+    given: "$.paths[*][get,put,post,delete,patch,options,head,trace].responses"
+    then:
+      field: "400"
+      function: truthy
+  # SYNTHETIC TRAINING STANDARD: the document must declare a global security
+  # requirement. (Simplified check: it does not look at operation-level security.)
+  compass-global-security-defined:
+    description: "SYNTHETIC TRAINING STANDARD: the API document must declare a global security requirement."
+    message: "API document has no global security requirement (SYNTHETIC TRAINING STANDARD)."
+    severity: warn
+    given: "$"
+    then:
+      field: security
+      function: truthy

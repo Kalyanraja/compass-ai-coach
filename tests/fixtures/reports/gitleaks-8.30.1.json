@@ -1,0 +1,22 @@
+[
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 12,
+  "EndLine": 12,
+  "StartColumn": 2,
+  "EndColumn": 55,
+  "Match": "inventory_api_key = \"REDACTED\"",
+  "Secret": "REDACTED",
+  "File": "config/settings.ini",
+  "SymlinkFile": "",
+  "Commit": "",
+  "Entropy": 5,
+  "Author": "",
+  "Email": "",
+  "Date": "",
+  "Message": "",
+  "Tags": [],
+  "Fingerprint": "config/settings.ini:generic-api-key:12"
+ }
+]

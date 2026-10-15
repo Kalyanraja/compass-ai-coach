@@ -13,6 +13,8 @@ How Compass addresses each judging criterion, with the evidence to show.
 | Current vs future state | [business-case.md](business-case.md) |
 | Customer journey | [user-guide.md](user-guide.md), [demo-script.md](demo-script.md) |
 
+| Workflow coach (new) | Guides the whole loop for 3 workflows: goal, facts with sources, missing questions, tool choice, a reviewed package, then evidence and a verdict. Catches the missing API requirement, rejects a fix without reproduction evidence, and proves which tests catch a seeded defect ([docs/workflow-coach.md](workflow-coach.md)) |
+
 ## 2. Business impact and implementation potential (25%)
 
 | Rubric item | Evidence |
@@ -31,6 +33,7 @@ How Compass addresses each judging criterion, with the evidence to show.
 | Engineering excellence | Typed, documented Python. 34 acceptance tests. CI on Windows and Linux with Python 3.9 and 3.12. Deterministic synthetic data. |
 | Effective AI usage | AI appears where it adds value: the agent kit makes Copilot, Claude Code and Devin better, and the prompt coach makes each prompt complete. The decision core is deterministic so it is explainable and testable. |
 | Responsible AI | [responsible-ai.md](responsible-ai.md): no people scoring, human review points, NIST AI RMF and ISO/IEC 42001 mapping, non-causal labeling |
+| Token and cost efficiency (workflow coach) | Context budgeter with Lean / Balanced / Deep. In a 386-file repo, a Deep package was about 15k estimated tokens vs about 454k for a whole-repo paste, measured in [measurements.md](measurements.md) (labeled estimates, not billing) |
 | Token and cost efficiency | The coach itself uses 0 tokens. Generated prompts aim to cut agent iterations by giving complete context up front, and research shows underspecified prompts reduce first-try correctness 20-30% ([evidence](research/evidence.md) row 32). |
 | AI output quality | Recommendation eval at 100% on the team's 25 regression scenarios (target 80%). Prompt routing at 16/16 on the team's routing set. |
 | Prompt strategy | 54-prompt library, 27 anti-patterns, tool-specific prompt shapes (plan first, evidence required, forbidden actions for Devin) |

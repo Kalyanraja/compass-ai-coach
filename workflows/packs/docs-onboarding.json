@@ -1,0 +1,8 @@
+{
+  "id": "docs-onboarding",
+  "version": "0.1.0",
+  "status": "planned",
+  "title": "Documentation and onboarding",
+  "summary": "Create or update README, runbooks and onboarding guides. Registered as an optional extension; not implemented yet.",
+  "note": "Not available. Use the agent kit prompts for now."
+}

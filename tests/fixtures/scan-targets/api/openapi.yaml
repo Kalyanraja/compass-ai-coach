@@ -1,0 +1,49 @@
+# SYNTHETIC training fixture for API linting tests.
+# Deliberate issues: GET /orders/{orderId} has no 400 response, no security
+# requirement (and the document has no global security), and no
+# X-Correlation-Id header parameter.
+openapi: 3.0.3
+info:
+  title: Synthetic Orders API
+  version: 0.1.0
+  description: Training fixture only. Not a real service.
+  contact:
+    name: Compass fixtures
+    url: https://example.invalid
+servers:
+  - url: https://example.invalid/v1
+tags:
+  - name: orders
+    description: Order lookups
+paths:
+  /orders/{orderId}:
+    get:
+      operationId: getOrder
+      summary: Get one order
+      description: Returns a single order by id.
+      tags:
+        - orders
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          description: Not found
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string

@@ -1,0 +1,63 @@
+[
+	{
+		"code": "compass-global-security-defined",
+		"path": [],
+		"message": "API document has no global security requirement (SYNTHETIC TRAINING STANDARD).",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 4,
+				"character": 0
+			},
+			"end": {
+				"line": 48,
+				"character": 22
+			}
+		},
+		"source": "api/openapi.yaml"
+	},
+	{
+		"code": "compass-operation-correlation-id",
+		"path": [
+			"paths",
+			"/orders/{orderId}",
+			"get",
+			"parameters"
+		],
+		"message": "#/paths/~1orders~1%7BorderId%7D/get/parameters is missing an X-Correlation-Id header parameter (SYNTHETIC TRAINING STANDARD).",
+		"severity": 0,
+		"range": {
+			"start": {
+				"line": 25,
+				"character": 17
+			},
+			"end": {
+				"line": 30,
+				"character": 24
+			}
+		},
+		"source": "api/openapi.yaml"
+	},
+	{
+		"code": "compass-operation-400-response",
+		"path": [
+			"paths",
+			"/orders/{orderId}",
+			"get",
+			"responses"
+		],
+		"message": "Operation is missing a 400 response (SYNTHETIC TRAINING STANDARD).",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 31,
+				"character": 16
+			},
+			"end": {
+				"line": 39,
+				"character": 32
+			}
+		},
+		"source": "api/openapi.yaml"
+	}
+]

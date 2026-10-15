@@ -58,16 +58,16 @@
 
   // ---------------------------------------------------------------- nav
   var NAV = {
-    engineer: [["#/coach", "My coaching"], ["#/prompt", "Prompt coach"], ["#/practices", "Practices"], ["#/mydata", "My data"], ["#/trust", "How it works"]],
-    manager: [["#/team", "Team insights"], ["#/prompt", "Prompt coach"], ["#/practices", "Practices"], ["#/trust", "How it works"]],
-    leader: [["#/org", "Portfolio insights"], ["#/practices", "Practices"], ["#/trust", "How it works"]],
-    enablement: [["#/enable", "Enablement"], ["#/practices", "Practices"], ["#/prompt", "Prompt coach"], ["#/trust", "How it works"]]
+    engineer: [["#/coach", "My coaching"], ["#/workflow", "Workflow coach"], ["#/practices", "Practices"], ["#/mydata", "My data"], ["#/catalog", "Tool catalog"], ["#/setup", "Setup"], ["#/trust", "How it works"]],
+    manager: [["#/team", "Team insights"], ["#/workflow", "Workflow coach"], ["#/practices", "Practices"], ["#/trust", "How it works"]],
+    leader: [["#/org", "Portfolio insights"], ["#/practices", "Practices"], ["#/catalog", "Tool catalog"], ["#/trust", "How it works"]],
+    enablement: [["#/enable", "Enablement"], ["#/workflow", "Workflow coach"], ["#/catalog", "Tool catalog"], ["#/practices", "Practices"], ["#/setup", "Setup"], ["#/trust", "How it works"]]
   };
   function renderNav() {
-    var links = state.role ? NAV[state.role] : [["#/trust", "How it works"]];
-    var cur = location.hash || "#/";
+    var links = state.role ? NAV[state.role] : [["#/setup", "Setup"], ["#/catalog", "Tool catalog"], ["#/trust", "How it works"]];
+    var cur = (location.hash || "#/").split("?")[0];
     document.getElementById("nav").innerHTML = links.map(function (l) {
-      return '<a href="' + l[0] + '"' + (cur.indexOf(l[0]) === 0 ? ' aria-current="page"' : "") + ">" + esc(l[1]) + "</a>";
+      return '<a href="' + l[0] + '"' + (cur === l[0] ? ' aria-current="page"' : "") + ">" + esc(l[1]) + "</a>";
     }).join("");
     document.getElementById("who").innerHTML = state.role
       ? '<span>Signed in as <strong>' + esc(state.display) + '</strong></span><button class="btn ghost small" data-action="signout">Switch role</button>'
@@ -93,7 +93,7 @@
         '<p class="lead">Compass reads workflow signals, suggests one next step at a time, and writes the prompt for the right tool. Your coaching stays private. Leaders only see team patterns.</p>' +
         privacyBar("Enablement, not evaluation", "No scores, rankings or labels for people. Recommendations, feedback and history are visible only to the engineer.") +
         '</div>' + rose() + '</section>' +
-        '<h2>Choose how you sign in</h2><p class="muted small">Demo sign-in with synthetic personas. A real deployment uses your enterprise single sign-on.</p>' +
+        '<div id="setup-banner"></div><h2>Choose how you sign in</h2><p class="muted small">Demo sign-in with synthetic personas. A real deployment uses your enterprise single sign-on.</p>' +
         '<div class="choices">' +
         '<button class="choice" data-action="show-engineers"><h3>Engineer</h3><p class="small muted">Private coaching, prompt coach and practice library.</p></button>' +
         '<div class="choice"><h3>Engineering manager</h3><p class="small muted">Team patterns and enablement opportunities, never individuals.</p><select aria-label="Choose team" id="mgr-team">' +
@@ -108,6 +108,7 @@
           return '<details class="team"><summary>' + esc(t) + ' (' + byTeam[t].length + ' personas)</summary><div class="persona-list">' + byTeam[t].map(function (e) { return card(e); }).join("") + "</div></details>";
         }).join("") + '</div></section>'
       );
+      setupBanner();
     }).catch(fail);
   }
   function rose() {
@@ -122,10 +123,20 @@
       '<text x="100" y="199" text-anchor="middle" font-size="11" fill="currentColor">Explain</text>' +
       '<text x="4" y="104" font-size="11" fill="currentColor">Measure</text></svg>';
   }
+  function setupBanner() {
+    api("GET", "/api/setup").then(function (d) {
+      var el = document.getElementById("setup-banner");
+      if (el && !d.settings.setup_complete) {
+        el.innerHTML = '<div class="warn" style="margin-bottom:1rem"><strong>First run:</strong> answer 8 quick setup questions (about 2 minutes): which AI tools you may use, which project folders Compass may read, Jira, and local scanners. <a href="#/setup">Open setup</a></div>';
+      }
+    }).catch(function () {});
+  }
   function login(role, subject) {
     api("POST", "/api/session", { role: role, subject: subject }).then(function (s) {
       state.token = s.token; state.role = s.role; state.display = s.display; persist();
-      location.hash = NAV[role][0][0];
+      if (state.pendingDeepLink && (NEED[state.pendingDeepLink.split("?")[0]] || []).indexOf(role) >= 0) {
+        var dl = state.pendingDeepLink; state.pendingDeepLink = null; location.hash = dl;
+      } else { location.hash = NAV[role][0][0]; }
     }).catch(function (e) { toast(e.message); });
   }
 
@@ -231,7 +242,7 @@
 
   // ---------------------------------------------------------------- prompt coach
   function promptView() {
-    view('<h1>Prompt coach</h1><p class="lead">Paste a Jira story or describe the task. Compass checks what is missing, picks the right tool, and writes the prompt. Three steps.</p>' +
+    view('<p class="small"><a href="#/workflow">Back to the Workflow coach</a></p><h1>Quick prompt coach</h1><p class="lead">For tasks outside the three guided workflows (documents, emails, refactors, SQL, exploration). Paste a Jira story or describe the task. Compass checks what is missing, picks the right tool, and writes the prompt. Three steps.</p>' +
       '<div class="steps" id="steps"><span class="on">1. Paste the task</span><span>2. Answer up to 3 questions</span><span>3. Copy the prompt</span></div>' +
       privacyBar("Your text is processed in memory and never stored", "It is not logged and never appears in any manager or leader view. Remove secrets and customer data before using any AI tool.") +
       '<div class="grid2" style="margin-top:1rem;align-items:start"><div class="panel stack"><div><label for="coach-text">Story or task</label><textarea id="coach-text" placeholder="Example: Build REST API to create a service request. As a portal user I want to submit a request...">' + esc(state.coachText) + '</textarea></div>' +
@@ -454,14 +465,23 @@
   };
   var NEED = { "#/coach": ["engineer"], "#/mydata": ["engineer"], "#/team": ["manager"], "#/org": ["leader"], "#/enable": ["enablement"],
     "#/prompt": ["engineer", "manager", "enablement", "leader"], "#/practices": ["engineer", "manager", "leader", "enablement"] };
+  window.Compass = { api: api, esc: esc, view: view, toast: toast, copy: copy, openModal: openModal, closeModal: closeModal,
+    privacyBar: privacyBar, state: state, toolName: toolName };
+  var EXTRA = window.CompassRoutes || {};
+  Object.keys(EXTRA).forEach(function (k) { ROUTES_[k] = EXTRA[k].view; if (EXTRA[k].roles) NEED[k] = EXTRA[k].roles; });
   function router() {
-    var h = location.hash || "#/";
+    var full = location.hash || "#/";
+    var h = full.split("?")[0], query = {};
+    (full.split("?")[1] || "").split("&").forEach(function (kv) { if (kv) { var p = kv.split("="); query[decodeURIComponent(p[0])] = decodeURIComponent((p[1] || "").replace(/\+/g, " ")); } });
     if (!ROUTES_[h]) h = "#/";
-    if (NEED[h] && NEED[h].indexOf(state.role) < 0) h = state.role ? NAV[state.role][0][0] : "#/";
-    if (h === "#/" && state.role) { h = NAV[state.role][0][0]; }
-    if (location.hash !== h) { location.hash = h; return; }
+    if (NEED[h] && NEED[h].indexOf(state.role) < 0) {
+      if (!state.role && Object.keys(query).length) { state.pendingDeepLink = full; }
+      h = state.role ? NAV[state.role][0][0] : "#/";
+    }
+    if (h === "#/" && state.role) { h = state.pendingDeepLink ? state.pendingDeepLink.split("?")[0] : NAV[state.role][0][0]; }
+    if (full.split("?")[0] !== h) { location.hash = h; return; }
     renderNav();
-    ROUTES_[h]();
+    ROUTES_[h](query);
   }
   window.addEventListener("hashchange", router);
   router();

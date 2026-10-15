@@ -18,4 +18,4 @@ cd examples/py-login-service
 python -m unittest discover -s tests -t .
 ```
 
-Expected: `Ran 4 tests`, `FAILED (failures=1)`. See each fixture's README for details.
+Expected: `Ran 4 tests`, `FAILED (failures=1)`. Seeded issues and expected results are in [TESTER-NOTES.md](TESTER-NOTES.md), kept outside the fixture folders so they never end up in a work package.

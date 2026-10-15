@@ -596,7 +596,7 @@
       "id": "J05",
       "text": "Write a status update email for leadership about the sprint.",
       "expected_type": "docs_communication",
-      "expected_tool": "writing"
+      "expected_tool": "copilot"
     },
     {
       "id": "J06",
@@ -662,7 +662,7 @@
       "id": "J16",
       "text": "Summarize this design doc for the stakeholders meeting in five bullet points.",
       "expected_type": "docs_communication",
-      "expected_tool": "writing"
+      "expected_tool": "copilot"
     }
   ]
 }

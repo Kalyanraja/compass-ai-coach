@@ -1,6 +1,6 @@
 # Compass evaluation report
 
-Generated: 2026-10-15T14:39:18+00:00 (deterministic; rerun with `python -m compass eval`)
+Generated: 2026-10-15T16:20:13+00:00 (deterministic; rerun with `python -m compass eval`)
 
 ## Recommendation quality (AC3)
 
@@ -62,7 +62,7 @@ A scenario passes only if every check passes: relevant, complete (4 elements), e
 | J02 | bug_fix | bug_fix | claude | claude | yes |
 | J03 | test_creation | test_creation | copilot | copilot | yes |
 | J04 | refactor_modernization | refactor_modernization | devin | devin | yes |
-| J05 | docs_communication | docs_communication | writing | writing | yes |
+| J05 | docs_communication | docs_communication | copilot | copilot | yes |
 | J06 | trivial_deterministic | trivial_deterministic | no_ai | no_ai | yes |
 | J07 | test_creation | test_creation | copilot | copilot | yes |
 | J08 | exploration | exploration | claude | claude | yes |
@@ -73,6 +73,6 @@ A scenario passes only if every check passes: relevant, complete (4 elements), e
 | J13 | refactor_modernization | refactor_modernization | devin | devin | yes |
 | J14 | feature_api | feature_api | copilot | copilot | yes |
 | J15 | feature_api | feature_api | claude | claude | yes |
-| J16 | docs_communication | docs_communication | writing | writing | yes |
+| J16 | docs_communication | docs_communication | copilot | copilot | yes |
 
 Reusable practices identified: 8 (each cites the workflow signals it improves).

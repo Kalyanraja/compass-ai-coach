@@ -23,23 +23,4 @@ A small Spring Boot style service for creating and reading orders.
 | `recorded/surefire-TEST-OrderControllerTest.xml` | Hand-written surefire report, 1 pass, 1 fail |
 | `.github/workflows/ci.yml` | Maven CI workflow (not run) |
 
-## Seeded gaps (for testers)
-
-The spec in `src/main/resources/openapi.yaml` deliberately breaks the synthetic standard:
-
-- **STD-API-1** - no operation declares the `X-Correlation-Id` header parameter.
-- **STD-API-2** - `POST /orders` has no `400` response and there is no error schema with `code` and `message`.
-- **STD-API-3** - no `components.securitySchemes` and no `security` block.
-- **STD-API-4** - satisfied: `CreateOrderRequest` has a `required` list (a control, should not be flagged).
-
-Other things the coach should notice:
-
-- `docs/stories/ORD-12.md` only has a happy-path Given/When/Then. Nothing about
-  auth, error responses, headers, or what happens when the order is already
-  shipped or cancelled. The coach should ask about these.
-- There is **no AGENTS.md** on purpose, so "agent instructions present" should
-  come back as missing or unknown.
-- `recorded/surefire-TEST-OrderControllerTest.xml` is recorded sample evidence:
-  `createOrderReturns201` passes, `createOrderWithMissingFieldsReturns400` fails
-  with `Status expected:<400> but was:<500>`. It was hand-written, not produced
-  by a build.
+Tester notes (seeded issues and expected results) are in `../TESTER-NOTES.md`, outside this project folder.

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "compass/catalog/tool-registry.schema.json",
+  "title": "Compass tool registry record",
+  "description": "Metadata only. A record is never an executable plugin definition.",
+  "type": "object",
+  "required": ["id", "repository_url", "category", "proposed_use", "integration_status", "reviewed_revision", "license", "approval_state", "enabled", "verification"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "name": {"type": "string"},
+    "repository_url": {"type": "string", "format": "uri"},
+    "category": {"enum": ["workflow", "security", "context", "testing", "host-model"]},
+    "proposed_use": {"type": "string"},
+    "integration_status": {"enum": ["reference", "adapted-content", "runtime-adapter-candidate", "optional-capability"]},
+    "reviewed_revision": {
+      "type": "object",
+      "required": ["commit", "checked_on"],
+      "properties": {
+        "default_branch": {"type": ["string", "null"]},
+        "commit": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+        "latest_release_tag": {"type": ["string", "null"]},
+        "latest_release_note": {"type": "string"},
+        "checked_on": {"type": "string"}
+      }
+    },
+    "license": {
+      "type": "object",
+      "properties": {
+        "code_spdx": {"type": ["string", "null"]},
+        "rules_or_content_license": {"type": ["string", "null"]},
+        "model_license_note": {"type": ["string", "null"]},
+        "files": {"type": "array", "items": {"type": "string"}},
+        "notes": {"type": "string"}
+      }
+    },
+    "supported_stacks": {"type": "array", "items": {"type": "string"}},
+    "platforms": {"type": "array", "items": {"type": "string"}},
+    "local_prerequisites": {"type": "array", "items": {"type": "string"}},
+    "model_or_key_requirements": {"type": "string"},
+    "network_policy": {"type": "string"},
+    "provenance": {"type": "string"},
+    "approval_state": {"enum": ["not-requested", "requested", "approved", "rejected"]},
+    "selected_workflows": {"type": "array", "items": {"enum": ["feature-api", "uat-defect", "test-creation", "security-review", "context-packaging"]}},
+    "enabled": {"type": "boolean"},
+    "verification": {"enum": ["verified", "partially-verified", "unverified"]},
+    "review_notes": {"type": "string"}
+  }
+}

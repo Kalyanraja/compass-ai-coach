@@ -138,7 +138,7 @@ PRACTICES = {
         "title": "Route each task to the right tool",
         "workflow": "pr_readiness",
         "type": "agent",
-        "summary": "Use Copilot for in-editor changes, Claude Code for multi-file reasoning, Devin for long well-specified async work, a writing assistant for documents and email, and plain tooling (formatter, codemod) for deterministic work.",
+        "summary": "Use Copilot for in-editor changes, Claude Code for multi-file reasoning, Devin for long well-specified async work, Copilot or Claude in a separate Ask-mode chat for documents and email, and plain tooling (formatter, codemod) for deterministic work.",
         "signals": ["noncode_tasks_in_coding_agent", "large_task_chat_sessions", "devin_sessions"],
         "evidence": [
             {"claim": "Developers lose substantial time to organizational inefficiencies even when AI saves time on coding.",

@@ -93,7 +93,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 1.25rem 0; }
 .btn[aria-pressed="true"] { background: var(--sea-wash); color: var(--sea-deep); border-color: var(--sea); }
 .btn:disabled { opacity: .5; cursor: not-allowed; }
 
-.tag { display: inline-block; font-size: .78rem; font-weight: 600; padding: .12rem .5rem; border-radius: 999px; background: var(--sea-wash); color: var(--sea-deep); }
+.tag { display: inline-block; white-space: nowrap; font-size: .78rem; font-weight: 600; padding: .12rem .5rem; border-radius: 999px; background: var(--sea-wash); color: var(--sea-deep); }
 .tag.amber { background: var(--amber-wash); color: var(--amber); }
 .tag.plain { background: transparent; border: 1px solid var(--line); color: var(--muted); font-weight: 500; }
 
@@ -220,3 +220,19 @@ pre.prompt { white-space: pre-wrap; background: var(--chart); border: 1px solid 
   h1 { font-size: 1.7rem; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* workflow coach */
+.wf-grid { display: grid; grid-template-columns: 260px 1fr; gap: 1.25rem; margin-top: 1rem; align-items: start; }
+.wf-steps { position: sticky; top: 76px; }
+.wf-steplist { list-style: none; padding: 0; margin: 0; display: grid; gap: .35rem; }
+.wf-step { width: 100%; display: flex; gap: .6rem; align-items: flex-start; text-align: left; font: inherit; color: inherit; background: var(--paper);
+  border: 1px solid var(--line); border-radius: var(--radius-s); padding: .55rem .65rem; cursor: pointer; }
+.wf-step strong { display: block; font-family: var(--head); }
+.wf-step .n { display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; border: 1.5px solid var(--sea); color: var(--sea-deep); font-weight: 700; flex: none; }
+.wf-step.on { border-color: var(--sea); background: var(--sea-wash); }
+.wf-step.on .n { background: var(--sea); color: #fff; }
+.wf-step:disabled { opacity: .45; cursor: not-allowed; }
+.tool-opt.disabled { opacity: .5; }
+.linkbtn { background: none; border: 0; padding: 0; color: var(--sea); cursor: pointer; text-decoration: underline; font: inherit; }
+pre.prompt .hl { background: var(--amber-wash); display: inline-block; width: 100%; }
+@media (max-width: 860px) { .wf-grid { grid-template-columns: 1fr; } .wf-steps { position: static; } }

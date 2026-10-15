@@ -34,3 +34,22 @@ Additional tests cover prompt-coach routing, sensitive-data warnings, Jira CSV i
 
 **Manager: one interaction after sign-in**
 1. Open **Team insights**. Gaps and enablement opportunities are on the first screen. There are no links to people.
+
+## Workflow coach requirements traceability
+
+| Requirement | Implemented in | Test |
+|---|---|---|
+| Goal, facts, questions, tool, package, evidence, lesson journey | `compass/workflow/journey.py`, `web/workflow.js` | `Demos.*`, Playwright walkthrough |
+| Three complete workflows plus a shared security stage; planned extensions not presented as working | `workflows/packs/*.json`, `coach.WORKING` | `Api.test_planned_workflows_not_startable` |
+| At most 3 questions; detected / inferred / confirmed / unknown facts with file:line | `coach.next_questions`, `workspace.detect_facts` | `Questions.*`, `Provenance.*` |
+| Approved-capability catalog; policy before fit; override within policy; "no AI needed" | `catalog/capabilities.json`, `coach.recommend_tool` | `Routing.*` |
+| Work package with excerpts, unresolved questions, staged actions, acceptance criteria and an exact preview | `workflow/package.py` | `Budgets.*`, `Redaction.*` |
+| Context budgeter (Lean / Balanced / Deep), overflow instead of silent drops, bytes plus labeled estimates | `workflow/context.py` | `Budgets.test_required_context_never_dropped_and_overflow_reported` |
+| Evidence model; gitleaks / Semgrep / Spectral / JUnit / unittest adapters; missing = not checked; malformed = blocked | `workflow/evidence.py`, `workflow/runner.py` | `MissingToolsAndReports.*` |
+| Safe execution: templates, no shell, validation, minimal env, timeout, approval | `workflow/runner.py` | `Boundaries.*`, `Timeouts.*` |
+| Workspace boundaries: allowed roots, traversal, symlinks, credential files | `workflow/workspace.py` | `Boundaries.test_traversal_symlink_and_credential_files` |
+| Untrusted input stays data | `package.injection_warnings` | `UntrustedInput.*` |
+| Cache only with permission, invalidated on change | `workflow/cache.py` | `Cache.*` |
+| Blocked-network smoke test | in-process egress guard | `BlockedNetwork.*` |
+| Jira automation (read-only, host-pinned, token never stored) | `compass/jira_client.py` | `Jira.*` |
+| Local API protected from other websites | `server._check_origin` | `Api.test_cross_origin_and_non_json_refused` |

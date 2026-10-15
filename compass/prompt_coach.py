@@ -150,11 +150,11 @@ TYPE_CHECKS = {
     ],
 }
 
-TOOLS = {
+TOOLS = {  # labels shown to users
     "copilot": {"label": "GitHub Copilot (VS Code)", "mode": "Agent mode with a prompt file"},
     "claude": {"label": "Claude Code (VS Code)", "mode": "Start in plan mode"},
     "devin": {"label": "Devin (web)", "mode": "Session with an attached playbook"},
-    "writing": {"label": "Approved writing assistant", "mode": "Not a coding agent (for example Microsoft 365 Copilot where enabled)"},
+    "writing": {"label": "Microsoft 365 Copilot (if enabled)", "mode": "Optional writing assistant, only if your company provides it"},
     "no_ai": {"label": "No AI needed", "mode": "Use the formatter, linter, IDE refactoring or a codemod"},
 }
 
@@ -173,7 +173,7 @@ KIT_FOR_TYPE = {
                  "devin": "devin/playbooks/jira-ticket-to-pr.devin.md"},
     "exploration": {"copilot": ".github/prompts/explain-code.prompt.md", "claude": ".claude/skills/brainstorming/SKILL.md",
                     "devin": "devin/README.md"},
-    "docs_communication": {"writing": "tool-routing-guide.md"},
+    "docs_communication": {"copilot": "tool-routing-guide.md", "claude": "tool-routing-guide.md", "writing": "tool-routing-guide.md"},
     "trivial_deterministic": {"no_ai": "tool-routing-guide.md"},
 }
 
@@ -291,9 +291,10 @@ def route(text: str, task_type: str, complexity: str = "medium") -> dict:
         reasons = ["The change is deterministic; the project formatter, linter or IDE refactoring is faster, free and exact.",
                    "Save AI for work that needs reasoning."]
     elif task_type == "docs_communication":
-        tool = "writing"
-        reasons = ["This is writing, not code; a writing assistant handles tone, length and audience better than a coding agent.",
-                   "Keeps coding-agent sessions focused on the repository."]
+        tool, alts = "copilot", ["claude", "writing"]
+        reasons = ["Office work (documents, emails, summaries): GitHub Copilot and Claude Code in VS Code are approved for it.",
+                   "Give the audience, tone and length, and keep facts unchanged.",
+                   "Microsoft 365 Copilot is an alternative only if your company provides it."]
     elif task_type == "refactor_modernization" and broad:
         tool, alts = "devin", ["claude"]
         reasons = ["Repo-wide, repetitive and well specified: suits an asynchronous agent that works through it and opens a PR.",
@@ -377,7 +378,7 @@ def build(text: str, answers: dict | None = None, tool: str | None = None, compl
     if tool == "no_ai":
         prompt = ("No prompt needed. Run the project's formatter or linter (for example `prettier --write`, `dotnet format`, "
                   "`black .`, `mvn spotless:apply`) or use the IDE's rename/refactor. Commit the result as its own small PR.")
-    elif tool == "writing":
+    elif tool == "writing" or (tool in ("copilot", "claude") and tt == "docs_communication"):
         prompt = (f"Rewrite the following for {answers.get('audience', 'the intended audience')}. Keep it concise, plain and "
                   f"specific. Keep all facts unchanged and flag anything unclear instead of guessing.\n\nText:\n{source}\n"
                   "\nDo not include confidential data, customer data or credentials.")

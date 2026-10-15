@@ -89,3 +89,42 @@ An LLM can be added later for phrasing (`compass/llm.py`) without changing the d
 ## Technology
 
 Python 3.9+ standard library (`http.server`, `sqlite3`, `hmac`, `statistics`), vanilla JavaScript and inline SVG charts. No third-party runtime dependencies, so there is no supply-chain exposure and nothing to approve beyond Python.
+
+## Workflow coach architecture (extension)
+
+```mermaid
+flowchart TB
+  subgraph Laptop["Engineer laptop (127.0.0.1 only)"]
+    UI[Browser UI<br/>web/workflow.js]
+    subgraph Svc["compass/ (Python stdlib)"]
+      API[api_workflow.py<br/>roles, owner-scoped journeys,<br/>Host/Origin/JSON checks]
+      WS[workspace.py<br/>allowed roots, no traversal,<br/>no symlinks, no credential files]
+      CO[coach.py<br/>packs, 3 questions max,<br/>policy-first tool choice]
+      CX[context.py<br/>Lean / Balanced / Deep,<br/>decisive files kept, overflow]
+      PK[package.py<br/>work package, redaction,<br/>untrusted fencing]
+      EV[evidence.py<br/>normalized checks, readers,<br/>built-in checks, diff apply]
+      RN[runner.py<br/>templates, no shell, approval,<br/>timeout, SHA-256 pinned tools]
+      CA[cache.py<br/>opt-in, invalidated on change]
+      JR[jira_client.py<br/>read-only GET, one https host]
+    end
+    P[(Project folder<br/>read-only)]
+    S[(var/settings.json<br/>no secrets)]
+    T[(Approved scanners<br/>gitleaks / Semgrep / Spectral)]
+  end
+  JI[(Jira, optional)]
+  AI[Copilot / Claude Code / Devin]
+  UI --> API --> WS --> P
+  API --> CO & CX & PK & EV
+  EV --> RN --> T
+  RN -->|approved test run on temp copy| P
+  API --> CA
+  API --> JR --> JI
+  API --> S
+  PK -->|preview, then the user copies| AI
+  AI -->|diff, test report, scan imported by the user| EV
+```
+
+Key boundaries:
+- The project folder is read-only. Fixes are verified on temporary copies.
+- Nothing leaves the laptop unless the user copies it, or enables Jira or the optional LLM hook.
+- Packs and the capability catalog are data files, so new workflows and tools are added without code changes to the journey.

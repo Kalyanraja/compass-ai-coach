@@ -1,0 +1,8 @@
+{
+  "id": "pr-review",
+  "version": "0.1.0",
+  "status": "planned",
+  "title": "PR review",
+  "summary": "Review a pull request against readiness and security checklists. Registered as an optional extension; not implemented yet.",
+  "note": "Not available. Use the agent kit prompts for now."
+}

@@ -63,3 +63,25 @@ The installer never overwrites existing files. It skips them and lists them. See
 | Port already in use | `python -m compass --port 8780` |
 | Signed out after restart | Expected, because the signing key is regenerated. Set `COMPASS_SECRET` to keep sessions. |
 | Want a clean demo | `python -m compass --reset` |
+
+## First-run setup (8 questions)
+
+Open **Setup** in the app (it is also linked from the sign-in page on first run). Settings are saved in `var/settings.json` and never include secrets.
+
+1. Which AI tools you may use (Copilot, Claude Code, Devin, Microsoft 365 Copilot if provided).
+2. Which of them may see internal source code.
+3. Which project folders Compass may read. Whole drives and your home folder are refused.
+4. Jira: off (paste or CSV), Cloud or Data Center, base URL, and the environment variable holding your token. See [jira.md](jira.md).
+5. Local scanners: Compass finds and approves gitleaks, Semgrep and Spectral, recording path, version and SHA-256. See [offline-and-tools.md](offline-and-tools.md).
+6. Whether Compass may offer to run your project's tests. You still approve each run.
+7. Default work-package size: Lean, Balanced or Deep.
+8. Whether to allow the local cache (off by default).
+
+## Automated start
+
+| Command | Effect |
+|---|---|
+| `Start-Coach.bat` | Start and open the browser |
+| `Start-Coach.bat C:\code\my-repo` or drag a folder onto the .bat | Open the Workflow coach on that project. The folder is added to your allowed folders |
+| `Start-Coach.bat C:\code\my-repo ABC-123` | Also fetch Jira issue ABC-123 (if Jira is set up) |
+| `python -m compass doctor` | Check Python, settings, scanners and Jira without changing anything |

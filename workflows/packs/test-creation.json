@@ -1,0 +1,132 @@
+{
+  "id": "test-creation",
+  "version": "1.0.0",
+  "status": "working",
+  "title": "Create meaningful tests",
+  "summary": "Derive tests from acceptance criteria, then prove they catch a real defect, not just pass.",
+  "detect_keywords": [
+    "test",
+    "tests",
+    "coverage",
+    "playwright",
+    "junit",
+    "pytest",
+    "unittest",
+    "regression suite",
+    "automation"
+  ],
+  "supported_stacks": [
+    "python",
+    "java-maven",
+    "java-gradle",
+    "node",
+    "dotnet"
+  ],
+  "required_facts": [
+    "stack",
+    "build_file",
+    "test_framework",
+    "test_command",
+    "agent_instructions"
+  ],
+  "questions": [
+    {
+      "id": "behaviour",
+      "priority": 1,
+      "text": "Which behavior must the tests prove? Paste or point to the acceptance criteria.",
+      "why": "Tests derived from acceptance criteria catch real defects; tests derived from code only mirror it.",
+      "ask_if": {
+        "text_lacks": "acceptance|given|then|should|must"
+      },
+      "fills": "behaviour"
+    },
+    {
+      "id": "negative",
+      "priority": 1,
+      "text": "Which failure and edge cases matter (invalid input, wrong password, empty, unauthorized)?",
+      "why": "Happy-path-only suites are the most common weakness of generated tests.",
+      "ask_if": {
+        "text_lacks": "invalid|wrong|negative|edge|empty|unauthori|reject"
+      },
+      "fills": "negative_cases"
+    },
+    {
+      "id": "data",
+      "priority": 2,
+      "text": "What test data or fixtures should be used? (No production data or real credentials.)",
+      "why": "Isolated fixtures prevent flaky, order-dependent tests.",
+      "ask_if": {
+        "text_lacks": "fixture|test data|mock|stub|factory"
+      },
+      "fills": "test_data"
+    },
+    {
+      "id": "test_command",
+      "priority": 3,
+      "text": "How do you run the tests for this project?",
+      "why": "Tests that never ran prove nothing.",
+      "ask_if": {
+        "fact_not_confirmed": "test_command"
+      },
+      "fills": "test_command"
+    }
+  ],
+  "decisive_context": [
+    "existing_tests",
+    "suspect_source"
+  ],
+  "context_keywords": [
+    "test",
+    "assert"
+  ],
+  "staged_actions": [
+    {
+      "stage": "Design",
+      "instruction": "List test cases (happy, negative, boundary) mapped to each acceptance criterion. Wait for approval before writing code."
+    },
+    {
+      "stage": "Write",
+      "instruction": "Write the tests in the project's existing framework and style. Assert observable behavior, not implementation details. No fixed sleeps, no real credentials."
+    },
+    {
+      "stage": "Verify",
+      "instruction": "Run {test_command} and paste the results. Then show that at least one test fails when the behavior is broken (for example against the known defect)."
+    }
+  ],
+  "acceptance": [
+    {
+      "id": "AC-TST-1",
+      "text": "Tests ran and the results were captured.",
+      "check": "tests.ran"
+    },
+    {
+      "id": "AC-TST-2",
+      "text": "At least one test fails when the behavior is broken (detects the known defect).",
+      "check": "tests.detects_defect"
+    },
+    {
+      "id": "AC-TST-3",
+      "text": "No test passes only because it checks existence or type instead of behavior.",
+      "check": "tests.weak_suite_flagged"
+    },
+    {
+      "id": "AC-SEC-1",
+      "text": "No secrets or credentials in test files or fixtures.",
+      "check": "security.secrets"
+    }
+  ],
+  "checks": [
+    "tests",
+    "security.secrets",
+    "security.patterns"
+  ],
+  "evidence_requirements": [
+    "Test run output or JUnit XML report"
+  ],
+  "teaching_tip": "A test that passes on broken code proves nothing. Check that your tests fail when the behavior is wrong.",
+  "exercise": {
+    "prompt": "The smoke tests pass. Does that mean login works?",
+    "answer_hint": "No. They pass even with the wrong-password defect, so they don't test the behavior."
+  },
+  "security_stage": "security-review"
+}

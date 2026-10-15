@@ -1,0 +1,37 @@
+# Local Semgrep rules for the Compass synthetic fixtures.
+# Written for Compass. Not copied from the Semgrep Registry.
+rules:
+  - id: compass-python-eval-use
+    languages: [python]
+    severity: ERROR
+    message: >-
+      eval() executes arbitrary code. Do not pass untrusted input to eval();
+      parse the value explicitly (for example ast.literal_eval or int()).
+    pattern: eval(...)
+    metadata:
+      category: security
+      cwe: "CWE-95: Improper Neutralization of Directives in Dynamically Evaluated Code"
+      source: compass-synthetic-training
+  - id: compass-python-subprocess-shell-true
+    languages: [python]
+    severity: ERROR
+    message: >-
+      subprocess called with shell=True. Pass an argument list and leave
+      shell at its default (False) to avoid shell injection.
+    pattern-either:
+      - pattern: subprocess.run(..., shell=True, ...)
+      - pattern: subprocess.call(..., shell=True, ...)
+      - pattern: subprocess.Popen(..., shell=True, ...)
+      - pattern: subprocess.check_output(..., shell=True, ...)
+    metadata:
+      category: security
+      cwe: "CWE-78: Improper Neutralization of Special Elements used in an OS Command"
+      source: compass-synthetic-training
+  - id: compass-python-shell-string-concat
+    languages: [python]
+    severity: WARNING
+    message: Shell command built by string concatenation with a variable.
+    pattern: subprocess.$FUNC("..." + $X, ..., shell=True, ...)
+    metadata:
+      category: security
+      source: compass-synthetic-training

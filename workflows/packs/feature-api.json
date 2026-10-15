@@ -1,0 +1,182 @@
+{
+  "id": "feature-api",
+  "version": "1.0.0",
+  "status": "working",
+  "title": "Build or change a feature / API",
+  "summary": "Turn a story into an implementation-ready API task, then verify the result against the project's own standard.",
+  "detect_keywords": [
+    "endpoint",
+    "api",
+    "rest",
+    "implement",
+    "add field",
+    "feature",
+    "story",
+    "as a ",
+    "controller",
+    "request",
+    "service"
+  ],
+  "supported_stacks": [
+    "java-maven",
+    "java-gradle",
+    "python",
+    "node",
+    "dotnet"
+  ],
+  "required_facts": [
+    "stack",
+    "build_file",
+    "test_framework",
+    "test_command",
+    "api_spec",
+    "api_standard",
+    "auth_scheme",
+    "agent_instructions"
+  ],
+  "questions": [
+    {
+      "id": "auth",
+      "priority": 1,
+      "text": "Who may call this operation (roles or scopes)?",
+      "why": "Authorization rules are rarely guessable and costly to retrofit.",
+      "ask_if": {
+        "text_lacks": "auth|role|permission|scope|token|bearer"
+      },
+      "fills": "auth_rule"
+    },
+    {
+      "id": "errors",
+      "priority": 1,
+      "text": "Which error responses must it return (for example 400 for invalid input, 404 when not found)?",
+      "why": "Error paths are where most API review comments land.",
+      "ask_if": {
+        "text_lacks": "\\b4\\d\\d\\b|error|invalid|reject"
+      },
+      "fills": "error_rules"
+    },
+    {
+      "id": "io",
+      "priority": 2,
+      "text": "Which request fields are required, which are optional, and what does the response contain?",
+      "why": "Without a contract the agent invents one.",
+      "ask_if": {
+        "text_lacks": "request|response|field|payload|body|returns"
+      },
+      "fills": "io_contract"
+    },
+    {
+      "id": "header",
+      "priority": 2,
+      "text": "Your API standard requires the X-Correlation-Id header on every operation. Should this operation follow it?",
+      "why": "Detected from your standard; confirming avoids a rejected PR.",
+      "ask_if": {
+        "all": [
+          {
+            "fact_present": "standard_header_rule"
+          },
+          {
+            "text_lacks": "correlation"
+          }
+        ]
+      },
+      "fills": "header_rule"
+    },
+    {
+      "id": "scope",
+      "priority": 3,
+      "text": "Which module or files are in scope, and what must not change?",
+      "why": "Naming the area keeps the change small and reviewable.",
+      "ask_if": {
+        "text_lacks": "\\.(java|py|ts|cs|yaml|yml)\\b|module|controller|service|class"
+      },
+      "fills": "scope"
+    },
+    {
+      "id": "test_command",
+      "priority": 3,
+      "text": "How do you run the tests for this project?",
+      "why": "The agent must show test evidence; it needs the exact command.",
+      "ask_if": {
+        "fact_not_confirmed": "test_command"
+      },
+      "fills": "test_command"
+    }
+  ],
+  "decisive_context": [
+    "api_spec",
+    "api_standard"
+  ],
+  "context_keywords": [
+    "controller",
+    "openapi",
+    "route",
+    "endpoint",
+    "service"
+  ],
+  "staged_actions": [
+    {
+      "stage": "Inspect",
+      "instruction": "Read the API spec, the API standard and the controller/service named below. List the gaps between the requested change and the standard. Do not edit files yet; reply with the gap list and a short plan."
+    },
+    {
+      "stage": "Implement",
+      "instruction": "Make the smallest change that satisfies the acceptance criteria. Update the API spec first, then the code, then the tests. Keep the change under about 400 changed lines."
+    },
+    {
+      "stage": "Verify",
+      "instruction": "Run {test_command} and paste the summary. Confirm each acceptance criterion with evidence (test name or spec line). Say 'not checked' for anything you could not verify."
+    }
+  ],
+  "acceptance": [
+    {
+      "id": "AC-API-1",
+      "text": "Every new or changed operation declares the X-Correlation-Id request header.",
+      "check": "openapi.header",
+      "when": {
+        "fact_present": "standard_header_rule"
+      },
+      "standard_ref": "standard_header_rule"
+    },
+    {
+      "id": "AC-API-2",
+      "text": "Every POST/PUT documents a 400 response with an error schema.",
+      "check": "openapi.error400",
+      "standard_ref": "standard_error_rule"
+    },
+    {
+      "id": "AC-API-3",
+      "text": "Operations require the documented authentication scheme.",
+      "check": "openapi.security",
+      "standard_ref": "standard_auth_rule"
+    },
+    {
+      "id": "AC-API-4",
+      "text": "Tests cover the happy path and each documented error response, and they ran.",
+      "check": "tests.ran_and_passed"
+    },
+    {
+      "id": "AC-SEC-1",
+      "text": "No secrets or credentials in the changed or exported files.",
+      "check": "security.secrets"
+    }
+  ],
+  "checks": [
+    "openapi.lite",
+    "spectral",
+    "tests",
+    "security.secrets",
+    "security.patterns"
+  ],
+  "evidence_requirements": [
+    "Updated API spec (or diff)",
+    "Test report (JUnit XML or test output)",
+    "Secret scan of changed files"
+  ],
+  "teaching_tip": "For API changes, write down required inputs, who may call it and the error responses before asking for code. Agents fill missing requirements with guesses, and those guesses are what fail review.",
+  "exercise": {
+    "prompt": "Before revealing the coach's questions: which requirement is missing from this story?",
+    "answer_hint": "Look at the standard: headers, error responses and authentication."
+  },
+  "security_stage": "security-review"
+}

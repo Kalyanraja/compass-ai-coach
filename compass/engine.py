@@ -39,7 +39,7 @@ TOOL_LABEL = {
     "copilot": "GitHub Copilot (VS Code)",
     "claude": "Claude Code (VS Code)",
     "devin": "Devin (web)",
-    "writing": "Your approved writing assistant (not a coding agent)",
+    "writing": "Copilot or Claude Code in Ask mode (office work)",
 }
 
 
@@ -130,6 +130,74 @@ def _tool_for(rule_id: str, profile: dict) -> str:
     c = profile.get("project_complexity", "medium")
     if rule_id == "R-WRONG-TOOL-TEXT":
         return "writing"
+    if rule_id == "R-WRONG-TOOL-LARGE":
+        return "devin"
+    if rule_id in ("R-LONG-SESSIONS", "R-PR-SIZE") and c == "high":
+        return "claude"
+    if rule_id == "R-NO-CONTEXT":
+        return "copilot"
+    return "copilot"
+
+
+def _action(rule_id: str, m: dict, profile: dict) -> str:
+    stack = STACK_CONTEXT.get(profile.get("stack"), STACK_CONTEXT["python"])
+    sen = profile.get("seniority", "mid")
+    lead = sen in ("senior", "lead")
+    junior = sen == "junior"
+    c = profile.get("project_complexity", "medium")
+
+    if rule_id == "R-PR-SIZE":
+        tool = "Claude Code (start in plan mode, skill: pr-slicing)" if c == "high" else "Copilot Chat (/slice-pr)"
+        a = (f"On your next ticket, ask {tool} to propose 2-3 slices of under 400 lines before writing code; "
+             f"for {profile.get('stack_label', 'your stack')} work, {stack['slice_hint']}.")
+        if sen == "lead":
+            a += " As a lead, consider adding a PR-size note to the team's AGENTS.md so every agent proposes slices."
+        elif sen == "senior":
+            a += " Pair it with a short PR-size note in the repo's AGENTS.md so agents propose slices by default."
+        if junior:
+            a += " Share the proposed slices with your reviewer before you start, so the split is agreed early."
+        return a
+    if rule_id == "R-REVIEW-ROUNDS":
+        return (f"Before requesting review, run /pr-readiness in Copilot Chat (or the pr-readiness-selfcheck skill in Claude Code). "
+                f"It checks tests, description, risks and debug leftovers and runs `{stack['test_cmd']}` so reviewers see evidence up front.")
+    if rule_id == "R-CI-FIRST-PASS":
+        a = (f"Add one line to your agent requests: 'Run `{stack['test_cmd']}` and lint, paste the summary, and do not say done without it.' "
+             "The verification-before-completion skill does this automatically in Claude Code and Copilot.")
+        if junior:
+            a += " Start with one PR this week and compare the CI result."
+        return a
+    if rule_id == "R-FEW-TESTS":
+        a = (f"Paste the story's acceptance criteria into Copilot Chat with /test-plan, review the happy, negative and boundary cases, "
+             f"then use /write-tests to generate {stack['test_fw']} tests before or alongside the implementation.")
+        if profile.get("stack") == "playwright":
+            a = ("Use /test-plan with the story's acceptance criteria to list user journeys and negative paths first, then "
+                 "/write-tests to generate Playwright Test specs with web-first assertions.")
+        return a
+    if rule_id == "R-SLOW-TESTS":
+        return (f"Let the agent draft the first version: give Copilot agent mode the acceptance criteria plus one existing "
+                f"{stack['test_fw']} test as a style example (/write-tests), then spend your time reviewing assertions instead of typing boilerplate.")
+    if rule_id == "R-LONG-SESSIONS":
+        if c == "high":
+            a = ("Start complex sessions in Claude Code plan mode with the writing-plans skill: get a numbered plan (files, steps, tests, risks), "
+                 "approve it, then run one step per session. Restart a session instead of steering past 10 turns.")
+        else:
+            a = ("Open sessions with /jira-to-plan in Copilot Chat to get a short plan first, approve it, then implement step by step. "
+                 "Restart with a fresh brief instead of steering past 10 turns.")
+        if junior:
+            a += " Ask a teammate to sanity-check the first plan."
+        return a
+    if rule_id == "R-NO-CONTEXT":
+        a = ("Run /create-agents-md in Copilot Chat once to draft an AGENTS.md (build and test commands, conventions, guardrails), "
+             "edit it by hand to keep it short, and commit it. Copilot, Claude Code and Devin all read it.")
+        if sen == "lead":
+            a += " As a lead, this is a 30-minute task that helps everyone on the repo."
+        elif sen == "senior":
+            a += " It takes about 30 minutes and every teammate's agent sessions benefit."
+        return a
+    if rule_id == "R-WRONG-TOOL-TEXT":
+        return ("Keep office work (status updates, emails, document rewrites) in a separate Copilot Chat or Claude Code conversation "
+                "in Ask mode with a short brief (audience, tone, length) instead of mixing it into agent-mode coding sessions, "
+                "so code context stays clean. Use the right-tool-for-task skill when unsure.")
     if rule_id == "R-WRONG-TOOL-LARGE":
         return "devin"
     if rule_id in ("R-LONG-SESSIONS", "R-PR-SIZE") and c == "high":

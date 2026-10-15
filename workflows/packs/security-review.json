@@ -1,0 +1,70 @@
+{
+  "id": "security-review",
+  "version": "1.0.0",
+  "status": "working",
+  "kind": "shared-stage",
+  "title": "Security review (shared stage)",
+  "summary": "Static checks that run in every workflow before export and on returned evidence. Never executes project code.",
+  "checks": [
+    "security.secrets",
+    "security.patterns"
+  ],
+  "asvs_references": [
+    {
+      "ref": "ASVS v5.0.0 V6 Authentication",
+      "applies_to": [
+        "uat-defect",
+        "test-creation"
+      ]
+    },
+    {
+      "ref": "ASVS v5.0.0 V8 Authorization",
+      "applies_to": [
+        "feature-api"
+      ]
+    },
+    {
+      "ref": "ASVS v5.0.0 V4 API and Web Service",
+      "applies_to": [
+        "feature-api"
+      ]
+    },
+    {
+      "ref": "ASVS v5.0.0 V2 Validation and Business Logic",
+      "applies_to": [
+        "feature-api",
+        "uat-defect"
+      ]
+    },
+    {
+      "ref": "ASVS v5.0.0 V1 Encoding and Sanitization",
+      "applies_to": [
+        "feature-api",
+        "uat-defect"
+      ]
+    },
+    {
+      "ref": "ASVS v5.0.0 V13 Configuration",
+      "applies_to": [
+        "feature-api",
+        "uat-defect",
+        "test-creation"
+      ]
+    },
+    {
+      "ref": "ASVS v5.0.0 V16 Security Logging and Error Handling",
+      "applies_to": [
+        "feature-api",
+        "uat-defect"
+      ]
+    }
+  ],
+  "claim_states": [
+    "candidate",
+    "needs-validation",
+    "confirmed",
+    "rejected"
+  ],
+  "rules": "Pattern matches are candidates, never proven vulnerabilities. Clean results are not a security or compliance certification.",
+  "teaching_tip": "Scanners find patterns, people confirm risk. Treat every finding as a candidate until someone traces it to real impact."
+}

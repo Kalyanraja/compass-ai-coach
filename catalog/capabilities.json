@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "note": "Editable approved-capability catalog. Approval and data rules are applied first, then capabilities and task fit. Workspace files can never change this file; only the Settings page or an administrator can. Values here are defaults; var/settings.json overrides approval per user.",
+  "data_classes": {
+    "synthetic": "Synthetic or public data only",
+    "internal": "Internal source code and documents, no customer or personal data",
+    "restricted": "Contains customer, personal or secret data"
+  },
+  "tools": [
+    {
+      "id": "copilot",
+      "label": "GitHub Copilot (VS Code)",
+      "approved": true,
+      "allowed_data": ["synthetic", "internal"],
+      "handoff": "Paste the work package into Copilot Chat (Agent mode) or save it as a .prompt.md file. No MCP required.",
+      "capabilities": ["in-editor-edit", "agent-mode", "run-local-tests", "explain-code", "office-docs", "small-scoped-change", "test-writing"],
+      "limits": ["Works on files open in your workspace", "No MCP servers configured"],
+      "notes": "Approved for code and office work (documents, emails, summaries) in VS Code."
+    },
+    {
+      "id": "claude",
+      "label": "Claude Code (VS Code)",
+      "approved": true,
+      "allowed_data": ["synthetic", "internal"],
+      "handoff": "Paste the work package into Claude Code; start in plan mode. No MCP required.",
+      "capabilities": ["multi-file-reasoning", "plan-mode", "run-local-tests", "investigation", "explain-code", "office-docs", "test-writing", "refactor"],
+      "limits": ["No MCP servers or extra skills unless you install the agent kit"],
+      "notes": "Approved for code and office work in VS Code."
+    },
+    {
+      "id": "devin",
+      "label": "Devin (web)",
+      "approved": true,
+      "allowed_data": ["synthetic", "internal"],
+      "handoff": "Paste the work package into a new Devin session and attach the matching playbook. Requires the repository to be connected in Devin already.",
+      "capabilities": ["async-long-task", "repo-wide-change", "dependency-upgrade", "migration", "opens-pr", "multi-file-reasoning"],
+      "limits": ["Web only, no MCP", "Repository must already be connected in Devin"],
+      "notes": "Best for long, well-specified, repo-wide work you review as a PR."
+    },
+    {
+      "id": "writing",
+      "label": "Microsoft 365 Copilot (if enabled)",
+      "approved": false,
+      "allowed_data": ["synthetic", "internal"],
+      "handoff": "Paste the text into your approved writing assistant.",
+      "capabilities": ["office-docs"],
+      "limits": ["Enable only if your organization provides it"],
+      "notes": "Optional. Copilot and Claude Code are also approved for office work."
+    },
+    {
+      "id": "no_ai",
+      "label": "No AI needed: formatter, linter or test runner",
+      "approved": true,
+      "allowed_data": ["synthetic", "internal", "restricted"],
+      "handoff": "Run the project's own formatter, linter or test command.",
+      "capabilities": ["deterministic-chore", "run-local-tests"],
+      "limits": [],
+      "notes": "Deterministic work is faster, free and exact without AI."
+    }
+  ],
+  "workflow_fit": {
+    "feature-api": {"needs": ["small-scoped-change", "multi-file-reasoning", "run-local-tests"], "prefer_by_complexity": {"low": "copilot", "medium": "copilot", "high": "claude"}, "large_scope": "devin"},
+    "uat-defect": {"needs": ["investigation", "multi-file-reasoning", "run-local-tests"], "prefer_by_complexity": {"low": "copilot", "medium": "claude", "high": "claude"}},
+    "test-creation": {"needs": ["test-writing", "run-local-tests"], "prefer_by_complexity": {"low": "copilot", "medium": "copilot", "high": "claude"}, "large_scope": "devin"}
+  }
+}
