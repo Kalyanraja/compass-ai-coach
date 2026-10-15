@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compass Coach</title>
+<meta name="description" content="Private AI workflow coaching for engineers, aggregated insights for leaders.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%231F6F78'/%3E%3Cpath d='M16 5l4 11-4 11-4-11z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <a class="brand" href="#/" aria-label="Compass home">
+    <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 6l3.5 10L16 26l-3.5-10z" fill="currentColor"/></svg>
+    <span>Compass</span>
+  </a>
+  <nav id="nav" aria-label="Main"></nav>
+  <div id="who" class="who"></div>
+</header>
+<main id="main" tabindex="-1"></main>
+<div id="modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-box">
+    <div class="modal-head"><h2 id="modal-title"></h2><button class="btn ghost" data-close>Close</button></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="/charts.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

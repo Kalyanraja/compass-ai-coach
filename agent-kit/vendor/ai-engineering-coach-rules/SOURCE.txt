@@ -1,0 +1,1 @@
+Source: https://github.com/microsoft/AI-Engineering-Coach commit 8c78e96316a81496884dc937a4214cb6f52c4bff (Wed Oct 7 18:13:23 2026 +0200); files from src/core/rules/

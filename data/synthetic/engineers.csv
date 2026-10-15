@@ -1,0 +1,38 @@
+engineer_id,codename,team_id,seniority,role,stack,stack_label,project_complexity,primary_workflows,patterns
+E-ATL-01,Falcon,T-ATLAS,senior,Senior Software Engineer,java,Java / Spring Boot,high,"pr_readiness,test_creation",large_prs|no_context
+E-ATL-02,Otter,T-ATLAS,mid,Software Engineer,java,Java / Spring Boot,high,"pr_readiness,test_creation",large_prs
+E-ATL-03,Juniper,T-ATLAS,mid,Software Engineer,java,Java / Spring Boot,high,"pr_readiness,test_creation",large_prs|low_ci_pass
+E-ATL-04,Comet,T-ATLAS,junior,Associate Software Engineer,java,Java / Spring Boot,high,"pr_readiness,test_creation",large_prs|low_adoption
+E-ATL-05,Harbor,T-ATLAS,lead,Lead Engineer,java,Java / Spring Boot,high,"pr_readiness,test_creation",adopter_pr
+E-ATL-06,Maple,T-ATLAS,mid,Software Engineer,java,Java / Spring Boot,high,"pr_readiness,test_creation",large_prs|wrong_tool
+E-ATL-07,Quartz,T-ATLAS,senior,Senior Software Engineer,java,Java / Spring Boot,high,"pr_readiness,test_creation",large_prs
+E-ATL-08,Nimbus,T-ATLAS,mid,Software Engineer,java,Java / Spring Boot,high,"pr_readiness,test_creation",healthy
+E-ATL-09,Cedar,T-ATLAS,junior,Associate Software Engineer,java,Java / Spring Boot,high,"pr_readiness,test_creation",few_tests
+E-ATL-10,Pixel,T-ATLAS,sdet,Software Development Engineer in Test,playwright,Playwright (TypeScript) test automation,high,test_creation,flaky_ai_tests
+E-BOR-01,Atlas-7,T-BOREALIS,mid,Software Engineer,dotnet,.NET / C#,medium,"pr_readiness,test_creation",few_tests
+E-BOR-02,Lynx,T-BOREALIS,senior,Senior Software Engineer,dotnet,.NET / C#,medium,"pr_readiness,test_creation",few_tests|large_prs
+E-BOR-03,Sparrow,T-BOREALIS,junior,Associate Software Engineer,dotnet,.NET / C#,medium,"pr_readiness,test_creation",few_tests|long_sessions
+E-BOR-04,Topaz,T-BOREALIS,mid,Software Engineer,dotnet,.NET / C#,medium,"pr_readiness,test_creation",few_tests
+E-BOR-05,Willow,T-BOREALIS,lead,Lead Engineer,dotnet,.NET / C#,medium,"pr_readiness,test_creation",adopter_tests
+E-BOR-06,Orbit,T-BOREALIS,mid,Software Engineer,dotnet,.NET / C#,medium,"pr_readiness,test_creation",few_tests|wrong_tool
+E-BOR-07,Basil,T-BOREALIS,senior,Senior Software Engineer,dotnet,.NET / C#,medium,"pr_readiness,test_creation",healthy
+E-BOR-08,Echo-3,T-BOREALIS,sdet,Software Development Engineer in Test,playwright,Playwright (TypeScript) test automation,medium,test_creation,flaky_ai_tests
+E-BOR-09,Kestrel,T-BOREALIS,junior,Associate Software Engineer,dotnet,.NET / C#,medium,"pr_readiness,test_creation",low_ci_pass
+E-CIR-01,Saffron,T-CIRRUS,sdet,Software Development Engineer in Test,playwright,Playwright (TypeScript) test automation,medium,test_creation,flaky_ai_tests
+E-CIR-02,Tundra,T-CIRRUS,sdet,Software Development Engineer in Test,playwright,Playwright (TypeScript) test automation,medium,test_creation,flaky_ai_tests|few_tests
+E-CIR-03,Indigo,T-CIRRUS,mid,Software Engineer,typescript,TypeScript / React,medium,"pr_readiness,test_creation",flaky_ai_tests
+E-CIR-04,Marlin,T-CIRRUS,senior,Senior Software Engineer,typescript,TypeScript / React,medium,"pr_readiness,test_creation",flaky_ai_tests|no_context
+E-CIR-05,Sage,T-CIRRUS,mid,Software Engineer,typescript,TypeScript / React,medium,"pr_readiness,test_creation",flaky_ai_tests|low_ci_pass
+E-CIR-06,Vector,T-CIRRUS,junior,Associate Software Engineer,typescript,TypeScript / React,medium,"pr_readiness,test_creation",long_sessions
+E-CIR-07,Aspen,T-CIRRUS,lead,Lead Engineer,typescript,TypeScript / React,medium,"pr_readiness,test_creation",healthy
+E-CIR-08,Cobalt,T-CIRRUS,mid,Software Engineer,typescript,TypeScript / React,medium,"pr_readiness,test_creation",wrong_tool
+E-ECH-01,Fable,T-ECHO,senior,Senior Software Engineer,python,Python,high,"pr_readiness,test_creation",long_sessions|no_context
+E-ECH-02,Zephyr,T-ECHO,mid,Software Engineer,python,Python,high,"pr_readiness,test_creation",long_sessions|no_context
+E-ECH-03,Granite,T-ECHO,mid,Software Engineer,python,Python,high,"pr_readiness,test_creation",long_sessions|no_context
+E-ECH-04,Heron,T-ECHO,junior,Associate Software Engineer,python,Python,high,"pr_readiness,test_creation",long_sessions|no_context|few_tests
+E-ECH-05,Onyx,T-ECHO,lead,Lead Engineer,python,Python,high,"pr_readiness,test_creation",long_sessions|no_context|modernization_in_chat
+E-ECH-06,Raven,T-ECHO,mid,Software Engineer,python,Python,high,"pr_readiness,test_creation",low_ci_pass
+E-ECH-07,Ember,T-ECHO,senior,Senior Software Engineer,python,Python,high,"pr_readiness,test_creation",modernization_in_chat
+E-DEL-01,Delta-9,T-DELTA,mid,Software Engineer,python,Python,low,"pr_readiness,test_creation",large_prs
+E-DEL-02,Lumen,T-DELTA,senior,Senior Software Engineer,python,Python,low,"pr_readiness,test_creation",wrong_tool
+E-DEL-03,Pebble,T-DELTA,junior,Associate Software Engineer,python,Python,low,"pr_readiness,test_creation",low_adoption

@@ -1,0 +1,11 @@
+Issue key,Issue Type,Summary,Description,Acceptance Criteria
+DEMO-101,Story,Build REST API to create a service request,"As a portal user I want to submit a service request so that the operations team can process it.","Given a valid request when POST /requests is called then return 201 with the request id
+Given a missing title when POST /requests is called then return 400 with a validation message"
+DEMO-102,Bug,Order summary API fails in UAT,"The order summary endpoint returns 500 in UAT for some customers. Works in dev.",
+DEMO-103,Story,Create Playwright tests for the login page,"We need automated tests for login before the release.",
+DEMO-104,Task,Upgrade all services to Java 21,"Upgrade the build and runtime of every service in the repo from Java 17 to Java 21 and fix deprecations across all services.","All services build and pass tests on Java 21; no behavior change; one service per PR"
+DEMO-105,Task,Write status update email for leadership,"Summarize this sprint's progress on the onboarding feature for leadership in a short email.",
+DEMO-106,Task,Fix formatting in the utils package,"Run formatting and fix lint warnings in the utils package.",
+DEMO-107,Story,Add pagination to the vendor search endpoint,"Add page and size query parameters to GET /vendors/search in VendorSearchController. Do not break existing clients: default page=0 size=20.","Given page and size when searching then results are paged
+Given size above 100 then return 400"
+DEMO-108,Bug,Nightly ETL job duplicates rows,"The nightly load into the claims_summary table inserts duplicate rows after the last release. Expected one row per claim id.","No duplicates after rerun; add a regression test"

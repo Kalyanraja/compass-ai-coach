@@ -1,0 +1,1440 @@
+{
+  "generated_at": "2026-10-15T14:39:18+00:00",
+  "summary": {
+    "total": 25,
+    "passed": 25,
+    "pass_rate": 1.0,
+    "target": 0.8,
+    "meets_target": true
+  },
+  "by_workflow": {
+    "pr_readiness": {
+      "total": 17,
+      "passed": 17,
+      "pass_rate": 1.0
+    },
+    "test_creation": {
+      "total": 8,
+      "passed": 8,
+      "pass_rate": 1.0
+    }
+  },
+  "scenarios": [
+    {
+      "id": "S01",
+      "title": "Large PRs, senior Java, high complexity",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-PR-SIZE"
+      ],
+      "fired": [
+        "R-PR-SIZE"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Slice work into small, single-concern PRs",
+        "observation": "Over the last 4 weeks: Median PR size: 720 lines; Review rounds per PR: 3.4 rounds; PR cycle time: 72 hours. Practice guideline: under 400 changed lines, 1-2 review rounds.",
+        "suggested_action": "On your next ticket, ask Claude Code (start in plan mode, skill: pr-slicing) to propose 2-3 slices of under 400 lines before writing code; for Java / Spring Boot work, keep API contract (OpenAPI / DTO) changes in a separate PR from service logic. Pair it with a short PR-size note in the repo's AGENTS.md so agents propose slices by default."
+      }
+    },
+    {
+      "id": "S02",
+      "title": "Large PRs, junior .NET",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-PR-SIZE"
+      ],
+      "fired": [
+        "R-PR-SIZE"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Slice work into small, single-concern PRs",
+        "observation": "Over the last 4 weeks: Median PR size: 560 lines; Review rounds per PR: 3.0 rounds; PR cycle time: 60 hours. Practice guideline: under 400 changed lines, 1-2 review rounds.",
+        "suggested_action": "On your next ticket, ask Copilot Chat (/slice-pr) to propose 2-3 slices of under 400 lines before writing code; for .NET / C# work, ship EF Core migrations separately from feature logic. Share the proposed slices with your reviewer before you start, so the split is agreed early."
+      }
+    },
+    {
+      "id": "S03",
+      "title": "Many review rounds on small PRs, mid TypeScript",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-REVIEW-ROUNDS"
+      ],
+      "fired": [
+        "R-REVIEW-ROUNDS"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Run an AI readiness self-check before requesting review",
+        "observation": "Over the last 4 weeks: Review rounds per PR: 3.1 rounds; PR template used: 20%; CI first-pass rate: 86%. Practice guideline: most reviews should close in 1-2 rounds.",
+        "suggested_action": "Before requesting review, run /pr-readiness in Copilot Chat (or the pr-readiness-selfcheck skill in Claude Code). It checks tests, description, risks and debug leftovers and runs `npm test` so reviewers see evidence up front."
+      }
+    },
+    {
+      "id": "S04",
+      "title": "CI failures with heavy agent use, mid Python",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-CI-FIRST-PASS"
+      ],
+      "fired": [
+        "R-CI-FIRST-PASS"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Make the agent show test evidence before 'done'",
+        "observation": "Over the last 4 weeks: CI first-pass rate: 55%; Agent-mode share: 62%; Review rounds per PR: 1.6 rounds. Practice guideline: 85%+ of pushes pass CI the first time.",
+        "suggested_action": "Add one line to your agent requests: 'Run `pytest -q` and lint, paste the summary, and do not say done without it.' The verification-before-completion skill does this automatically in Claude Code and Copilot."
+      }
+    },
+    {
+      "id": "S05",
+      "title": "Few tests per PR, mid Java",
+      "workflow": "test_creation",
+      "expected": [
+        "R-FEW-TESTS"
+      ],
+      "fired": [
+        "R-FEW-TESTS"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Derive tests from acceptance criteria first",
+        "observation": "Over the last 4 weeks: Tests added per PR: 0.4 tests; Time to create tests: 110 minutes; Tests written first: 5%. Practice guideline: every behavior change ships with tests (2+ per PR is typical).",
+        "suggested_action": "Paste the story's acceptance criteria into Copilot Chat with /test-plan, review the happy, negative and boundary cases, then use /write-tests to generate JUnit 5 with Mockito tests before or alongside the implementation."
+      }
+    },
+    {
+      "id": "S06",
+      "title": "Slow manual test writing, senior .NET",
+      "workflow": "test_creation",
+      "expected": [
+        "R-SLOW-TESTS"
+      ],
+      "fired": [
+        "R-SLOW-TESTS"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Derive tests from acceptance criteria first",
+        "observation": "Over the last 4 weeks: Time to create tests: 150 minutes; AI-assisted test share: 10%; Tests written first: 50%. Practice guideline: draft the test plan with AI, then refine; aim for under 60 minutes per PR.",
+        "suggested_action": "Let the agent draft the first version: give Copilot agent mode the acceptance criteria plus one existing xUnit with Moq test as a style example (/write-tests), then spend your time reviewing assertions instead of typing boilerplate."
+      }
+    },
+    {
+      "id": "S07",
+      "title": "Flaky AI-generated Playwright tests, SDET",
+      "workflow": "test_creation",
+      "expected": [
+        "R-FLAKY-AI-TESTS"
+      ],
+      "fired": [
+        "R-FLAKY-AI-TESTS"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Harden AI-generated tests against flakiness",
+        "observation": "Over the last 4 weeks: Flaky test rate: 10%; AI-assisted test share: 75%; CI first-pass rate: 86%. Practice guideline: flaky rate under 2%; AI-generated tests reviewed for waits and shared state.",
+        "suggested_action": "Before merging AI-generated tests, run /fix-flaky-test or the flaky-test-hardening skill: use web-first assertions and role-based locators instead of waitForTimeout, and run the suite 3 times locally to confirm stability."
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Long agent sessions, junior Python, high complexity",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-LONG-SESSIONS"
+      ],
+      "fired": [
+        "R-LONG-SESSIONS"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Plan first, then implement in small steps",
+        "observation": "Over the last 4 weeks: Chat turns per agent session: 19 turns; Abandoned agent sessions: 42%; Sessions started with a plan: 10%. Practice guideline: well-scoped sessions usually finish in under 10 turns.",
+        "suggested_action": "Start complex sessions in Claude Code plan mode with the writing-plans skill: get a numbered plan (files, steps, tests, risks), approve it, then run one step per session. Restart a session instead of steering past 10 turns. Ask a teammate to sanity-check the first plan."
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Long agent sessions, mid TypeScript, medium complexity",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-LONG-SESSIONS"
+      ],
+      "fired": [
+        "R-LONG-SESSIONS"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Plan first, then implement in small steps",
+        "observation": "Over the last 4 weeks: Chat turns per agent session: 15 turns; Abandoned agent sessions: 20%; Sessions started with a plan: 20%. Practice guideline: well-scoped sessions usually finish in under 10 turns.",
+        "suggested_action": "Open sessions with /jira-to-plan in Copilot Chat to get a short plan first, approve it, then implement step by step. Restart with a fresh brief instead of steering past 10 turns."
+      }
+    },
+    {
+      "id": "S10",
+      "title": "No repo instructions with agent mode, lead Java",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-NO-CONTEXT"
+      ],
+      "fired": [
+        "R-NO-CONTEXT"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Give agents a short, human-written context pack",
+        "observation": "Over the last 4 weeks: Repo has agent instructions: no; Agent-mode share: 60%; Chat turns per agent session: 6.5 turns. Practice guideline: every repo used with agents has a short AGENTS.md or copilot-instructions.md.",
+        "suggested_action": "Run /create-agents-md in Copilot Chat once to draft an AGENTS.md (build and test commands, conventions, guardrails), edit it by hand to keep it short, and commit it. Copilot, Claude Code and Devin all read it. As a lead, this is a 30-minute task that helps everyone on the repo."
+      }
+    },
+    {
+      "id": "S11",
+      "title": "Coding agent used for emails, mid .NET",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-WRONG-TOOL-TEXT"
+      ],
+      "fired": [
+        "R-WRONG-TOOL-TEXT"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Route each task to the right tool",
+        "observation": "Over the last 4 weeks: Non-code tasks in coding agent: 6 per week. Practice guideline: documents, emails and summaries belong in a writing assistant.",
+        "suggested_action": "Move status updates, emails and document rewrites to your approved writing assistant (for example Microsoft 365 Copilot where enabled) and keep the coding agents for code. Use the right-tool-for-task skill when unsure."
+      }
+    },
+    {
+      "id": "S12",
+      "title": "Repo-wide migration done in chat, lead Python",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-WRONG-TOOL-LARGE"
+      ],
+      "fired": [
+        "R-WRONG-TOOL-LARGE"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Route each task to the right tool",
+        "observation": "Over the last 4 weeks: Large multi-file tasks done in chat: 5 per week; Devin sessions: 0 per week. Practice guideline: long, well-specified, repo-wide work suits an asynchronous agent with a playbook.",
+        "suggested_action": "For repo-wide, well-specified work (upgrades, migrations, repetitive fixes), hand it to Devin with the modernization-migration or dependency-upgrade playbook and review the PR, instead of driving it turn by turn in chat."
+      }
+    },
+    {
+      "id": "S13",
+      "title": "Low tool adoption, junior Java",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-LOW-ADOPTION"
+      ],
+      "fired": [
+        "R-LOW-ADOPTION"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "30-minute guided starter path",
+        "observation": "Over the last 4 weeks: Copilot sessions: 1 per week; Claude Code sessions: 0 per week. Optional: a short guided path to try the tools you already have on a real ticket.",
+        "suggested_action": "Try the 30-minute starter path on a real ticket: (1) add a context pack, (2) ask for a plan first, (3) run the readiness self-check before review. Entirely optional."
+      }
+    },
+    {
+      "id": "S14",
+      "title": "Large PRs and few tests, mid Java",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-PR-SIZE",
+        "R-FEW-TESTS"
+      ],
+      "fired": [
+        "R-PR-SIZE",
+        "R-FEW-TESTS"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Slice work into small, single-concern PRs",
+        "observation": "Over the last 4 weeks: Median PR size: 600 lines; Review rounds per PR: 3.2 rounds; PR cycle time: 26 hours. Practice guideline: under 400 changed lines, 1-2 review rounds.",
+        "suggested_action": "On your next ticket, ask Copilot Chat (/slice-pr) to propose 2-3 slices of under 400 lines before writing code; for Java / Spring Boot work, keep API contract (OpenAPI / DTO) changes in a separate PR from service logic."
+      }
+    },
+    {
+      "id": "S15",
+      "title": "Flaky tests and CI failures, mid TypeScript",
+      "workflow": "test_creation",
+      "expected": [
+        "R-FLAKY-AI-TESTS",
+        "R-CI-FIRST-PASS"
+      ],
+      "fired": [
+        "R-FLAKY-AI-TESTS",
+        "R-CI-FIRST-PASS"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Harden AI-generated tests against flakiness",
+        "observation": "Over the last 4 weeks: Flaky test rate: 8%; AI-assisted test share: 70%; CI first-pass rate: 60%. Practice guideline: flaky rate under 2%; AI-generated tests reviewed for waits and shared state.",
+        "suggested_action": "Before merging AI-generated tests, run /fix-flaky-test or the flaky-test-hardening skill: use findBy* queries instead of fixed timeouts, and run the suite 3 times locally to confirm stability."
+      }
+    },
+    {
+      "id": "S16",
+      "title": "No context and long sessions, senior Python",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-NO-CONTEXT",
+        "R-LONG-SESSIONS"
+      ],
+      "fired": [
+        "R-NO-CONTEXT",
+        "R-LONG-SESSIONS"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Give agents a short, human-written context pack",
+        "observation": "Over the last 4 weeks: Repo has agent instructions: no; Agent-mode share: 55%; Chat turns per agent session: 17 turns. Practice guideline: every repo used with agents has a short AGENTS.md or copilot-instructions.md.",
+        "suggested_action": "Run /create-agents-md in Copilot Chat once to draft an AGENTS.md (build and test commands, conventions, guardrails), edit it by hand to keep it short, and commit it. Copilot, Claude Code and Devin all read it. It takes about 30 minutes and every teammate's agent sessions benefit."
+      }
+    },
+    {
+      "id": "S17",
+      "title": "Few tests, SDET Playwright",
+      "workflow": "test_creation",
+      "expected": [
+        "R-FEW-TESTS"
+      ],
+      "fired": [
+        "R-FEW-TESTS"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Derive tests from acceptance criteria first",
+        "observation": "Over the last 4 weeks: Tests added per PR: 0.6 tests; Time to create tests: 100 minutes; Tests written first: 50%. Practice guideline: every behavior change ships with tests (2+ per PR is typical).",
+        "suggested_action": "Use /test-plan with the story's acceptance criteria to list user journeys and negative paths first, then /write-tests to generate Playwright Test specs with web-first assertions."
+      }
+    },
+    {
+      "id": "S18",
+      "title": "Healthy senior Java: no false alarms",
+      "workflow": "pr_readiness",
+      "expected": [],
+      "fired": [
+        "R-GROWTH"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Route each task to the right tool",
+        "observation": "Over the last 4 weeks: Devin sessions: 1 per week; Large multi-file tasks done in chat: 0 per week. No workflow gaps detected. Optional growth idea below.",
+        "suggested_action": "Pick one backlog chore (dependency bump, lint cleanup, test gap) and try it with Devin using a playbook from the agent kit, then compare the effort with doing it in chat."
+      }
+    },
+    {
+      "id": "S19",
+      "title": "Healthy junior TypeScript: no false alarms",
+      "workflow": "test_creation",
+      "expected": [],
+      "fired": [
+        "R-GROWTH"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Route each task to the right tool",
+        "observation": "Over the last 4 weeks: Devin sessions: 1 per week; Large multi-file tasks done in chat: 0 per week. No workflow gaps detected. Optional growth idea below.",
+        "suggested_action": "Pick one backlog chore (dependency bump, lint cleanup, test gap) and try it with Devin using a playbook from the agent kit, then compare the effort with doing it in chat."
+      }
+    },
+    {
+      "id": "S20",
+      "title": "Borderline PR size (380 lines) should not trigger",
+      "workflow": "pr_readiness",
+      "expected": [],
+      "fired": [
+        "R-GROWTH"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Route each task to the right tool",
+        "observation": "Over the last 4 weeks: Devin sessions: 1 per week; Large multi-file tasks done in chat: 0 per week. No workflow gaps detected. Optional growth idea below.",
+        "suggested_action": "Pick one backlog chore (dependency bump, lint cleanup, test gap) and try it with Devin using a playbook from the agent kit, then compare the effort with doing it in chat."
+      }
+    },
+    {
+      "id": "S21",
+      "title": "Flaky tests but not AI-generated: no AI-test flag",
+      "workflow": "test_creation",
+      "expected": [],
+      "fired": [
+        "R-GROWTH"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Route each task to the right tool",
+        "observation": "Over the last 4 weeks: Devin sessions: 1 per week; Large multi-file tasks done in chat: 0 per week. No workflow gaps detected. Optional growth idea below.",
+        "suggested_action": "Pick one backlog chore (dependency bump, lint cleanup, test gap) and try it with Devin using a playbook from the agent kit, then compare the effort with doing it in chat."
+      }
+    },
+    {
+      "id": "S22",
+      "title": "Low CI pass without agent use: not attributed to AI",
+      "workflow": "pr_readiness",
+      "expected": [],
+      "fired": [
+        "R-GROWTH"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Route each task to the right tool",
+        "observation": "Over the last 4 weeks: Devin sessions: 1 per week; Large multi-file tasks done in chat: 0 per week. No workflow gaps detected. Optional growth idea below.",
+        "suggested_action": "Pick one backlog chore (dependency bump, lint cleanup, test gap) and try it with Devin using a playbook from the agent kit, then compare the effort with doing it in chat."
+      }
+    },
+    {
+      "id": "S23",
+      "title": "Large PRs, lead TypeScript, high complexity",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-PR-SIZE"
+      ],
+      "fired": [
+        "R-PR-SIZE"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Slice work into small, single-concern PRs",
+        "observation": "Over the last 4 weeks: Median PR size: 900 lines; Review rounds per PR: 3.8 rounds; PR cycle time: 90 hours. Practice guideline: under 400 changed lines, 1-2 review rounds.",
+        "suggested_action": "On your next ticket, ask Claude Code (start in plan mode, skill: pr-slicing) to propose 2-3 slices of under 400 lines before writing code; for TypeScript / React work, separate component refactors from behavior changes. As a lead, consider adding a PR-size note to the team's AGENTS.md so every agent proposes slices."
+      }
+    },
+    {
+      "id": "S24",
+      "title": "Slow tests, junior Python",
+      "workflow": "test_creation",
+      "expected": [
+        "R-SLOW-TESTS"
+      ],
+      "fired": [
+        "R-SLOW-TESTS"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "Derive tests from acceptance criteria first",
+        "observation": "Over the last 4 weeks: Time to create tests: 130 minutes; AI-assisted test share: 15%; Tests written first: 50%. Practice guideline: draft the test plan with AI, then refine; aim for under 60 minutes per PR.",
+        "suggested_action": "Let the agent draft the first version: give Copilot agent mode the acceptance criteria plus one existing pytest test as a style example (/write-tests), then spend your time reviewing assertions instead of typing boilerplate."
+      }
+    },
+    {
+      "id": "S25",
+      "title": "Emails in coding agent and low adoption, junior",
+      "workflow": "pr_readiness",
+      "expected": [
+        "R-WRONG-TOOL-TEXT",
+        "R-LOW-ADOPTION"
+      ],
+      "fired": [
+        "R-LOW-ADOPTION",
+        "R-WRONG-TOOL-TEXT"
+      ],
+      "checks": {
+        "relevant": true,
+        "complete": true,
+        "explainable": true,
+        "actionable": true,
+        "persona_specific": true
+      },
+      "passed": true,
+      "top_recommendation": {
+        "practice_title": "30-minute guided starter path",
+        "observation": "Over the last 4 weeks: Copilot sessions: 2 per week; Claude Code sessions: 0 per week. Optional: a short guided path to try the tools you already have on a real ticket.",
+        "suggested_action": "Try the 30-minute starter path on a real ticket: (1) add a context pack, (2) ask for a plan first, (3) run the readiness self-check before review. Entirely optional."
+      }
+    }
+  ],
+  "context_awareness": {
+    "summary": {
+      "total": 5,
+      "passed": 5,
+      "pass_rate": 1.0
+    },
+    "pairs": [
+      {
+        "id": "C01",
+        "rule": "R-PR-SIZE",
+        "persona_a": {
+          "seniority": "senior",
+          "stack": "java",
+          "project_complexity": "high"
+        },
+        "persona_b": {
+          "seniority": "junior",
+          "stack": "typescript",
+          "project_complexity": "medium"
+        },
+        "action_a": "On your next ticket, ask Claude Code (start in plan mode, skill: pr-slicing) to propose 2-3 slices of under 400 lines before writing code; for Java / Spring Boot work, keep API contract (OpenAPI / DTO) changes in a separate PR from service logic. Pair it with a short PR-size note in the repo's AGENTS.md so agents propose slices by default.",
+        "action_b": "On your next ticket, ask Copilot Chat (/slice-pr) to propose 2-3 slices of under 400 lines before writing code; for TypeScript / React work, separate component refactors from behavior changes. Share the proposed slices with your reviewer before you start, so the split is agreed early.",
+        "passed": true
+      },
+      {
+        "id": "C02",
+        "rule": "R-FEW-TESTS",
+        "persona_a": {
+          "seniority": "mid",
+          "stack": "dotnet",
+          "project_complexity": "medium"
+        },
+        "persona_b": {
+          "seniority": "sdet",
+          "stack": "playwright",
+          "project_complexity": "medium"
+        },
+        "action_a": "Paste the story's acceptance criteria into Copilot Chat with /test-plan, review the happy, negative and boundary cases, then use /write-tests to generate xUnit with Moq tests before or alongside the implementation.",
+        "action_b": "Use /test-plan with the story's acceptance criteria to list user journeys and negative paths first, then /write-tests to generate Playwright Test specs with web-first assertions.",
+        "passed": true
+      },
+      {
+        "id": "C03",
+        "rule": "R-LONG-SESSIONS",
+        "persona_a": {
+          "seniority": "junior",
+          "stack": "python",
+          "project_complexity": "high"
+        },
+        "persona_b": {
+          "seniority": "mid",
+          "stack": "typescript",
+          "project_complexity": "low"
+        },
+        "action_a": "Start complex sessions in Claude Code plan mode with the writing-plans skill: get a numbered plan (files, steps, tests, risks), approve it, then run one step per session. Restart a session instead of steering past 10 turns. Ask a teammate to sanity-check the first plan.",
+        "action_b": "Open sessions with /jira-to-plan in Copilot Chat to get a short plan first, approve it, then implement step by step. Restart with a fresh brief instead of steering past 10 turns.",
+        "passed": true
+      },
+      {
+        "id": "C04",
+        "rule": "R-FLAKY-AI-TESTS",
+        "persona_a": {
+          "seniority": "sdet",
+          "stack": "playwright",
+          "project_complexity": "medium"
+        },
+        "persona_b": {
+          "seniority": "mid",
+          "stack": "java",
+          "project_complexity": "medium"
+        },
+        "action_a": "Before merging AI-generated tests, run /fix-flaky-test or the flaky-test-hardening skill: use web-first assertions and role-based locators instead of waitForTimeout, and run the suite 3 times locally to confirm stability.",
+        "action_b": "Before merging AI-generated tests, run /fix-flaky-test or the flaky-test-hardening skill: replace Thread.sleep with Awaitility and isolate test data per test, and run the suite 3 times locally to confirm stability.",
+        "passed": true
+      },
+      {
+        "id": "C05",
+        "rule": "R-NO-CONTEXT",
+        "persona_a": {
+          "seniority": "lead",
+          "stack": "java",
+          "project_complexity": "high"
+        },
+        "persona_b": {
+          "seniority": "mid",
+          "stack": "python",
+          "project_complexity": "medium"
+        },
+        "action_a": "Run /create-agents-md in Copilot Chat once to draft an AGENTS.md (build and test commands, conventions, guardrails), edit it by hand to keep it short, and commit it. Copilot, Claude Code and Devin all read it. As a lead, this is a 30-minute task that helps everyone on the repo.",
+        "action_b": "Run /create-agents-md in Copilot Chat once to draft an AGENTS.md (build and test commands, conventions, guardrails), edit it by hand to keep it short, and commit it. Copilot, Claude Code and Devin all read it.",
+        "passed": true
+      }
+    ]
+  },
+  "seeded_personas": {
+    "summary": {
+      "total": 37,
+      "passed": 37,
+      "pass_rate": 1.0
+    },
+    "personas": [
+      {
+        "persona": "seeded-01",
+        "patterns": [
+          "large_prs",
+          "no_context"
+        ],
+        "expected": [
+          "R-NO-CONTEXT",
+          "R-PR-SIZE"
+        ],
+        "fired": [
+          "R-NO-CONTEXT",
+          "R-PR-SIZE"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-02",
+        "patterns": [
+          "large_prs"
+        ],
+        "expected": [
+          "R-PR-SIZE"
+        ],
+        "fired": [
+          "R-PR-SIZE"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-03",
+        "patterns": [
+          "large_prs",
+          "low_ci_pass"
+        ],
+        "expected": [
+          "R-CI-FIRST-PASS",
+          "R-PR-SIZE"
+        ],
+        "fired": [
+          "R-CI-FIRST-PASS",
+          "R-PR-SIZE"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-04",
+        "patterns": [
+          "large_prs",
+          "low_adoption"
+        ],
+        "expected": [
+          "R-LOW-ADOPTION",
+          "R-PR-SIZE"
+        ],
+        "fired": [
+          "R-LOW-ADOPTION",
+          "R-PR-SIZE"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-05",
+        "patterns": [
+          "adopter_pr"
+        ],
+        "expected": [],
+        "fired": [
+          "R-GROWTH"
+        ],
+        "progress_detected": true,
+        "passed": true
+      },
+      {
+        "persona": "seeded-06",
+        "patterns": [
+          "large_prs",
+          "wrong_tool"
+        ],
+        "expected": [
+          "R-PR-SIZE",
+          "R-WRONG-TOOL-TEXT"
+        ],
+        "fired": [
+          "R-PR-SIZE",
+          "R-WRONG-TOOL-TEXT"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-07",
+        "patterns": [
+          "large_prs"
+        ],
+        "expected": [
+          "R-PR-SIZE"
+        ],
+        "fired": [
+          "R-PR-SIZE"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-08",
+        "patterns": [
+          "healthy"
+        ],
+        "expected": [],
+        "fired": [
+          "R-GROWTH"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-09",
+        "patterns": [
+          "few_tests"
+        ],
+        "expected": [
+          "R-FEW-TESTS"
+        ],
+        "fired": [
+          "R-FEW-TESTS"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-10",
+        "patterns": [
+          "flaky_ai_tests"
+        ],
+        "expected": [
+          "R-FLAKY-AI-TESTS"
+        ],
+        "fired": [
+          "R-FLAKY-AI-TESTS"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-11",
+        "patterns": [
+          "few_tests"
+        ],
+        "expected": [
+          "R-FEW-TESTS"
+        ],
+        "fired": [
+          "R-FEW-TESTS"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-12",
+        "patterns": [
+          "few_tests",
+          "large_prs"
+        ],
+        "expected": [
+          "R-FEW-TESTS",
+          "R-PR-SIZE"
+        ],
+        "fired": [
+          "R-FEW-TESTS",
+          "R-PR-SIZE"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-13",
+        "patterns": [
+          "few_tests",
+          "long_sessions"
+        ],
+        "expected": [
+          "R-FEW-TESTS",
+          "R-LONG-SESSIONS"
+        ],
+        "fired": [
+          "R-FEW-TESTS",
+          "R-LONG-SESSIONS"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-14",
+        "patterns": [
+          "few_tests"
+        ],
+        "expected": [
+          "R-FEW-TESTS"
+        ],
+        "fired": [
+          "R-FEW-TESTS"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-15",
+        "patterns": [
+          "adopter_tests"
+        ],
+        "expected": [],
+        "fired": [
+          "R-GROWTH"
+        ],
+        "progress_detected": true,
+        "passed": true
+      },
+      {
+        "persona": "seeded-16",
+        "patterns": [
+          "few_tests",
+          "wrong_tool"
+        ],
+        "expected": [
+          "R-FEW-TESTS",
+          "R-WRONG-TOOL-TEXT"
+        ],
+        "fired": [
+          "R-FEW-TESTS",
+          "R-WRONG-TOOL-TEXT"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-17",
+        "patterns": [
+          "healthy"
+        ],
+        "expected": [],
+        "fired": [
+          "R-GROWTH"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-18",
+        "patterns": [
+          "flaky_ai_tests"
+        ],
+        "expected": [
+          "R-FLAKY-AI-TESTS"
+        ],
+        "fired": [
+          "R-FLAKY-AI-TESTS"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-19",
+        "patterns": [
+          "low_ci_pass"
+        ],
+        "expected": [
+          "R-CI-FIRST-PASS"
+        ],
+        "fired": [
+          "R-CI-FIRST-PASS",
+          "R-REVIEW-ROUNDS"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-20",
+        "patterns": [
+          "flaky_ai_tests"
+        ],
+        "expected": [
+          "R-FLAKY-AI-TESTS"
+        ],
+        "fired": [
+          "R-FLAKY-AI-TESTS"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-21",
+        "patterns": [
+          "flaky_ai_tests",
+          "few_tests"
+        ],
+        "expected": [
+          "R-FEW-TESTS",
+          "R-FLAKY-AI-TESTS"
+        ],
+        "fired": [
+          "R-FEW-TESTS",
+          "R-FLAKY-AI-TESTS"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-22",
+        "patterns": [
+          "flaky_ai_tests"
+        ],
+        "expected": [
+          "R-FLAKY-AI-TESTS"
+        ],
+        "fired": [
+          "R-FLAKY-AI-TESTS"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-23",
+        "patterns": [
+          "flaky_ai_tests",
+          "no_context"
+        ],
+        "expected": [
+          "R-FLAKY-AI-TESTS",
+          "R-NO-CONTEXT"
+        ],
+        "fired": [
+          "R-FLAKY-AI-TESTS",
+          "R-NO-CONTEXT"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-24",
+        "patterns": [
+          "flaky_ai_tests",
+          "low_ci_pass"
+        ],
+        "expected": [
+          "R-CI-FIRST-PASS",
+          "R-FLAKY-AI-TESTS"
+        ],
+        "fired": [
+          "R-CI-FIRST-PASS",
+          "R-FLAKY-AI-TESTS"
+        ],
+        "progress_detected": true,
+        "passed": true
+      },
+      {
+        "persona": "seeded-25",
+        "patterns": [
+          "long_sessions"
+        ],
+        "expected": [
+          "R-LONG-SESSIONS"
+        ],
+        "fired": [
+          "R-LONG-SESSIONS"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-26",
+        "patterns": [
+          "healthy"
+        ],
+        "expected": [],
+        "fired": [
+          "R-GROWTH"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-27",
+        "patterns": [
+          "wrong_tool"
+        ],
+        "expected": [
+          "R-WRONG-TOOL-TEXT"
+        ],
+        "fired": [
+          "R-WRONG-TOOL-TEXT"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-28",
+        "patterns": [
+          "long_sessions",
+          "no_context"
+        ],
+        "expected": [
+          "R-LONG-SESSIONS",
+          "R-NO-CONTEXT"
+        ],
+        "fired": [
+          "R-LONG-SESSIONS",
+          "R-NO-CONTEXT"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-29",
+        "patterns": [
+          "long_sessions",
+          "no_context"
+        ],
+        "expected": [
+          "R-LONG-SESSIONS",
+          "R-NO-CONTEXT"
+        ],
+        "fired": [
+          "R-LONG-SESSIONS",
+          "R-NO-CONTEXT"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-30",
+        "patterns": [
+          "long_sessions",
+          "no_context"
+        ],
+        "expected": [
+          "R-LONG-SESSIONS",
+          "R-NO-CONTEXT"
+        ],
+        "fired": [
+          "R-LONG-SESSIONS",
+          "R-NO-CONTEXT"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-31",
+        "patterns": [
+          "long_sessions",
+          "no_context",
+          "few_tests"
+        ],
+        "expected": [
+          "R-FEW-TESTS",
+          "R-LONG-SESSIONS",
+          "R-NO-CONTEXT"
+        ],
+        "fired": [
+          "R-FEW-TESTS",
+          "R-LONG-SESSIONS",
+          "R-NO-CONTEXT"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-32",
+        "patterns": [
+          "long_sessions",
+          "no_context",
+          "modernization_in_chat"
+        ],
+        "expected": [
+          "R-LONG-SESSIONS",
+          "R-NO-CONTEXT",
+          "R-WRONG-TOOL-LARGE"
+        ],
+        "fired": [
+          "R-LONG-SESSIONS",
+          "R-NO-CONTEXT",
+          "R-WRONG-TOOL-LARGE"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-33",
+        "patterns": [
+          "low_ci_pass"
+        ],
+        "expected": [
+          "R-CI-FIRST-PASS"
+        ],
+        "fired": [
+          "R-CI-FIRST-PASS",
+          "R-REVIEW-ROUNDS"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-34",
+        "patterns": [
+          "modernization_in_chat"
+        ],
+        "expected": [
+          "R-WRONG-TOOL-LARGE"
+        ],
+        "fired": [
+          "R-WRONG-TOOL-LARGE"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-35",
+        "patterns": [
+          "large_prs"
+        ],
+        "expected": [
+          "R-PR-SIZE"
+        ],
+        "fired": [
+          "R-PR-SIZE"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-36",
+        "patterns": [
+          "wrong_tool"
+        ],
+        "expected": [
+          "R-WRONG-TOOL-TEXT"
+        ],
+        "fired": [
+          "R-WRONG-TOOL-TEXT"
+        ],
+        "progress_detected": false,
+        "passed": true
+      },
+      {
+        "persona": "seeded-37",
+        "patterns": [
+          "low_adoption"
+        ],
+        "expected": [
+          "R-LOW-ADOPTION"
+        ],
+        "fired": [
+          "R-LOW-ADOPTION"
+        ],
+        "progress_detected": false,
+        "passed": true
+      }
+    ]
+  },
+  "prompt_coach": {
+    "summary": {
+      "total": 16,
+      "passed": 16,
+      "pass_rate": 1.0
+    },
+    "stories": [
+      {
+        "id": "J01",
+        "expected_type": "feature_api",
+        "got_type": "feature_api",
+        "expected_tool": "copilot",
+        "got_tool": "copilot",
+        "questions": 3,
+        "passed": true
+      },
+      {
+        "id": "J02",
+        "expected_type": "bug_fix",
+        "got_type": "bug_fix",
+        "expected_tool": "claude",
+        "got_tool": "claude",
+        "questions": 3,
+        "passed": true
+      },
+      {
+        "id": "J03",
+        "expected_type": "test_creation",
+        "got_type": "test_creation",
+        "expected_tool": "copilot",
+        "got_tool": "copilot",
+        "questions": 3,
+        "passed": true
+      },
+      {
+        "id": "J04",
+        "expected_type": "refactor_modernization",
+        "got_type": "refactor_modernization",
+        "expected_tool": "devin",
+        "got_tool": "devin",
+        "questions": 3,
+        "passed": true
+      },
+      {
+        "id": "J05",
+        "expected_type": "docs_communication",
+        "got_type": "docs_communication",
+        "expected_tool": "writing",
+        "got_tool": "writing",
+        "questions": 1,
+        "passed": true
+      },
+      {
+        "id": "J06",
+        "expected_type": "trivial_deterministic",
+        "got_type": "trivial_deterministic",
+        "expected_tool": "no_ai",
+        "got_tool": "no_ai",
+        "questions": 0,
+        "passed": true
+      },
+      {
+        "id": "J07",
+        "expected_type": "test_creation",
+        "got_type": "test_creation",
+        "expected_tool": "copilot",
+        "got_tool": "copilot",
+        "questions": 3,
+        "passed": true
+      },
+      {
+        "id": "J08",
+        "expected_type": "exploration",
+        "got_type": "exploration",
+        "expected_tool": "claude",
+        "got_tool": "claude",
+        "questions": 0,
+        "passed": true
+      },
+      {
+        "id": "J09",
+        "expected_type": "pr_readiness",
+        "got_type": "pr_readiness",
+        "expected_tool": "copilot",
+        "got_tool": "copilot",
+        "questions": 3,
+        "passed": true
+      },
+      {
+        "id": "J10",
+        "expected_type": "data_sql",
+        "got_type": "data_sql",
+        "expected_tool": "copilot",
+        "got_tool": "copilot",
+        "questions": 3,
+        "passed": true
+      },
+      {
+        "id": "J11",
+        "expected_type": "bug_fix",
+        "got_type": "bug_fix",
+        "expected_tool": "claude",
+        "got_tool": "claude",
+        "questions": 3,
+        "passed": true
+      },
+      {
+        "id": "J12",
+        "expected_type": "refactor_modernization",
+        "got_type": "refactor_modernization",
+        "expected_tool": "claude",
+        "got_tool": "claude",
+        "questions": 3,
+        "passed": true
+      },
+      {
+        "id": "J13",
+        "expected_type": "refactor_modernization",
+        "got_type": "refactor_modernization",
+        "expected_tool": "devin",
+        "got_tool": "devin",
+        "questions": 3,
+        "passed": true
+      },
+      {
+        "id": "J14",
+        "expected_type": "feature_api",
+        "got_type": "feature_api",
+        "expected_tool": "copilot",
+        "got_tool": "copilot",
+        "questions": 3,
+        "passed": true
+      },
+      {
+        "id": "J15",
+        "expected_type": "feature_api",
+        "got_type": "feature_api",
+        "expected_tool": "claude",
+        "got_tool": "claude",
+        "questions": 3,
+        "passed": true
+      },
+      {
+        "id": "J16",
+        "expected_type": "docs_communication",
+        "got_type": "docs_communication",
+        "expected_tool": "writing",
+        "got_tool": "writing",
+        "questions": 1,
+        "passed": true
+      }
+    ]
+  },
+  "practices_identified": 8
+}

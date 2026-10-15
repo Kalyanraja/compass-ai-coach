@@ -1,0 +1,6 @@
+team_id,name,domain,stack,project_complexity,source
+T-ATLAS,Team Atlas,Core services API,java,high,synthetic:org_metadata
+T-BOREALIS,Team Borealis,Partner portal,dotnet,medium,synthetic:org_metadata
+T-CIRRUS,Team Cirrus,Customer web app,typescript,medium,synthetic:org_metadata
+T-ECHO,Team Echo,Data platform,python,high,synthetic:org_metadata
+T-DELTA,Team Delta,Internal tooling,python,low,synthetic:org_metadata

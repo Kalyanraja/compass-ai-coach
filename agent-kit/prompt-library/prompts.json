@@ -1,0 +1,1220 @@
+[
+  {
+    "id": "pr-readiness-check",
+    "title": "PR readiness self-check",
+    "workflow": "pr_readiness",
+    "task_type": "review",
+    "practice_id": "pr-readiness-selfcheck",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code",
+      "devin"
+    ],
+    "when_to_use": "Before opening or updating a PR.",
+    "template": "Check whether branch {{BRANCH}} is ready for review against {{BASE_BRANCH}}. Run {{TEST_CMD}}, {{LINT_CMD}} and {{BUILD_CMD}} and quote the summary lines. Read the full diff and mark PASS/FAIL/N-A with file:line for: one concern and under {{MAX_PR_LINES}} lines; tests for every behavior change; no secrets/PII; no debug leftovers; error handling and validation; API/schema/config changes flagged with rollback; docs updated. Output: READY or NOT READY, evidence, checklist table, blocking fixes, draft PR description. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "BRANCH",
+      "BASE_BRANCH",
+      "TEST_CMD",
+      "LINT_CMD",
+      "BUILD_CMD",
+      "MAX_PR_LINES"
+    ],
+    "tags": [
+      "pr",
+      "checklist",
+      "evidence"
+    ],
+    "source": "compass-original; informed by github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "pr-description-draft",
+    "title": "Draft PR description from diff",
+    "workflow": "pr_readiness",
+    "task_type": "docs",
+    "practice_id": "pr-readiness-selfcheck",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code",
+      "devin"
+    ],
+    "when_to_use": "When opening a PR and the description is empty or vague.",
+    "template": "Write a PR description for the diff between {{BASE_BRANCH}} and HEAD for ticket {{TICKET_ID}}. Describe only what the diff shows. Sections: What (bullets), Why (ticket link), How (key decisions, where to start reading), Testing (exact commands and results, or 'not run by agent'), Risk and rollback, Out of scope. Max 300 words. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "BASE_BRANCH",
+      "TICKET_ID"
+    ],
+    "tags": [
+      "pr",
+      "description"
+    ],
+    "source": "compass-original"
+  },
+  {
+    "id": "pr-slice-plan",
+    "title": "Slice a large change into small PRs",
+    "workflow": "pr_readiness",
+    "task_type": "planning",
+    "practice_id": "pr-slicing",
+    "best_tool": "claude_code",
+    "alt_tools": [
+      "copilot_agent"
+    ],
+    "when_to_use": "When a branch exceeds the PR size target or mixes refactor and behavior.",
+    "template": "The branch {{BRANCH}} changes {{CHANGED_LINES}} lines across {{FILE_COUNT}} files. Propose a split into PRs of at most {{MAX_PR_LINES}} lines. Classify changes (mechanical, refactor, schema/config, behavior, tests, cleanup), order slices so each builds and passes alone (mechanical > refactor > additive schema > behavior behind tests/flag > cleanup), and output a table: #, title, type, files, approx lines, depends on, tests. Suggest git commands for me to run; do not rewrite history. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "BRANCH",
+      "CHANGED_LINES",
+      "FILE_COUNT",
+      "MAX_PR_LINES"
+    ],
+    "tags": [
+      "pr",
+      "slicing",
+      "small-batches"
+    ],
+    "source": "compass-original"
+  },
+  {
+    "id": "pr-plan-slices-upfront",
+    "title": "Plan PR slices before coding",
+    "workflow": "planning",
+    "task_type": "planning",
+    "practice_id": "pr-slicing",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "When starting a feature you expect to exceed one small PR.",
+    "template": "Before I write code for {{FEATURE}}, plan how to deliver it as a stack of PRs, each under {{MAX_PR_LINES}} lines and independently mergeable. Use expand-then-contract for schema/API changes and a feature flag named {{FLAG_NAME}} if partial behavior would be visible. For each slice give scope, tests that prove it, and reviewer focus. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "FEATURE",
+      "MAX_PR_LINES",
+      "FLAG_NAME"
+    ],
+    "tags": [
+      "pr",
+      "slicing",
+      "planning"
+    ],
+    "source": "compass-original"
+  },
+  {
+    "id": "self-review-strict",
+    "title": "Strict self-review before requesting review",
+    "workflow": "review",
+    "task_type": "review",
+    "practice_id": "pr-readiness-selfcheck",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Right before asking a teammate to review.",
+    "template": "Review my changes in {{FILES_OR_DIFF}} as a strict senior reviewer. Do not edit. Order: correctness, tests (would they fail without the change?), security, design, readability. Output a table: severity (Critical/Important/Minor), file:line, problem, why it matters, fix. Then a verdict. Do not invent issues; say 'none' when a category is clean. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "FILES_OR_DIFF"
+    ],
+    "tags": [
+      "review",
+      "self-check"
+    ],
+    "source": "compass-original; informed by obra/superpowers (MIT), adapted"
+  },
+  {
+    "id": "review-against-plan",
+    "title": "Review a git range against its plan",
+    "workflow": "review",
+    "task_type": "review",
+    "practice_id": "pr-readiness-selfcheck",
+    "best_tool": "claude_code",
+    "alt_tools": [
+      "copilot_agent"
+    ],
+    "when_to_use": "After finishing a plan task or feature, before merging.",
+    "template": "Review the range {{BASE_SHA}}..{{HEAD_SHA}} against the plan at {{PLAN_PATH}}. Check plan alignment (missing or extra scope), correctness, tests (real behavior, would fail without change), security, production readiness. List behaviors you considered but set aside as out of scope, with reasons. Output Strengths, Issues (Critical/Important/Minor with file:line and fix), Set aside, Assessment. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "BASE_SHA",
+      "HEAD_SHA",
+      "PLAN_PATH"
+    ],
+    "tags": [
+      "review",
+      "plan"
+    ],
+    "source": "obra/superpowers (MIT), adapted"
+  },
+  {
+    "id": "address-review-comments",
+    "title": "Process review comments with rigor",
+    "workflow": "review",
+    "task_type": "review",
+    "practice_id": "verify-before-done",
+    "best_tool": "claude_code",
+    "alt_tools": [
+      "copilot_agent"
+    ],
+    "when_to_use": "When you receive PR review comments.",
+    "template": "Here are review comments on my PR: {{COMMENTS}}. For each: restate the technical requirement, verify it against the codebase, decide accept/push back/clarify with evidence. Ask about unclear items before changing anything. Implement accepted items one at a time (blocking first) with a test each. No performative agreement or thanks; draft factual replies. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "COMMENTS"
+    ],
+    "tags": [
+      "review",
+      "feedback"
+    ],
+    "source": "obra/superpowers (MIT), adapted"
+  },
+  {
+    "id": "commit-message-conventional",
+    "title": "Conventional commit message",
+    "workflow": "pr_readiness",
+    "task_type": "docs",
+    "practice_id": "pr-readiness-selfcheck",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "When committing staged changes.",
+    "template": "Write a Conventional Commits message for the staged diff. Format: type(scope): imperative summary (max 72 chars), blank line, why and what (wrapped at 72), 'Refs: {{TICKET_ID}}'. If the staged diff mixes unrelated concerns, say so and suggest how to split. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "TICKET_ID"
+    ],
+    "tags": [
+      "git",
+      "commit"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "test-plan-from-story",
+    "title": "Test plan from acceptance criteria",
+    "workflow": "test_creation",
+    "task_type": "testing",
+    "practice_id": "test-first-acceptance",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "When a story or ticket is ready and before implementation.",
+    "template": "Create a test plan for this story: {{STORY}}. Restate each acceptance criterion as Given/When/Then, pick the cheapest test level that proves it (unit > integration > UI), add edge cases (empty, null, boundaries, invalid input, permissions, dependency failure), and list synthetic data needs. Output table: ID, scenario, level, test name, file. List open questions. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "STORY"
+    ],
+    "tags": [
+      "testing",
+      "acceptance-criteria"
+    ],
+    "source": "compass-original; informed by github/spec-kit (MIT), adapted"
+  },
+  {
+    "id": "failing-test-first",
+    "title": "Write the failing test first",
+    "workflow": "test_creation",
+    "task_type": "testing",
+    "practice_id": "test-first-acceptance",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "At the start of implementing any behavior or bug fix.",
+    "template": "Implement {{BEHAVIOR}} test-first. Step 1: write one test in {{TEST_FILE}} following the style of {{REFERENCE_TEST_FILE}}, with a literal expected value. Step 2: run {{SINGLE_TEST_CMD}} and show it failing for the expected reason (not a compile or import error). Stop and show me the failure before implementing. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "BEHAVIOR",
+      "TEST_FILE",
+      "REFERENCE_TEST_FILE",
+      "SINGLE_TEST_CMD"
+    ],
+    "tags": [
+      "tdd",
+      "red-green"
+    ],
+    "source": "obra/superpowers (MIT), adapted"
+  },
+  {
+    "id": "tdd-green-minimal",
+    "title": "Make the failing test pass minimally",
+    "workflow": "test_creation",
+    "task_type": "coding",
+    "practice_id": "test-first-acceptance",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "After a failing test is confirmed.",
+    "template": "The test {{TEST_NAME}} fails as expected. Write the minimum production code in {{TARGET_FILE}} to make it pass. No extra options or refactors. Run {{SINGLE_TEST_CMD}} then {{TEST_CMD}} and quote the results. Then suggest refactors that keep everything green, without applying them. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "TEST_NAME",
+      "TARGET_FILE",
+      "SINGLE_TEST_CMD",
+      "TEST_CMD"
+    ],
+    "tags": [
+      "tdd",
+      "red-green"
+    ],
+    "source": "obra/superpowers (MIT), adapted"
+  },
+  {
+    "id": "unit-tests-junit5",
+    "title": "JUnit 5 unit tests",
+    "workflow": "test_creation",
+    "task_type": "testing",
+    "practice_id": "test-first-acceptance",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code",
+      "copilot_chat"
+    ],
+    "when_to_use": "Writing or extending Java unit tests.",
+    "template": "Write JUnit 5 tests for {{CLASS_NAME}} covering {{BEHAVIORS}}. Use explicit static imports, assertEquals(expected, actual), assertAll for related properties, assertThrows with message check, @ParameterizedTest with @CsvSource for input tables, @DisplayName. Mock only external boundaries with Mockito. Run {{TEST_CMD}} and report counts. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "CLASS_NAME",
+      "BEHAVIORS",
+      "TEST_CMD"
+    ],
+    "tags": [
+      "java",
+      "junit"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "unit-tests-xunit",
+    "title": "xUnit unit tests",
+    "workflow": "test_creation",
+    "task_type": "testing",
+    "practice_id": "test-first-acceptance",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Writing or extending C#/.NET unit tests.",
+    "template": "Write xUnit tests for {{CLASS_NAME}} covering {{BEHAVIORS}}. Names Method_Scenario_ExpectedResult. [Fact] for single cases, [Theory] with [InlineData] or [MemberData] for tables, constructor setup, Assert.ThrowsAsync<T> with message check. Fakes for repositories, mocks only for HTTP/clock/queue. Run dotnet test and report counts. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "CLASS_NAME",
+      "BEHAVIORS"
+    ],
+    "tags": [
+      "csharp",
+      "xunit"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "unit-tests-pytest",
+    "title": "pytest tests",
+    "workflow": "test_creation",
+    "task_type": "testing",
+    "practice_id": "test-first-acceptance",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Writing or extending Python tests.",
+    "template": "Write pytest tests for {{MODULE}} covering {{BEHAVIORS}}. Use fixtures, pytest.mark.parametrize for input tables, pytest.raises(match=...) for errors, tmp_path and monkeypatch for files, env and time. Then run pytest --cov={{PACKAGE}} --cov-report=term-missing and list uncovered lines that matter (not all lines). Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "MODULE",
+      "BEHAVIORS",
+      "PACKAGE"
+    ],
+    "tags": [
+      "python",
+      "pytest",
+      "coverage"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "unit-tests-jest",
+    "title": "Jest/Vitest tests",
+    "workflow": "test_creation",
+    "task_type": "testing",
+    "practice_id": "test-first-acceptance",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Writing or extending JavaScript/TypeScript tests.",
+    "template": "Write {{TEST_RUNNER}} tests for {{MODULE}} covering {{BEHAVIORS}}. describe per unit, it('should ... when ...') per behavior, fake timers instead of real waits, mock only HTTP/storage/clock at the module boundary and reset in afterEach, Testing Library queries by role for UI. No snapshot tests for logic. Run and report counts. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "TEST_RUNNER",
+      "MODULE",
+      "BEHAVIORS"
+    ],
+    "tags": [
+      "typescript",
+      "jest",
+      "vitest"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "playwright-e2e-test",
+    "title": "Playwright UI test for a journey",
+    "workflow": "test_creation",
+    "task_type": "testing",
+    "practice_id": "test-first-acceptance",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code",
+      "devin"
+    ],
+    "when_to_use": "Adding an end-to-end test for a critical user journey.",
+    "template": "Write a Playwright ({{PW_LANGUAGE}}) test for the journey: {{JOURNEY}}. Use getByRole/getByLabel/getByTestId locators, web-first assertions (toHaveText, toHaveURL, toHaveCount), test.step for phases, no waitForTimeout, state seeded per test via {{SEED_METHOD}}, synthetic test account from CI variables. Run {{E2E_CMD}} with --repeat-each=5 and report results. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "PW_LANGUAGE",
+      "JOURNEY",
+      "SEED_METHOD",
+      "E2E_CMD"
+    ],
+    "tags": [
+      "playwright",
+      "e2e",
+      "ui"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "characterization-tests",
+    "title": "Characterization tests before changing legacy code",
+    "workflow": "test_creation",
+    "task_type": "testing",
+    "practice_id": "test-first-acceptance",
+    "best_tool": "claude_code",
+    "alt_tools": [
+      "copilot_agent"
+    ],
+    "when_to_use": "Before modifying untested legacy code.",
+    "template": "Before I change {{TARGET}}, pin its current behavior with characterization tests. Identify its public entry points, inputs and side effects; write tests asserting what it does today (even if odd; flag suspected bugs separately instead of encoding them silently); run them on the current code and confirm they pass. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "TARGET"
+    ],
+    "tags": [
+      "legacy",
+      "refactoring",
+      "testing"
+    ],
+    "source": "compass-original"
+  },
+  {
+    "id": "test-gap-audit",
+    "title": "Find missing or weak tests for a change",
+    "workflow": "test_creation",
+    "task_type": "review",
+    "practice_id": "test-first-acceptance",
+    "best_tool": "claude_code",
+    "alt_tools": [
+      "copilot_chat"
+    ],
+    "when_to_use": "Before a risky merge or when asked 'are the tests enough?'.",
+    "template": "Audit test coverage for {{SCOPE}}. Read-only. List behaviors, routes, error paths and contracts in scope; map each to existing tests; flag missing, weak (assert on mocks, no assertions, change detectors), stale or mis-scoped tests. Output table: behavior, existing test, gap type, suggested test (name + assertion), priority. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "SCOPE"
+    ],
+    "tags": [
+      "testing",
+      "audit"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "mutation-check",
+    "title": "Mutation check of a test suite",
+    "workflow": "test_creation",
+    "task_type": "review",
+    "practice_id": "test-first-acceptance",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "After writing tests, to check they actually catch bugs.",
+    "template": "For {{TARGET}} and its tests in {{TEST_FILE}}: list 5 realistic mutations (wrong constant, wrong branch, missing side effect, empty return, missing validation). For each, name the test that would fail, or say 'none'. Propose tests for the uncaught ones. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "TARGET",
+      "TEST_FILE"
+    ],
+    "tags": [
+      "testing",
+      "quality"
+    ],
+    "source": "obra/superpowers (MIT), adapted"
+  },
+  {
+    "id": "flaky-test-diagnose",
+    "title": "Diagnose and fix a flaky test",
+    "workflow": "test_creation",
+    "task_type": "debugging",
+    "practice_id": "flaky-test-hardening",
+    "best_tool": "claude_code",
+    "alt_tools": [
+      "copilot_agent",
+      "devin"
+    ],
+    "when_to_use": "A test fails intermittently or only in CI.",
+    "template": "Test {{TEST_ID}} is flaky. Failure excerpt (redacted): {{FAILURE_EXCERPT}}. 1) Measure: run it {{RUNS}} times isolated, with its suite, and in parallel; record fail counts. 2) Classify the cause with evidence (timing, shared state/order, time zone, randomness, concurrency, external dependency, async misuse, environment, selector). 3) Fix at the source. No sleeps, retries, longer timeouts, force-clicks or skips. 4) Rerun the same counts and report before/after. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "TEST_ID",
+      "FAILURE_EXCERPT",
+      "RUNS"
+    ],
+    "tags": [
+      "flaky",
+      "ci"
+    ],
+    "source": "compass-original; informed by obra/superpowers (MIT), adapted and github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "replace-sleeps",
+    "title": "Replace fixed sleeps with condition waits",
+    "workflow": "test_creation",
+    "task_type": "refactoring",
+    "practice_id": "flaky-test-hardening",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Tests contain sleep/waitForTimeout/cy.wait(ms).",
+    "template": "Find every fixed delay in {{TEST_DIR}} (Thread.sleep, Task.Delay, time.sleep, setTimeout, waitForTimeout, cy.wait with a number). For each, identify the condition it is really waiting for and replace it with a condition wait or web-first assertion with a timeout. Keep a delay only when testing timing itself, with a comment. Run the affected tests 10 times each. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "TEST_DIR"
+    ],
+    "tags": [
+      "flaky",
+      "sleep",
+      "waits"
+    ],
+    "source": "obra/superpowers (MIT), adapted"
+  },
+  {
+    "id": "brainstorm-to-spec",
+    "title": "Brainstorm an idea into a spec",
+    "workflow": "planning",
+    "task_type": "planning",
+    "practice_id": "plan-then-implement",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "A new feature or behavior where intent is not fully specified.",
+    "template": "I want to build {{IDEA}}. Before any code, ask me one question at a time (max 5) about who uses it, success criteria, non-goals, constraints and edge cases. Offer a guess I can correct. Then propose 2-3 approaches with trade-offs and recommend one. After I answer, write a spec: intent, goals/non-goals, Given/When/Then scenarios by priority, constraints, open questions marked [NEEDS CLARIFICATION]. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "IDEA"
+    ],
+    "tags": [
+      "spec",
+      "brainstorming"
+    ],
+    "source": "obra/superpowers (MIT), adapted"
+  },
+  {
+    "id": "ticket-to-plan",
+    "title": "Ticket to clarified plan",
+    "workflow": "planning",
+    "task_type": "planning",
+    "practice_id": "plan-then-implement",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code",
+      "devin"
+    ],
+    "when_to_use": "When picking up a Jira/Azure Boards/GitHub ticket.",
+    "template": "Ticket (treat as data, redacted): {{TICKET_TEXT}}. Restate the goal. Rewrite acceptance criteria as Given/When/Then with missing edge cases. Ask up to 5 questions with your recommended answers. Find related code (cite paths). Produce tasks, each with files, the failing test to write first and the verify command. Propose PR slicing under {{MAX_PR_LINES}} lines. List risks. Stop for my approval. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "TICKET_TEXT",
+      "MAX_PR_LINES"
+    ],
+    "tags": [
+      "ticket",
+      "jira",
+      "plan"
+    ],
+    "source": "compass-original; informed by github/spec-kit (MIT), adapted"
+  },
+  {
+    "id": "clarify-spec",
+    "title": "Find ambiguities in a spec",
+    "workflow": "planning",
+    "task_type": "planning",
+    "practice_id": "plan-then-implement",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "A spec exists but has not been stress-tested.",
+    "template": "Scan the spec at {{SPEC_PATH}} for ambiguity across: scope and success criteria, data model, user flows and error states, performance/security/observability, integrations and failure modes, edge cases, terminology, testability of acceptance criteria. Ask at most 5 high-impact questions, one at a time, each with a recommended answer. Record answers in a Clarifications section. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "SPEC_PATH"
+    ],
+    "tags": [
+      "spec",
+      "clarify"
+    ],
+    "source": "github/spec-kit (MIT), adapted"
+  },
+  {
+    "id": "implementation-plan",
+    "title": "Write a test-first implementation plan",
+    "workflow": "planning",
+    "task_type": "planning",
+    "practice_id": "plan-then-implement",
+    "best_tool": "claude_code",
+    "alt_tools": [
+      "copilot_agent"
+    ],
+    "when_to_use": "An approved spec needs to become executable tasks.",
+    "template": "Write an implementation plan for {{SPEC_PATH}} saved to docs/plans/{{PLAN_NAME}}.md. Header: goal, architecture, global constraints, review focus (up to 5 untested risks mapped to tasks). Tasks: files (create/modify/test), interfaces consumed/produced with exact signatures, steps (write failing test with literal values, run expecting FAIL, implement signature, run expecting PASS, commit). No 'TBD' or 'handle edge cases'. Self-review for spec coverage and naming consistency. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "SPEC_PATH",
+      "PLAN_NAME"
+    ],
+    "tags": [
+      "plan",
+      "tasks"
+    ],
+    "source": "obra/superpowers (MIT), adapted"
+  },
+  {
+    "id": "spec-to-tasks",
+    "title": "Spec to user-story task list",
+    "workflow": "planning",
+    "task_type": "planning",
+    "practice_id": "plan-then-implement",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Turning a spec into a tracked, parallelizable task list.",
+    "template": "From the spec at {{SPEC_PATH}}, produce tasks formatted '- [ ] T### [P?] [US#] action in exact/path'. Group by user story in priority order; tests first within each story; [P] only for different files with no dependency; a checkpoint per phase. End with a coverage table requirement -> tasks and list unmapped requirements. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "SPEC_PATH"
+    ],
+    "tags": [
+      "tasks",
+      "spec-kit"
+    ],
+    "source": "github/spec-kit (MIT), adapted"
+  },
+  {
+    "id": "execute-plan-task",
+    "title": "Execute one plan task with ledger",
+    "workflow": "planning",
+    "task_type": "coding",
+    "practice_id": "plan-then-implement",
+    "best_tool": "claude_code",
+    "alt_tools": [
+      "copilot_agent",
+      "devin"
+    ],
+    "when_to_use": "Implementing an approved plan task by task.",
+    "template": "Execute Task {{TASK_NUMBER}} from {{PLAN_PATH}} exactly. Follow its steps in order: failing test, run (expect FAIL), implement, run (expect PASS), full suite, commit. If an output differs from the plan's expected, record 'Ruling: what - why - cost if wrong' in {{LEDGER_PATH}} and continue, unless it is destructive, security-sensitive, outside the branch, or unresolvable; then stop and ask. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "TASK_NUMBER",
+      "PLAN_PATH",
+      "LEDGER_PATH"
+    ],
+    "tags": [
+      "plan",
+      "execution"
+    ],
+    "source": "obra/superpowers (MIT), adapted"
+  },
+  {
+    "id": "context-pack-agents-md",
+    "title": "Generate AGENTS.md from repo facts",
+    "workflow": "docs",
+    "task_type": "docs",
+    "practice_id": "context-pack",
+    "best_tool": "claude_code",
+    "alt_tools": [
+      "copilot_agent",
+      "devin"
+    ],
+    "when_to_use": "New repo for agents, or agents keep using wrong commands.",
+    "template": "Create AGENTS.md for this repo using only verified facts: inspect build files, CI, README, linters and tests; run the cheap commands to verify them. Sections: overview, commands table (install, build, test, single test, lint, e2e), key directories, code/test/git conventions with one example file each, security rules. Under 200 lines. Leave double-brace placeholders where a value is unverified and list them. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [],
+    "tags": [
+      "context",
+      "agents-md"
+    ],
+    "source": "compass-original; informed by agentsmd/agents.md (MIT) and github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "task-brief",
+    "title": "Write a task brief before a big agent task",
+    "workflow": "planning",
+    "task_type": "planning",
+    "practice_id": "context-pack",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code",
+      "devin"
+    ],
+    "when_to_use": "Before handing a multi-step task to any agent.",
+    "template": "Goal: {{GOAL}}. Context: read {{FILES}} first; follow the pattern in {{REFERENCE_FILE}}. Constraints: {{CONSTRAINTS}}; no new dependencies; do not touch {{OUT_OF_SCOPE}}. Acceptance: {{ACCEPTANCE}}. Verify with: {{VERIFY_CMD}}. Output: a short plan first, then wait for my go. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "GOAL",
+      "FILES",
+      "REFERENCE_FILE",
+      "CONSTRAINTS",
+      "OUT_OF_SCOPE",
+      "ACCEPTANCE",
+      "VERIFY_CMD"
+    ],
+    "tags": [
+      "context",
+      "brief"
+    ],
+    "source": "compass-original; informed by microsoft/AI-Engineering-Coach (MIT), adapted"
+  },
+  {
+    "id": "what-context-needed",
+    "title": "Ask the agent what context it needs",
+    "workflow": "planning",
+    "task_type": "research",
+    "practice_id": "context-pack",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Before asking a question about code you have not shared.",
+    "template": "Before answering, list the files, symbols, docs or command outputs you need to see to answer this well: {{QUESTION}}. Rank them by importance and explain why each matters. Do not answer yet. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "QUESTION"
+    ],
+    "tags": [
+      "context"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "onboard-explain-module",
+    "title": "Explain a module for onboarding",
+    "workflow": "docs",
+    "task_type": "research",
+    "practice_id": "context-pack",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Joining a codebase or touching an unfamiliar area.",
+    "template": "Explain {{MODULE_PATH}} to an engineer new to this codebase. Read-only. Purpose, main flow as numbered steps, inputs/outputs/side effects, callers, invariants, risky areas, existing tests, and 'to change X start at Y'. Cite file:line; mark inferences as (inferred). Max 400 words. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "MODULE_PATH"
+    ],
+    "tags": [
+      "onboarding",
+      "explain"
+    ],
+    "source": "compass-original"
+  },
+  {
+    "id": "debug-systematic",
+    "title": "Systematic debugging session",
+    "workflow": "debugging",
+    "task_type": "debugging",
+    "practice_id": "verify-before-done",
+    "best_tool": "claude_code",
+    "alt_tools": [
+      "copilot_agent"
+    ],
+    "when_to_use": "Any bug, failing test, or unexpected behavior.",
+    "template": "Symptom: {{SYMPTOM}}. No fix until root cause is shown. 1) Read the full error, reproduce with the smallest command, record output. 2) Check recent changes. 3) For multi-layer flows, add temporary boundary logging (no secrets) to find where data goes wrong. 4) Compare with a working path. 5) One hypothesis at a time, minimal probe. 6) Then failing regression test, fix at source, full suite. Stop after 3 failed fixes and discuss design. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "SYMPTOM"
+    ],
+    "tags": [
+      "debugging",
+      "root-cause"
+    ],
+    "source": "obra/superpowers (MIT), adapted"
+  },
+  {
+    "id": "bug-repro-brief",
+    "title": "Minimal reproduction brief",
+    "workflow": "debugging",
+    "task_type": "debugging",
+    "practice_id": "verify-before-done",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code",
+      "devin"
+    ],
+    "when_to_use": "A vague or intermittent bug report.",
+    "template": "Turn this report into a minimal reproduction (no fix yet): {{BUG_REPORT}}. Record target commit and environment, Expected vs Actual as observable statements (no suspected cause), minimal steps and fixture, run it twice, frequency if intermittent, evidence, unknowns, next safe hypothesis. Use local or test environments only. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "BUG_REPORT"
+    ],
+    "tags": [
+      "debugging",
+      "reproduction"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "root-cause-trace",
+    "title": "Trace a bad value to its origin",
+    "workflow": "debugging",
+    "task_type": "debugging",
+    "practice_id": "verify-before-done",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "An error appears deep in the call stack.",
+    "template": "The bad value/error appears at {{SYMPTOM_LOCATION}}. Trace backward: immediate cause, then each caller and the value it passed, up to the original trigger. Show the chain with file:line. Propose the fix at the source, validation at each layer it passed through, and a regression test. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "SYMPTOM_LOCATION"
+    ],
+    "tags": [
+      "debugging",
+      "tracing"
+    ],
+    "source": "obra/superpowers (MIT), adapted"
+  },
+  {
+    "id": "explain-stack-trace",
+    "title": "Explain an error or stack trace",
+    "workflow": "debugging",
+    "task_type": "research",
+    "practice_id": "right-tool-for-task",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "You need to understand an error quickly (lookup-style).",
+    "template": "Explain this error and the most likely causes in this codebase, ranked, with the first thing to check for each: {{ERROR_TEXT}}. Point to the relevant lines in {{FILE}} if provided. Do not propose code changes yet. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "ERROR_TEXT",
+      "FILE"
+    ],
+    "tags": [
+      "debugging",
+      "explain"
+    ],
+    "source": "compass-original"
+  },
+  {
+    "id": "refactor-no-behavior-change",
+    "title": "Safe refactor with characterization tests",
+    "workflow": "refactoring",
+    "task_type": "refactoring",
+    "practice_id": "pr-slicing",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Improving structure without changing behavior.",
+    "template": "Refactor {{TARGET}} to {{GOAL}} with no behavior change. Ensure tests pin behavior first (add characterization tests if missing). Apply small mechanical steps (rename, extract, inline, move), running tests after each. Keep public signatures. Keep the diff under {{MAX_PR_LINES}} lines. List any bugs you notice separately instead of fixing them. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "TARGET",
+      "GOAL",
+      "MAX_PR_LINES"
+    ],
+    "tags": [
+      "refactoring"
+    ],
+    "source": "compass-original; informed by github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "reduce-complexity",
+    "title": "Reduce method complexity",
+    "workflow": "refactoring",
+    "task_type": "refactoring",
+    "practice_id": "pr-slicing",
+    "best_tool": "copilot_inline",
+    "alt_tools": [
+      "copilot_agent"
+    ],
+    "when_to_use": "A method is long or deeply nested.",
+    "template": "Reduce the complexity of {{METHOD}}: guard clauses instead of nesting, extract well-named helpers, replace flag arguments, remove duplication. Same behavior; existing tests must pass unchanged. Show before/after cyclomatic complexity estimate. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "METHOD"
+    ],
+    "tags": [
+      "refactoring",
+      "complexity"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "dependency-upgrade",
+    "title": "Upgrade one dependency safely",
+    "workflow": "modernization",
+    "task_type": "migration",
+    "practice_id": "pr-slicing",
+    "best_tool": "devin",
+    "alt_tools": [
+      "claude_code",
+      "copilot_agent"
+    ],
+    "when_to_use": "Bumping a library or framework version.",
+    "template": "Upgrade {{PACKAGE}} from {{FROM_VERSION}} to {{TO_VERSION}}. Baseline build and tests first. Read release notes/migration guide (I will paste them if unreachable) and list breaking changes that affect this repo with file refs. Update via the package manager from {{PACKAGE_REGISTRY}} only. Fix breakages in small commits with tests after each. Report baseline vs after. One dependency per PR. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "PACKAGE",
+      "FROM_VERSION",
+      "TO_VERSION",
+      "PACKAGE_REGISTRY"
+    ],
+    "tags": [
+      "dependencies",
+      "upgrade"
+    ],
+    "source": "compass-original"
+  },
+  {
+    "id": "language-version-migration",
+    "title": "Migrate a module to a newer language/runtime",
+    "workflow": "modernization",
+    "task_type": "migration",
+    "practice_id": "plan-then-implement",
+    "best_tool": "devin",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Java 8->17/21, .NET Framework->.NET 8, JS->TS, Python 3.x upgrades, one slice at a time.",
+    "template": "Migrate the slice {{SLICE}} from {{SOURCE}} to {{TARGET}}. Inventory files, public APIs and outside usages; propose a slice plan (under {{MAX_PR_LINES}} lines) and wait for approval. Add characterization tests and confirm they pass on old code. Migrate in mechanical steps (build config, syntax, API replacements), testing after each. Report baseline vs after and recommend the next slice. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "SLICE",
+      "SOURCE",
+      "TARGET",
+      "MAX_PR_LINES"
+    ],
+    "tags": [
+      "modernization",
+      "migration"
+    ],
+    "source": "compass-original; informed by github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "codemod-instead-of-ai",
+    "title": "Use a codemod or IDE refactor instead of AI",
+    "workflow": "modernization",
+    "task_type": "migration",
+    "practice_id": "right-tool-for-task",
+    "best_tool": "no_ai",
+    "alt_tools": [
+      "copilot_chat"
+    ],
+    "when_to_use": "A rename, API replacement or format change across many files that a rule can describe.",
+    "template": "I need to apply {{MECHANICAL_CHANGE}} across {{SCOPE}}. Do not edit files. Tell me the deterministic tool to use instead (IDE refactor, OpenRewrite recipe, Roslyn analyzer/code fix, jscodeshift/ts-morph, ruff/black, sqlfluff, sed with a reviewed pattern), the exact command or recipe, and how to verify (build + tests). Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "MECHANICAL_CHANGE",
+      "SCOPE"
+    ],
+    "tags": [
+      "codemod",
+      "deterministic",
+      "routing"
+    ],
+    "source": "compass-original"
+  },
+  {
+    "id": "security-review-diff",
+    "title": "Security review of a diff",
+    "workflow": "security",
+    "task_type": "review",
+    "practice_id": "pr-readiness-selfcheck",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Before merging changes that touch input handling, auth, data or config.",
+    "template": "Review {{SCOPE}} for security issues. Read-only. Trace each source (HTTP, message, file, DB) to each sink (SQL, shell, path, HTML, logs, outbound call). Check secrets, injection, authZ/IDOR, validation and encoding, sensitive data in logs, crypto/TLS, dependencies, error leakage. Table: severity, category, file:line, source->sink, issue, fix. Never print a found secret in full. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "SCOPE"
+    ],
+    "tags": [
+      "security",
+      "owasp"
+    ],
+    "source": "compass-original; informed by github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "secret-leak-check",
+    "title": "Check a diff for leaked secrets",
+    "workflow": "security",
+    "task_type": "review",
+    "practice_id": "pr-readiness-selfcheck",
+    "best_tool": "no_ai",
+    "alt_tools": [
+      "copilot_chat"
+    ],
+    "when_to_use": "Before every push; use the secret scanner first, AI second.",
+    "template": "Run the team's secret scanner ({{SECRET_SCANNER}}) on the staged diff first. Then review the diff for anything the scanner may miss: connection strings, tokens in test fixtures, keys in config samples, credentials in comments or logs. Report location and first 4 characters only. If found: stop, do not commit, rotate per policy. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "SECRET_SCANNER"
+    ],
+    "tags": [
+      "security",
+      "secrets"
+    ],
+    "source": "compass-original"
+  },
+  {
+    "id": "threat-model-lite",
+    "title": "Lightweight threat model for a feature",
+    "workflow": "security",
+    "task_type": "planning",
+    "practice_id": "plan-then-implement",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Designing a feature that handles sensitive data or new entry points.",
+    "template": "For {{FEATURE}}, list assets, entry points, trust boundaries and actors. For each entry point apply STRIDE (spoofing, tampering, repudiation, information disclosure, denial of service, elevation of privilege): threat, likelihood, mitigation, test that proves the mitigation. Keep it to one page and flag items needing security team review. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "FEATURE"
+    ],
+    "tags": [
+      "security",
+      "threat-model"
+    ],
+    "source": "compass-original"
+  },
+  {
+    "id": "sql-review",
+    "title": "Review SQL or stored procedure",
+    "workflow": "data_sql",
+    "task_type": "review",
+    "practice_id": "pr-readiness-selfcheck",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Changing queries, procedures or migrations.",
+    "template": "Review {{SQL_OBJECT}} for {{DB_ENGINE}}. Check injection (dynamic SQL without parameters), correctness (NULLs, join cardinality, implicit conversions, transactions, TRY/CATCH, XACT_ABORT), performance (sargability, SELECT *, cursors, index suggestions with reasoning, unbounded results), safety (DELETE/UPDATE without WHERE, rollback for migrations). Table: severity, line, issue, why, rewrite. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "SQL_OBJECT",
+      "DB_ENGINE"
+    ],
+    "tags": [
+      "sql",
+      "review"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "sql-optimize-query",
+    "title": "Optimize a slow query",
+    "workflow": "data_sql",
+    "task_type": "coding",
+    "practice_id": "verify-before-done",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "A query is slow and you have its plan or timings.",
+    "template": "This query is slow: {{QUERY}}. Execution plan/timings summary: {{PLAN_SUMMARY}}. Identify the top 3 causes (scans, key lookups, non-sargable predicates, parameter sniffing, missing/unused indexes, row estimates). Propose rewrites and index changes with expected impact and trade-offs (write cost, storage). Give a before/after test I can run on synthetic data. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "QUERY",
+      "PLAN_SUMMARY"
+    ],
+    "tags": [
+      "sql",
+      "performance"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "sql-proc-with-tests",
+    "title": "Stored procedure with tests",
+    "workflow": "data_sql",
+    "task_type": "coding",
+    "practice_id": "test-first-acceptance",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Creating or changing a stored procedure.",
+    "template": "Write stored procedure {{PROC_NAME}} that {{PURPOSE}}. Header comment (purpose, parameters, side effects), SET NOCOUNT ON, parameter validation, TRY/CATCH with THROW, explicit transaction with XACT_ABORT ON if it modifies multiple tables, explicit column lists, schema-qualified names. Also write tests ({{SQL_TEST_FRAMEWORK}}) with synthetic data for happy path, invalid params and rollback. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "PROC_NAME",
+      "PURPOSE",
+      "SQL_TEST_FRAMEWORK"
+    ],
+    "tags": [
+      "sql",
+      "stored-procedure",
+      "testing"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "migration-safety",
+    "title": "Database migration safety review",
+    "workflow": "data_sql",
+    "task_type": "review",
+    "practice_id": "pr-slicing",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Any schema change.",
+    "template": "Review migration {{MIGRATION_FILE}} for {{DB_ENGINE}}: backward compatibility with the currently deployed code (expand/contract), locking and duration on tables of about {{ROW_COUNT}} rows, idempotency, rollback script, data backfill strategy, and order relative to code deploys. Recommend splitting if it mixes expand and contract steps. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "MIGRATION_FILE",
+      "DB_ENGINE",
+      "ROW_COUNT"
+    ],
+    "tags": [
+      "sql",
+      "migration"
+    ],
+    "source": "compass-original"
+  },
+  {
+    "id": "adr-draft",
+    "title": "Architecture decision record",
+    "workflow": "docs",
+    "task_type": "docs",
+    "practice_id": "plan-then-implement",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Recording a technical decision.",
+    "template": "Draft an ADR for {{DECISION}}. Sections: context, decision drivers, options considered (at least 2, with pros/cons), decision, consequences (positive, negative, follow-ups), status. Use facts from {{SOURCES}}; mark assumptions. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "DECISION",
+      "SOURCES"
+    ],
+    "tags": [
+      "docs",
+      "adr"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "readme-runbook",
+    "title": "README or runbook update",
+    "workflow": "docs",
+    "task_type": "docs",
+    "practice_id": "context-pack",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Behavior or setup changed and docs are stale.",
+    "template": "Update {{DOC_PATH}} for the change in {{CHANGE_SUMMARY}}. Purpose first, then setup and run steps with copy-paste commands you verified in this repo, then troubleshooting. Remove outdated steps. Use placeholders instead of real hostnames or accounts. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "DOC_PATH",
+      "CHANGE_SUMMARY"
+    ],
+    "tags": [
+      "docs",
+      "readme"
+    ],
+    "source": "github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "status-update-email",
+    "title": "Status update or email (non-coding assistant)",
+    "workflow": "docs",
+    "task_type": "communication",
+    "practice_id": "right-tool-for-task",
+    "best_tool": "m365_copilot",
+    "alt_tools": [
+      "copilot_chat"
+    ],
+    "when_to_use": "Writing a stakeholder update, email or meeting summary.",
+    "template": "Write a {{LENGTH}} status update for {{AUDIENCE}} about {{TOPIC}}. Include: what shipped, what is next, risks or blockers with an ask, dates. Plain language, no jargon, bullets. Use only the facts I provide here: {{FACTS}}. Use only facts I provide; no confidential customer or personal data; I review before sending.",
+    "placeholders": [
+      "LENGTH",
+      "AUDIENCE",
+      "TOPIC",
+      "FACTS"
+    ],
+    "tags": [
+      "communication",
+      "non-coding"
+    ],
+    "source": "compass-original"
+  },
+  {
+    "id": "route-task-to-tool",
+    "title": "Pick the right tool for a task",
+    "workflow": "review",
+    "task_type": "routing",
+    "practice_id": "right-tool-for-task",
+    "best_tool": "copilot_chat",
+    "alt_tools": [
+      "claude_code"
+    ],
+    "when_to_use": "Unsure whether to use inline, chat, agent mode, Claude Code, Devin, a general assistant, or no AI.",
+    "template": "Task: {{TASK}}. Classify its shape (deterministic, lookup, local edit, multi-file interactive, unattended ticket, prose, human-only) and recommend the cheapest tool that can do it well among: no AI (formatter/linter/codemod), Copilot inline, Copilot chat, Copilot agent mode, Claude Code, Devin, general assistant. Give one reason, one alternative, a starter prompt, and what I must verify. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "TASK"
+    ],
+    "tags": [
+      "routing",
+      "tools"
+    ],
+    "source": "compass-original"
+  },
+  {
+    "id": "restart-stuck-session",
+    "title": "Reset a stuck agent session",
+    "workflow": "debugging",
+    "task_type": "routing",
+    "practice_id": "right-tool-for-task",
+    "best_tool": "claude_code",
+    "alt_tools": [
+      "copilot_agent"
+    ],
+    "when_to_use": "An agent is looping, repeating fixes, or the session covers too many topics.",
+    "template": "Summarize this session for a fresh start: goal, what was tried and the result of each attempt, facts established with evidence, current hypothesis, open questions, files touched. Max 200 words. I will paste this into a new session instead of continuing here. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [],
+    "tags": [
+      "session",
+      "context"
+    ],
+    "source": "microsoft/AI-Engineering-Coach (MIT), adapted"
+  },
+  {
+    "id": "playwright-flaky-locators",
+    "title": "Harden flaky Playwright locators and waits",
+    "workflow": "test_creation",
+    "task_type": "debugging",
+    "practice_id": "flaky-test-hardening",
+    "best_tool": "copilot_agent",
+    "alt_tools": [
+      "claude_code",
+      "devin"
+    ],
+    "when_to_use": "A Playwright spec fails intermittently with timeouts, strict-mode or detached-element errors.",
+    "template": "Harden {{SPEC_FILE}}. Replace CSS/XPath/nth-child locators with getByRole/getByLabel/getByTestId; replace waitForTimeout and networkidle waits with web-first assertions or waitForResponse on the specific call; remove force: true unless justified in a comment; make each test seed its own state. Measure with npx playwright test {{SPEC_FILE}} --repeat-each=20 --retries=0 before and after, and report fail counts. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "SPEC_FILE"
+    ],
+    "tags": [
+      "playwright",
+      "flaky",
+      "locators"
+    ],
+    "source": "compass-original; informed by github/awesome-copilot (MIT), adapted"
+  },
+  {
+    "id": "ci-only-failure",
+    "title": "Test fails only in CI",
+    "workflow": "test_creation",
+    "task_type": "debugging",
+    "practice_id": "flaky-test-hardening",
+    "best_tool": "claude_code",
+    "alt_tools": [
+      "copilot_agent",
+      "devin"
+    ],
+    "when_to_use": "A test passes locally but fails in the pipeline.",
+    "template": "Test {{TEST_ID}} passes locally but fails in CI. CI log excerpt (redacted): {{CI_EXCERPT}}. List environment differences to check (parallel workers, test order, time zone and locale, CPU/memory limits, missing services or env vars, file system case sensitivity, network access, headless browser viewport). Propose how to reproduce each locally (for example run with CI's worker count and TZ), then fix the confirmed cause. No retries or longer timeouts as the fix. Do not include secrets, PII or production data. Show the commands you ran and their results; a human reviews before merge.",
+    "placeholders": [
+      "TEST_ID",
+      "CI_EXCERPT"
+    ],
+    "tags": [
+      "flaky",
+      "ci",
+      "environment"
+    ],
+    "source": "compass-original"
+  }
+]

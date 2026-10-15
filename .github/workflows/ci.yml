@@ -1,0 +1,32 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Acceptance tests (AC1-AC14)
+        run: python -m unittest discover -s tests -t . -v
+      - name: Recommendation-quality evaluation (must be >= 80%)
+        run: python -m compass eval
+      - name: Data-minimization checks
+        run: python -m compass compliance
+      - name: Validate agent-kit JSON
+        run: |
+          python -m json.tool agent-kit/prompt-library/prompts.json > /dev/null
+          python -m json.tool agent-kit/prompt-library/anti-patterns.json > /dev/null
+        shell: bash

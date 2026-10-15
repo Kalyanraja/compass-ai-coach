@@ -1,0 +1,668 @@
+{
+  "target_pass_rate": 0.8,
+  "baseline_note": "Signals not listed take healthy default values (see compass/evaluation.py).",
+  "scenarios": [
+    {
+      "id": "S01",
+      "title": "Large PRs, senior Java, high complexity",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "senior",
+        "stack": "java",
+        "project_complexity": "high"
+      },
+      "signals": {
+        "pr_size_loc_median": 720,
+        "review_rounds_avg": 3.4,
+        "pr_cycle_time_hrs": 72,
+        "pr_template_used_rate": 0.3
+      },
+      "expected_rules": [
+        "R-PR-SIZE"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S02",
+      "title": "Large PRs, junior .NET",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "junior",
+        "stack": "dotnet",
+        "project_complexity": "medium"
+      },
+      "signals": {
+        "pr_size_loc_median": 560,
+        "review_rounds_avg": 3.0,
+        "pr_cycle_time_hrs": 60
+      },
+      "expected_rules": [
+        "R-PR-SIZE"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S03",
+      "title": "Many review rounds on small PRs, mid TypeScript",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "mid",
+        "stack": "typescript",
+        "project_complexity": "medium"
+      },
+      "signals": {
+        "review_rounds_avg": 3.1,
+        "pr_template_used_rate": 0.2
+      },
+      "expected_rules": [
+        "R-REVIEW-ROUNDS"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S04",
+      "title": "CI failures with heavy agent use, mid Python",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "mid",
+        "stack": "python",
+        "project_complexity": "high"
+      },
+      "signals": {
+        "ci_first_pass_rate": 0.55,
+        "agent_mode_share": 0.62
+      },
+      "expected_rules": [
+        "R-CI-FIRST-PASS"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S05",
+      "title": "Few tests per PR, mid Java",
+      "workflow": "test_creation",
+      "profile": {
+        "seniority": "mid",
+        "stack": "java",
+        "project_complexity": "medium"
+      },
+      "signals": {
+        "tests_added_per_pr": 0.4,
+        "test_creation_time_min": 110,
+        "tests_first_rate": 0.05,
+        "ai_assisted_test_share": 0.1
+      },
+      "expected_rules": [
+        "R-FEW-TESTS"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S06",
+      "title": "Slow manual test writing, senior .NET",
+      "workflow": "test_creation",
+      "profile": {
+        "seniority": "senior",
+        "stack": "dotnet",
+        "project_complexity": "medium"
+      },
+      "signals": {
+        "tests_added_per_pr": 2.0,
+        "test_creation_time_min": 150,
+        "ai_assisted_test_share": 0.1
+      },
+      "expected_rules": [
+        "R-SLOW-TESTS"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S07",
+      "title": "Flaky AI-generated Playwright tests, SDET",
+      "workflow": "test_creation",
+      "profile": {
+        "seniority": "sdet",
+        "stack": "playwright",
+        "project_complexity": "medium"
+      },
+      "signals": {
+        "flaky_test_rate": 0.1,
+        "ai_assisted_test_share": 0.75
+      },
+      "expected_rules": [
+        "R-FLAKY-AI-TESTS"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S08",
+      "title": "Long agent sessions, junior Python, high complexity",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "junior",
+        "stack": "python",
+        "project_complexity": "high"
+      },
+      "signals": {
+        "chat_turns_avg": 19,
+        "abandoned_session_rate": 0.42,
+        "plan_first_rate": 0.1
+      },
+      "expected_rules": [
+        "R-LONG-SESSIONS"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S09",
+      "title": "Long agent sessions, mid TypeScript, medium complexity",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "mid",
+        "stack": "typescript",
+        "project_complexity": "medium"
+      },
+      "signals": {
+        "chat_turns_avg": 15,
+        "abandoned_session_rate": 0.2,
+        "plan_first_rate": 0.2
+      },
+      "expected_rules": [
+        "R-LONG-SESSIONS"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S10",
+      "title": "No repo instructions with agent mode, lead Java",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "lead",
+        "stack": "java",
+        "project_complexity": "high"
+      },
+      "signals": {
+        "repo_has_instructions": 0,
+        "agent_mode_share": 0.6
+      },
+      "expected_rules": [
+        "R-NO-CONTEXT"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S11",
+      "title": "Coding agent used for emails, mid .NET",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "mid",
+        "stack": "dotnet",
+        "project_complexity": "low"
+      },
+      "signals": {
+        "noncode_tasks_in_coding_agent": 6
+      },
+      "expected_rules": [
+        "R-WRONG-TOOL-TEXT"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S12",
+      "title": "Repo-wide migration done in chat, lead Python",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "lead",
+        "stack": "python",
+        "project_complexity": "high"
+      },
+      "signals": {
+        "large_task_chat_sessions": 5,
+        "devin_sessions": 0
+      },
+      "expected_rules": [
+        "R-WRONG-TOOL-LARGE"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S13",
+      "title": "Low tool adoption, junior Java",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "junior",
+        "stack": "java",
+        "project_complexity": "low"
+      },
+      "signals": {
+        "copilot_sessions": 1,
+        "claude_sessions": 0,
+        "devin_sessions": 0
+      },
+      "expected_rules": [
+        "R-LOW-ADOPTION"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S14",
+      "title": "Large PRs and few tests, mid Java",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "mid",
+        "stack": "java",
+        "project_complexity": "medium"
+      },
+      "signals": {
+        "pr_size_loc_median": 600,
+        "review_rounds_avg": 3.2,
+        "tests_added_per_pr": 0.5,
+        "test_creation_time_min": 120
+      },
+      "expected_rules": [
+        "R-PR-SIZE",
+        "R-FEW-TESTS"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S15",
+      "title": "Flaky tests and CI failures, mid TypeScript",
+      "workflow": "test_creation",
+      "profile": {
+        "seniority": "mid",
+        "stack": "typescript",
+        "project_complexity": "medium"
+      },
+      "signals": {
+        "flaky_test_rate": 0.08,
+        "ai_assisted_test_share": 0.7,
+        "ci_first_pass_rate": 0.6,
+        "agent_mode_share": 0.55
+      },
+      "expected_rules": [
+        "R-FLAKY-AI-TESTS",
+        "R-CI-FIRST-PASS"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S16",
+      "title": "No context and long sessions, senior Python",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "senior",
+        "stack": "python",
+        "project_complexity": "high"
+      },
+      "signals": {
+        "repo_has_instructions": 0,
+        "agent_mode_share": 0.55,
+        "chat_turns_avg": 17,
+        "abandoned_session_rate": 0.35
+      },
+      "expected_rules": [
+        "R-NO-CONTEXT",
+        "R-LONG-SESSIONS"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S17",
+      "title": "Few tests, SDET Playwright",
+      "workflow": "test_creation",
+      "profile": {
+        "seniority": "sdet",
+        "stack": "playwright",
+        "project_complexity": "medium"
+      },
+      "signals": {
+        "tests_added_per_pr": 0.6,
+        "test_creation_time_min": 100
+      },
+      "expected_rules": [
+        "R-FEW-TESTS"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S18",
+      "title": "Healthy senior Java: no false alarms",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "senior",
+        "stack": "java",
+        "project_complexity": "medium"
+      },
+      "signals": {},
+      "expected_rules": [],
+      "forbidden_rules": [
+        "R-PR-SIZE",
+        "R-REVIEW-ROUNDS",
+        "R-CI-FIRST-PASS",
+        "R-FEW-TESTS",
+        "R-LONG-SESSIONS",
+        "R-NO-CONTEXT",
+        "R-FLAKY-AI-TESTS"
+      ]
+    },
+    {
+      "id": "S19",
+      "title": "Healthy junior TypeScript: no false alarms",
+      "workflow": "test_creation",
+      "profile": {
+        "seniority": "junior",
+        "stack": "typescript",
+        "project_complexity": "low"
+      },
+      "signals": {},
+      "expected_rules": [],
+      "forbidden_rules": [
+        "R-PR-SIZE",
+        "R-FEW-TESTS",
+        "R-FLAKY-AI-TESTS",
+        "R-LOW-ADOPTION"
+      ]
+    },
+    {
+      "id": "S20",
+      "title": "Borderline PR size (380 lines) should not trigger",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "mid",
+        "stack": "dotnet",
+        "project_complexity": "medium"
+      },
+      "signals": {
+        "pr_size_loc_median": 380
+      },
+      "expected_rules": [],
+      "forbidden_rules": [
+        "R-PR-SIZE"
+      ]
+    },
+    {
+      "id": "S21",
+      "title": "Flaky tests but not AI-generated: no AI-test flag",
+      "workflow": "test_creation",
+      "profile": {
+        "seniority": "mid",
+        "stack": "java",
+        "project_complexity": "medium"
+      },
+      "signals": {
+        "flaky_test_rate": 0.08,
+        "ai_assisted_test_share": 0.2
+      },
+      "expected_rules": [],
+      "forbidden_rules": [
+        "R-FLAKY-AI-TESTS"
+      ]
+    },
+    {
+      "id": "S22",
+      "title": "Low CI pass without agent use: not attributed to AI",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "mid",
+        "stack": "python",
+        "project_complexity": "medium"
+      },
+      "signals": {
+        "ci_first_pass_rate": 0.6,
+        "agent_mode_share": 0.2
+      },
+      "expected_rules": [],
+      "forbidden_rules": [
+        "R-CI-FIRST-PASS"
+      ]
+    },
+    {
+      "id": "S23",
+      "title": "Large PRs, lead TypeScript, high complexity",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "lead",
+        "stack": "typescript",
+        "project_complexity": "high"
+      },
+      "signals": {
+        "pr_size_loc_median": 900,
+        "review_rounds_avg": 3.8,
+        "pr_cycle_time_hrs": 90
+      },
+      "expected_rules": [
+        "R-PR-SIZE"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S24",
+      "title": "Slow tests, junior Python",
+      "workflow": "test_creation",
+      "profile": {
+        "seniority": "junior",
+        "stack": "python",
+        "project_complexity": "medium"
+      },
+      "signals": {
+        "tests_added_per_pr": 1.5,
+        "test_creation_time_min": 130,
+        "ai_assisted_test_share": 0.15
+      },
+      "expected_rules": [
+        "R-SLOW-TESTS"
+      ],
+      "forbidden_rules": []
+    },
+    {
+      "id": "S25",
+      "title": "Emails in coding agent and low adoption, junior",
+      "workflow": "pr_readiness",
+      "profile": {
+        "seniority": "junior",
+        "stack": "dotnet",
+        "project_complexity": "low"
+      },
+      "signals": {
+        "noncode_tasks_in_coding_agent": 4,
+        "copilot_sessions": 2,
+        "claude_sessions": 0,
+        "devin_sessions": 0
+      },
+      "expected_rules": [
+        "R-WRONG-TOOL-TEXT",
+        "R-LOW-ADOPTION"
+      ],
+      "forbidden_rules": []
+    }
+  ],
+  "context_pairs": [
+    {
+      "id": "C01",
+      "rule": "R-PR-SIZE",
+      "signals": {
+        "pr_size_loc_median": 650,
+        "review_rounds_avg": 3.2
+      },
+      "a": {
+        "seniority": "senior",
+        "stack": "java",
+        "project_complexity": "high"
+      },
+      "b": {
+        "seniority": "junior",
+        "stack": "typescript",
+        "project_complexity": "medium"
+      }
+    },
+    {
+      "id": "C02",
+      "rule": "R-FEW-TESTS",
+      "signals": {
+        "tests_added_per_pr": 0.4
+      },
+      "a": {
+        "seniority": "mid",
+        "stack": "dotnet",
+        "project_complexity": "medium"
+      },
+      "b": {
+        "seniority": "sdet",
+        "stack": "playwright",
+        "project_complexity": "medium"
+      }
+    },
+    {
+      "id": "C03",
+      "rule": "R-LONG-SESSIONS",
+      "signals": {
+        "chat_turns_avg": 18
+      },
+      "a": {
+        "seniority": "junior",
+        "stack": "python",
+        "project_complexity": "high"
+      },
+      "b": {
+        "seniority": "mid",
+        "stack": "typescript",
+        "project_complexity": "low"
+      }
+    },
+    {
+      "id": "C04",
+      "rule": "R-FLAKY-AI-TESTS",
+      "signals": {
+        "flaky_test_rate": 0.1,
+        "ai_assisted_test_share": 0.8
+      },
+      "a": {
+        "seniority": "sdet",
+        "stack": "playwright",
+        "project_complexity": "medium"
+      },
+      "b": {
+        "seniority": "mid",
+        "stack": "java",
+        "project_complexity": "medium"
+      }
+    },
+    {
+      "id": "C05",
+      "rule": "R-NO-CONTEXT",
+      "signals": {
+        "repo_has_instructions": 0,
+        "agent_mode_share": 0.6
+      },
+      "a": {
+        "seniority": "lead",
+        "stack": "java",
+        "project_complexity": "high"
+      },
+      "b": {
+        "seniority": "mid",
+        "stack": "python",
+        "project_complexity": "medium"
+      }
+    }
+  ],
+  "prompt_coach_stories": [
+    {
+      "id": "J01",
+      "text": "Build REST API to create a service request. As a portal user I want to submit a request. Given a valid request when POST /requests then 201.",
+      "expected_type": "feature_api",
+      "expected_tool": "copilot"
+    },
+    {
+      "id": "J02",
+      "text": "Order summary API fails in UAT with 500 for some customers, works in dev.",
+      "expected_type": "bug_fix",
+      "expected_tool": "claude"
+    },
+    {
+      "id": "J03",
+      "text": "Create Playwright tests for the login page before release.",
+      "expected_type": "test_creation",
+      "expected_tool": "copilot"
+    },
+    {
+      "id": "J04",
+      "text": "Upgrade all services to Java 21 and fix deprecations across all services.",
+      "expected_type": "refactor_modernization",
+      "expected_tool": "devin"
+    },
+    {
+      "id": "J05",
+      "text": "Write a status update email for leadership about the sprint.",
+      "expected_type": "docs_communication",
+      "expected_tool": "writing"
+    },
+    {
+      "id": "J06",
+      "text": "Fix formatting and lint warnings in the utils package.",
+      "expected_type": "trivial_deterministic",
+      "expected_tool": "no_ai"
+    },
+    {
+      "id": "J07",
+      "text": "Add unit tests with xUnit for the InvoiceCalculator edge cases: empty invoice, negative totals.",
+      "expected_type": "test_creation",
+      "expected_tool": "copilot"
+    },
+    {
+      "id": "J08",
+      "text": "Explain how the payment retry module works and where the backoff is configured.",
+      "expected_type": "exploration",
+      "expected_tool": "claude"
+    },
+    {
+      "id": "J09",
+      "text": "Review my pull request before I request review from the team.",
+      "expected_type": "pr_readiness",
+      "expected_tool": "copilot"
+    },
+    {
+      "id": "J10",
+      "text": "Optimize the stored procedure usp_GetClaims; the query on the claims table takes 40 seconds.",
+      "expected_type": "data_sql",
+      "expected_tool": "copilot"
+    },
+    {
+      "id": "J11",
+      "text": "NullPointerException in CustomerController when the address is missing. Expected a 400 instead.",
+      "expected_type": "bug_fix",
+      "expected_tool": "claude"
+    },
+    {
+      "id": "J12",
+      "text": "Refactor the ReportService class to extract the PDF generation into its own component, no behavior change.",
+      "expected_type": "refactor_modernization",
+      "expected_tool": "claude"
+    },
+    {
+      "id": "J13",
+      "text": "Bump the logging dependency in every service across all repos to the patched version.",
+      "expected_type": "refactor_modernization",
+      "expected_tool": "devin"
+    },
+    {
+      "id": "J14",
+      "text": "Add a new endpoint GET /vendors/{id}/contacts returning name and role, 404 if vendor missing.",
+      "expected_type": "feature_api",
+      "expected_tool": "copilot"
+    },
+    {
+      "id": "J15",
+      "text": "Design and implement end-to-end order cancellation across the order, payment and notification services.",
+      "expected_type": "feature_api",
+      "expected_tool": "claude"
+    },
+    {
+      "id": "J16",
+      "text": "Summarize this design doc for the stakeholders meeting in five bullet points.",
+      "expected_type": "docs_communication",
+      "expected_tool": "writing"
+    }
+  ]
+}

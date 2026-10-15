@@ -1,0 +1,1 @@
+Source: https://github.com/github/awesome-copilot commit 36e95dfda72140a68f577d5c894a551607606bd3 (Thu Oct 15 14:27:26 2026 +1100)
