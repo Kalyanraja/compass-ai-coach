@@ -23,7 +23,7 @@ const HEX = THEME.colors;
 
 const pres = new pptxgen();
 pres.layout = "LAYOUT_16x9"; // 10 x 5.625 in
-pres.title = "Compass: private workflow coaching for GenAI adoption";
+pres.title = "Compass: Right tool. Sharp prompt. Proven result.";
 pres.author = "Compass team";
 pres.theme = { headFontFace: THEME.headFontFace, bodyFontFace: THEME.bodyFontFace };
 const C = pres.SchemeColor;
@@ -33,8 +33,16 @@ pres.defineSlideMaster({
   title: "DARK_TITLE",
   background: { color: HEX.dk1 },
   objects: [
-    { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 1.45, w: 6.0, h: 1.3, fontSize: 44, bold: true, color: C.background1, fontFace: THEME.headFontFace, valign: "bottom", align: "left", margin: 0 }, text: "" } },
-    { placeholder: { options: { name: "body", type: "body", x: 0.6, y: 2.9, w: 6.0, h: 1.6, fontSize: 18, color: C.accent6, valign: "top", margin: 0 }, text: "" } },
+    { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 1.3, w: 5.2, h: 1.2, fontSize: 48, bold: true, color: C.background1, fontFace: THEME.headFontFace, valign: "bottom", align: "left", margin: 0 }, text: "" } },
+    { placeholder: { options: { name: "body", type: "body", x: 0.6, y: 2.65, w: 5.2, h: 1.9, fontSize: 16, color: C.accent6, valign: "top", margin: 0 }, text: "" } },
+  ],
+});
+pres.defineSlideMaster({
+  title: "DARK_CLOSE",
+  background: { color: HEX.dk1 },
+  objects: [
+    { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 0.7, w: 5.2, h: 1.5, fontSize: 36, bold: true, color: C.background1, fontFace: THEME.headFontFace, valign: "bottom", align: "left", margin: 0 }, text: "" } },
+    { placeholder: { options: { name: "body", type: "body", x: 0.6, y: 2.4, w: 5.2, h: 1.3, fontSize: 15, color: C.accent6, valign: "top", margin: 0 }, text: "" } },
   ],
 });
 pres.defineSlideMaster({
@@ -43,7 +51,7 @@ pres.defineSlideMaster({
   margin: [0.3, 0.5, 0.45, 0.5],
   objects: [
     { placeholder: { options: { name: "title", type: "title", x: 0.5, y: 0.28, w: 9.0, h: 0.7, fontSize: 28, bold: true, color: C.text1, fontFace: THEME.headFontFace, valign: "middle", align: "left", margin: 0 }, text: "" } },
-    { text: { text: "Compass  |  synthetic data only", options: { x: 0.5, y: 5.22, w: 5, h: 0.25, fontSize: 9, color: C.accent5, margin: 0 } } },
+    { text: { text: "Compass  |  Right tool. Sharp prompt. Proven result.  |  synthetic data only", options: { x: 0.5, y: 5.22, w: 7, h: 0.25, fontSize: 9, color: C.accent5, margin: 0 } } },
   ],
   slideNumber: { x: 9.0, y: 5.22, w: 0.5, h: 0.25, fontSize: 9, color: C.accent5, align: "right" },
 });
@@ -93,12 +101,13 @@ pres.addSection({ title: "Opening" });
 let s = pres.addSlide({ masterName: "DARK_TITLE", sectionTitle: "Opening" });
 s.addText("Compass", { placeholder: "title" });
 s.addText([
-  { text: "Private workflow coaching for GenAI adoption", options: { breakLine: true, color: C.background1 } },
-  { text: "AI Engineering Enablement Coach  |  Hackathon submission", options: { fontSize: 14, breakLine: true } },
-  { text: "Synthetic data only. Runs on a laptop. No API keys.", options: { fontSize: 14 } },
+  { text: "Right tool. Sharp prompt. Proven result.", options: { fontSize: 22, bold: true, color: C.background1, breakLine: true } },
+  { text: " ", options: { fontSize: 8, breakLine: true } },
+  { text: "Private GenAI coaching that guides every engineer the right way", options: { breakLine: true } },
+  { text: "AI Engineering Enablement Coach  |  Hackathon submission", options: { fontSize: 12, breakLine: true } },
+  { text: "Synthetic data only. Runs on a laptop. No API keys.", options: { fontSize: 12 } },
 ], { placeholder: "body" });
-s.addShape(pres.shapes.OVAL, { x: 7.0, y: 1.35, w: 2.5, h: 2.5, fill: { color: C.accent1 }, line: { color: C.accent6, width: 2 } });
-s.addImage({ path: img("compass-w.png"), x: 7.6, y: 1.95, w: 1.3, h: 1.3 });
+s.addImage({ path: img("ai-compass.png"), x: 5.95, y: 0.95, w: 3.7, h: 3.7 });
 s.addNotes("Compass coaches how engineers use AI, privately, and gives managers only aggregated, suppressed insights. Everything in this deck runs on synthetic data.");
 
 // ================= 2. Problem =================
@@ -123,6 +132,22 @@ text(s, [
   { text: "They can't tell an engineer what to change next, and they tempt managers to rank people." },
 ], { x: 1.5, y: 3.95, w: 7.8, h: 0.85, fontSize: 15, color: C.background1, valign: "middle" });
 s.addNotes("Sources: dora.dev and cloud.google.com DORA 2024 announcement; metr.org July 2025 study. Full list in docs/research/evidence.md.");
+
+// ================= 2b. Tagline explained =================
+s = content("Problem and solution", "How Compass guides every engineer the right way");
+s.addImage({ path: img("journey.png"), x: 1.6, y: 0.98, w: 6.8, h: 6.8 * 680 / 1800 });
+const beats = [
+  ["Right tool", C.accent1, "Approval and data rules first, then fit: Copilot, Claude Code, Devin, or no AI at all."],
+  ["Sharp prompt", C.accent2, "A reviewed work package: confirmed facts, up to 3 answers, decisive files in full."],
+  ["Proven result", C.accent4, "Tests, scans and reproduction evidence. A missing check is never a pass."],
+];
+beats.forEach(([h, col, d], i) => {
+  const x = 0.5 + i * 3.1;
+  card(s, x, 3.68, 2.8, 1.38, { name: "beat-" + i });
+  text(s, h, { x: x + 0.2, y: 3.8, w: 2.4, h: 0.35, fontSize: 16, bold: true, color: col, fontFace: THEME.headFontFace });
+  text(s, d, { x: x + 0.2, y: 4.17, w: 2.4, h: 0.82, fontSize: 12, color: C.text1 });
+});
+s.addNotes("The whole product in one line. Every engineer is pointed to the approved tool, gets a complete prompt package, and only gets a pass when there is evidence.");
 
 // ================= 3. What Compass is =================
 s = content("Problem and solution", "Compass coaches how AI is used, not how much");
@@ -388,15 +413,15 @@ ho.forEach(([n, h, d], i) => {
 s.addNotes("Hand-off instructions live in docs/handoff/. None of the assistants needs MCP servers or API keys.");
 
 // ================= 16. Closing =================
-s = pres.addSlide({ masterName: "DARK_TITLE", sectionTitle: "Close" });
-s.addText("Coach the workflow, not the person", { placeholder: "title" });
+s = pres.addSlide({ masterName: "DARK_CLOSE", sectionTitle: "Close" });
+s.addText("Points the way. Never points fingers.", { placeholder: "title" });
 s.addText([
-  { text: "Double-click Start-Coach.bat, or run python -m compass", options: { breakLine: true, color: C.background1 } },
-  { text: "github.com/Kalyanraja/compass-ai-coach", options: { fontSize: 14, breakLine: true } },
-  { text: "Synthetic data only. MIT licensed.", options: { fontSize: 14 } },
+  { text: "Right tool. Sharp prompt. Proven result.", options: { bold: true, color: C.background1, breakLine: true } },
+  { text: "Double-click Start-Coach.bat, or run python -m compass", options: { breakLine: true } },
+  { text: "github.com/Kalyanraja/compass-ai-coach  |  MIT licensed", options: { fontSize: 12 } },
 ], { placeholder: "body" });
-s.addShape(pres.shapes.OVAL, { x: 7.0, y: 1.35, w: 2.5, h: 2.5, fill: { color: C.accent1 }, line: { color: C.accent6, width: 2 } });
-s.addImage({ path: img("compass-w.png"), x: 7.6, y: 1.95, w: 1.3, h: 1.3 });
+s.addImage({ path: img("team.png"), x: 0.6, y: 3.85, w: 4.6, h: 4.6 * 420 / 1400 });
+s.addImage({ path: img("ai-compass.png"), x: 5.95, y: 0.95, w: 3.7, h: 3.7 });
 
 (async () => {
   await pres.writeFile({ fileName: OUT });
