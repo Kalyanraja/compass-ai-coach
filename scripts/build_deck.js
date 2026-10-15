@@ -14,9 +14,9 @@ const THEME = {
   headFontFace: "Cambria",
   bodyFontFace: "Calibri",
   colors: {
-    dk1: "102A35", lt1: "FFFFFF", dk2: "1D5C63", lt2: "EEF4F3",
-    accent1: "1D6E6B", accent2: "C77D1E", accent3: "B8432F", accent4: "2E7D4F",
-    accent5: "5E7279", accent6: "A9CFC9", hlink: "1D6E6B", folHlink: "5E7279",
+    dk1: "F2F5F8", lt1: "0B1B2B", dk2: "7FD8CF", lt2: "13283D",
+    accent1: "2EC4B6", accent2: "F2B544", accent3: "F0715A", accent4: "5DD39E",
+    accent5: "8FA3B3", accent6: "2F4A63", hlink: "2EC4B6", folHlink: "8FA3B3",
   },
 };
 const HEX = THEME.colors;
@@ -31,18 +31,18 @@ const C = pres.SchemeColor;
 // ---------- layouts ----------
 pres.defineSlideMaster({
   title: "DARK_TITLE",
-  background: { color: HEX.dk1 },
+  background: { color: "071421" },
   objects: [
-    { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 1.3, w: 5.2, h: 1.2, fontSize: 48, bold: true, color: C.background1, fontFace: THEME.headFontFace, valign: "bottom", align: "left", margin: 0 }, text: "" } },
-    { placeholder: { options: { name: "body", type: "body", x: 0.6, y: 2.65, w: 5.2, h: 1.9, fontSize: 16, color: C.accent6, valign: "top", margin: 0 }, text: "" } },
+    { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 1.3, w: 5.2, h: 1.2, fontSize: 48, bold: true, color: C.text1, fontFace: THEME.headFontFace, valign: "bottom", align: "left", margin: 0 }, text: "" } },
+    { placeholder: { options: { name: "body", type: "body", x: 0.6, y: 2.65, w: 5.2, h: 1.9, fontSize: 16, color: C.accent5, valign: "top", margin: 0 }, text: "" } },
   ],
 });
 pres.defineSlideMaster({
   title: "DARK_CLOSE",
-  background: { color: HEX.dk1 },
+  background: { color: "071421" },
   objects: [
-    { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 0.7, w: 5.2, h: 1.5, fontSize: 36, bold: true, color: C.background1, fontFace: THEME.headFontFace, valign: "bottom", align: "left", margin: 0 }, text: "" } },
-    { placeholder: { options: { name: "body", type: "body", x: 0.6, y: 2.4, w: 5.2, h: 1.3, fontSize: 15, color: C.accent6, valign: "top", margin: 0 }, text: "" } },
+    { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 0.7, w: 5.2, h: 1.5, fontSize: 36, bold: true, color: C.text1, fontFace: THEME.headFontFace, valign: "bottom", align: "left", margin: 0 }, text: "" } },
+    { placeholder: { options: { name: "body", type: "body", x: 0.6, y: 2.4, w: 5.2, h: 1.3, fontSize: 15, color: C.accent5, valign: "top", margin: 0 }, text: "" } },
   ],
 });
 pres.defineSlideMaster({
@@ -57,7 +57,7 @@ pres.defineSlideMaster({
 });
 
 // ---------- helpers ----------
-const shadow = () => ({ type: "outer", color: "1A3640", opacity: 0.14, blur: 6, offset: 2, angle: 90 });
+const shadow = () => ({ type: "outer", color: "000000", opacity: 0.35, blur: 6, offset: 2, angle: 90 });
 function card(s, x, y, w, h, opts = {}) {
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, {
     x, y, w, h, rectRadius: 0.08,
@@ -69,7 +69,7 @@ function card(s, x, y, w, h, opts = {}) {
 function iconCircle(s, x, y, d, icon, fill) {
   s.addShape(pres.shapes.OVAL, { x, y, w: d, h: d, fill: { color: fill || C.accent1 }, line: { type: "none" } });
   const p = d * 0.26;
-  s.addImage({ path: img(icon + "-w.png"), x: x + p, y: y + p, w: d - 2 * p, h: d - 2 * p });
+  s.addImage({ path: img(icon + "-d.png"), x: x + p, y: y + p, w: d - 2 * p, h: d - 2 * p });
 }
 function text(s, t, o) { s.addText(t, Object.assign({ isTextBox: true, margin: 0, valign: "top" }, o)); }
 function bullets(s, items, o) {
@@ -101,13 +101,13 @@ pres.addSection({ title: "Opening" });
 let s = pres.addSlide({ masterName: "DARK_TITLE", sectionTitle: "Opening" });
 s.addText("Compass", { placeholder: "title" });
 s.addText([
-  { text: "Right tool. Sharp prompt. Proven result.", options: { fontSize: 22, bold: true, color: C.background1, breakLine: true } },
+  { text: "Right tool. Sharp prompt. Proven result.", options: { fontSize: 22, bold: true, color: C.accent2, breakLine: true } },
   { text: " ", options: { fontSize: 8, breakLine: true } },
   { text: "Private GenAI coaching that guides every engineer the right way", options: { breakLine: true } },
   { text: "AI Engineering Enablement Coach  |  Hackathon submission", options: { fontSize: 12, breakLine: true } },
   { text: "Synthetic data only. Runs on a laptop. No API keys.", options: { fontSize: 12 } },
 ], { placeholder: "body" });
-s.addImage({ path: img("ai-compass.png"), x: 5.95, y: 0.95, w: 3.7, h: 3.7 });
+s.addImage({ path: img("ai-compass.png"), x: 5.8, y: 0.75, w: 4.05, h: 4.05 });
 s.addNotes("Compass coaches how engineers use AI, privately, and gives managers only aggregated, suppressed insights. Everything in this deck runs on synthetic data.");
 
 // ================= 2. Problem =================
@@ -135,7 +135,7 @@ s.addNotes("Sources: dora.dev and cloud.google.com DORA 2024 announcement; metr.
 
 // ================= 2b. Tagline explained =================
 s = content("Problem and solution", "How Compass guides every engineer the right way");
-s.addImage({ path: img("journey.png"), x: 1.6, y: 0.98, w: 6.8, h: 6.8 * 680 / 1800 });
+s.addImage({ path: img("journey.png"), x: 1.9, y: 1.08, w: 6.2, h: 6.2 * 700 / 1800 });
 const beats = [
   ["Right tool", C.accent1, "Approval and data rules first, then fit: Copilot, Claude Code, Devin, or no AI at all."],
   ["Sharp prompt", C.accent2, "A reviewed work package: confirmed facts, up to 3 answers, decisive files in full."],
@@ -159,7 +159,7 @@ const pillars = [
 pillars.forEach(([ic, h, b], i) => {
   const x = 0.5 + i * 3.1;
   card(s, x, 1.2, 2.8, 3.35, { name: "pillar-" + i });
-  iconCircle(s, x + 0.25, 1.4, 0.6, ic);
+  s.addImage({ path: img({ user: "person-engineer.png", users: "person-group.png", route: "person-coach.png" }[ic]), x: x + 0.22, y: 1.33, w: 0.72, h: 0.72 });
   text(s, h, { x: x + 0.25, y: 2.1, w: 2.35, h: 0.4, fontSize: 15, bold: true, color: C.text1, fontFace: THEME.headFontFace });
   bullets(s, b, { x: x + 0.25, y: 2.55, w: 2.35, h: 1.9, fontSize: 12 });
 });
@@ -286,7 +286,7 @@ s.addChart(pres.charts.BAR, [{ name: "Estimated tokens", labels: ["Deep package"
   showTitle: true, title: "Estimated tokens (characters / 4)", titleFontSize: 12, titleColor: HEX.dk1, titleFontFace: "+mn-lt",
   catAxisLabelColor: HEX.accent5, valAxisLabelColor: HEX.accent5, catAxisLabelFontFace: "+mn-lt", valAxisLabelFontFace: "+mn-lt",
   catAxisLabelFontSize: 11, valAxisLabelFontSize: 9, valAxisLabelFormatCode: "#,##0", valAxisMaxVal: 520000, valAxisMinVal: 0,
-  valGridLine: { color: "DCE6E4", size: 0.5 }, catGridLine: { style: "none" }, showLegend: false,
+  valGridLine: { color: "2F4A63", size: 0.5 }, catGridLine: { style: "none" }, showLegend: false,
 });
 text(s, "Estimates, not Copilot, Claude or Devin billing. On the tiny fixtures the package is slightly larger than the project (3,716 vs 2,977) because it adds goal, facts, questions and criteria.", { x: 0.5, y: 4.4, w: 9.0, h: 0.6, fontSize: 10, italic: true, color: C.accent5 });
 
@@ -416,12 +416,12 @@ s.addNotes("Hand-off instructions live in docs/handoff/. None of the assistants 
 s = pres.addSlide({ masterName: "DARK_CLOSE", sectionTitle: "Close" });
 s.addText("Points the way. Never points fingers.", { placeholder: "title" });
 s.addText([
-  { text: "Right tool. Sharp prompt. Proven result.", options: { bold: true, color: C.background1, breakLine: true } },
+  { text: "Right tool. Sharp prompt. Proven result.", options: { bold: true, color: C.accent2, breakLine: true } },
   { text: "Double-click Start-Coach.bat, or run python -m compass", options: { breakLine: true } },
   { text: "github.com/Kalyanraja/compass-ai-coach  |  MIT licensed", options: { fontSize: 12 } },
 ], { placeholder: "body" });
-s.addImage({ path: img("team.png"), x: 0.6, y: 3.85, w: 4.6, h: 4.6 * 420 / 1400 });
-s.addImage({ path: img("ai-compass.png"), x: 5.95, y: 0.95, w: 3.7, h: 3.7 });
+s.addImage({ path: img("team.png"), x: 0.6, y: 3.85, w: 4.6, h: 4.6 * 400 / 1500 });
+s.addImage({ path: img("ai-compass.png"), x: 5.8, y: 0.75, w: 4.05, h: 4.05 });
 
 (async () => {
   await pres.writeFile({ fileName: OUT });
