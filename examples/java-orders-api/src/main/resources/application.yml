@@ -1,0 +1,10 @@
+# SYNTHETIC FIXTURE - no secrets here by design
+server:
+  port: 8080
+spring:
+  application:
+    name: orders-api
+logging:
+  level:
+    root: INFO
+    com.example.orders: DEBUG

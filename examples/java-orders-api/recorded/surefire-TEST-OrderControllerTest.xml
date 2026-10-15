@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- RECORDED SAMPLE OUTPUT - hand-written for demo, not produced by a live build -->
+<!-- SYNTHETIC FIXTURE for Compass AI Workflow Coach evidence checks -->
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.example.orders.OrderControllerTest" time="1.284" tests="2" errors="0" skipped="0" failures="1">
+  <properties>
+    <property name="java.version" value="17.0.10"/>
+  </properties>
+  <testcase name="createOrderReturns201" classname="com.example.orders.OrderControllerTest" time="0.412"/>
+  <testcase name="createOrderWithMissingFieldsReturns400" classname="com.example.orders.OrderControllerTest" time="0.087">
+    <failure message="Status expected:&lt;400&gt; but was:&lt;500&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Status expected:<400> but was:<500>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at com.example.orders.OrderControllerTest.createOrderWithMissingFieldsReturns400(OrderControllerTest.java:36)
+]]></failure>
+  </testcase>
+</testsuite>

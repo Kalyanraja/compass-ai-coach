@@ -1,0 +1,37 @@
+SYNTHETIC FIXTURE - fix for LOGIN-7 that changes auth.py and adds a regression test.
+Apply from examples/py-login-service with: patch -p1 < fixes/fix-with-repro.diff
+
+--- a/login_service/auth.py
++++ b/login_service/auth.py
+@@ -32,4 +32,4 @@
+         return False
+ 
+     supplied_hash = hash_password(password)
+-    return hmac.compare_digest(str(supplied_length), str(record["password_length"]))
++    return hmac.compare_digest(supplied_hash, record["password_hash"])
+--- /dev/null
++++ b/tests/test_regression_wrong_password.py
+@@ -0,0 +1,23 @@
++"""Regression test for LOGIN-7: wrong password of the same length (SYNTHETIC FIXTURE)."""
++
++import unittest
++
++from login_service.auth import authenticate, make_user
++
++
++class WrongPasswordRegressionTest(unittest.TestCase):
++    def setUp(self):
++        self.users = {"demo.user": make_user("Correct-Horse-1")}
++
++    def test_same_length_wrong_password_is_rejected(self):
++        self.assertFalse(authenticate("demo.user", "Wrong-Battery-9", self.users))
++
++    def test_different_length_wrong_password_is_rejected(self):
++        self.assertFalse(authenticate("demo.user", "short", self.users))
++
++    def test_correct_password_still_accepted(self):
++        self.assertTrue(authenticate("demo.user", "Correct-Horse-1", self.users))
++
++
++if __name__ == "__main__":
++    unittest.main()

@@ -1,0 +1,11 @@
+SYNTHETIC FIXTURE - fix for LOGIN-7 that changes auth.py only, with no test added.
+Apply from examples/py-login-service with: patch -p1 < fixes/fix-no-repro.diff
+
+--- a/login_service/auth.py
++++ b/login_service/auth.py
+@@ -32,4 +32,4 @@
+         return False
+ 
+     supplied_hash = hash_password(password)
+-    return hmac.compare_digest(str(supplied_length), str(record["password_length"]))
++    return hmac.compare_digest(supplied_hash, record["password_hash"])

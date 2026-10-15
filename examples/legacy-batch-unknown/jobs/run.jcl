@@ -1,0 +1,8 @@
+//* SYNTHETIC FIXTURE - JCL-like text for unknown-stack fallback tests
+//* Not submitted, not run, not from any real system.
+//NIGHTLY  JOB (ACCT),'SYNTHETIC NIGHTLY',CLASS=A,MSGCLASS=X
+//STEP01   EXEC PGM=NIGHTLY
+//INFILE   DD DSN=SYNTH.DEMO.INPUT,DISP=SHR
+//OUTFILE  DD DSN=SYNTH.DEMO.OUTPUT,DISP=(NEW,CATLG,DELETE),
+//            SPACE=(TRK,(5,5)),DCB=(RECFM=FB,LRECL=80)
+//SYSOUT   DD SYSOUT=*

@@ -1,0 +1,7 @@
+# SYNTHETIC FIXTURE - demo project for Compass AI Workflow Coach
+[project]
+name = "py-login-service"
+version = "0.1.0"
+description = "SYNTHETIC login module fixture with seeded issues, for demos and tests only"
+requires-python = ">=3.9"
+dependencies = []

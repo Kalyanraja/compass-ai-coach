@@ -1,0 +1,76 @@
+# SYNTHETIC FIXTURE - demo spec for Compass AI Workflow Coach, not a real API
+openapi: 3.0.3
+info:
+  title: Orders API (synthetic)
+  version: 0.1.0
+  description: Synthetic orders service used to demo standards gap detection.
+servers:
+  - url: http://localhost:8080
+paths:
+  /orders:
+    post:
+      operationId: createOrder
+      summary: Create an order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        '201':
+          description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+  /orders/{id}:
+    get:
+      operationId: getOrder
+      summary: Get an order by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: Order not found
+components:
+  schemas:
+    CreateOrderRequest:
+      type: object
+      required:
+        - customerId
+        - sku
+        - quantity
+      properties:
+        customerId:
+          type: string
+        sku:
+          type: string
+        quantity:
+          type: integer
+          minimum: 1
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        sku:
+          type: string
+        quantity:
+          type: integer
+        total:
+          type: number
+        status:
+          type: string
