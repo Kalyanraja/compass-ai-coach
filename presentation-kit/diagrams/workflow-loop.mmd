@@ -1,0 +1,10 @@
+flowchart LR
+  G[1 · Goal] --> F[2 · Project facts<br/>file:line sources]
+  F --> Q[3 · Up to 3<br/>missing questions]
+  Q --> T[4 · Right tool<br/>even no AI]
+  T --> P[5 · Work package<br/>sized to budget]
+  P --> C[6 · Local checks<br/>+ imported evidence]
+  C --> V[7 · Verdict · next action<br/>· one lesson]
+  V -. learned feedback .- G
+
+  style V fill:#2dd4bf,color:#0b1220

@@ -1,0 +1,54 @@
+version: v2
+title: "Compass — Hackathon Pitch"
+size: [960, 540]
+theme:
+  colors:
+    bg: "#0B1220"
+    bg2: "#101A2E"
+    line: "#24345A"
+    primary: "#2DD4BF"
+    cyan: "#22D3EE"
+    accent: "#8B5CF6"
+    text: "#E6EDF7"
+    dim: "#8CA0C0"
+    warn: "#FBBF24"
+  textStyles:
+    kicker:
+      fontSize: 12
+      color: "$primary"
+      letterSpacing: 3
+      bold: true
+    claim:
+      fontSize: 30
+      color: "$text"
+      bold: true
+      lineHeight: 1.25
+    body:
+      fontSize: 14
+      color: "$dim"
+      lineHeight: 1.55
+    bignum:
+      fontSize: 52
+      color: "$text"
+      bold: true
+    small:
+      fontSize: 11
+      color: "$dim"
+      lineHeight: 1.5
+pages:
+  - pages/1_cover.page
+  - pages/2_problem.page
+  - pages/3_gap.page
+  - pages/4_current-future.page
+  - pages/5_solution.page
+  - pages/6_competitive.page
+  - pages/7_how-it-works.page
+  - pages/8_demos.page
+  - pages/9_evidence.page
+  - pages/10_architecture.page
+  - pages/11_trust.page
+  - pages/12_rubric.page
+  - pages/13_business.page
+  - pages/14_nfr.page
+  - pages/15_roadmap.page
+  - pages/16_closing.page

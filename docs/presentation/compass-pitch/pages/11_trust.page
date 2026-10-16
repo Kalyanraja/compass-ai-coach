@@ -1,0 +1,107 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [80, 48, 500, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: "09 — RESPONSIBLE AI & GUARDRAILS"
+  - elementId: claim
+    elementType: text
+    bounds: [80, 84, 560, 44]
+    content:
+      style: "$claim"
+      wrap: false
+      text: |
+        <p>Enablement, not evaluation — <span style="color:$primary">by design and by test</span>.</p>
+  - elementId: g1-icon
+    elementType: icon
+    bounds: [80, 160, 22, 22]
+    iconName: "fas:lock"
+    fill: {type: solid, color: "$primary"}
+  - elementId: g1
+    elementType: text
+    bounds: [116, 154, 400, 70]
+    content:
+      style: "$body"
+      text: |
+        <p><span style="font-size:16px; color:$text"><strong>Private by architecture</strong></span> — runs locally on stdlib Python. No API keys, no MCP, no cloud. Works fully offline; egress-blocked tests prove it.</p>
+  - elementId: g-sep1
+    elementType: line
+    bounds: [80, 232, 440, 2]
+    viewBox: [440, 2]
+    points: "0,1 440,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: g2-icon
+    elementType: icon
+    bounds: [80, 250, 22, 22]
+    iconName: "fas:shield-halved"
+    fill: {type: solid, color: "$primary"}
+  - elementId: g2
+    elementType: text
+    bounds: [116, 244, 400, 70]
+    content:
+      style: "$body"
+      text: |
+        <p><span style="font-size:16px; color:$text"><strong>No people scoring</strong></span> — k-anonymity (k ≥ 5), differencing protection, no drill-down, no ranking. Aggregation is tested behavior, not a policy note.</p>
+  - elementId: g-sep2
+    elementType: line
+    bounds: [80, 322, 440, 2]
+    viewBox: [440, 2]
+    points: "0,1 440,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: g3-icon
+    elementType: icon
+    bounds: [80, 340, 22, 22]
+    iconName: "fas:hand"
+    fill: {type: solid, color: "$primary"}
+  - elementId: g3
+    elementType: text
+    bounds: [116, 334, 400, 70]
+    content:
+      style: "$body"
+      text: |
+        <p><span style="font-size:16px; color:$text"><strong>Human review points</strong></span> — scans and tests run only on approval. Generated prompts demand a plan and review before merge. Compass never applies changes.</p>
+  - elementId: g-sep3
+    elementType: line
+    bounds: [80, 412, 440, 2]
+    viewBox: [440, 2]
+    points: "0,1 440,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: g4-icon
+    elementType: icon
+    bounds: [80, 430, 22, 22]
+    iconName: "fas:scale-balanced"
+    fill: {type: solid, color: "$primary"}
+  - elementId: g4
+    elementType: text
+    bounds: [116, 424, 400, 76]
+    content:
+      style: "$body"
+      text: |
+        <p><span style="font-size:16px; color:$text"><strong>Governed and explainable</strong></span> — deterministic core (hallucination-free by construction), evidence record ids on every recommendation, non-causal labels, NIST AI RMF and ISO/IEC 42001 mapping.</p>
+  - elementId: shot
+    elementType: image
+    bounds: [590, 140, 310, 285]
+    src: "media/9-trust.png"
+    fit: {mode: cover}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: shot-cap
+    elementType: text
+    bounds: [590, 434, 310, 20]
+    content:
+      style: "$small"
+      wrap: false
+      text: The in-app trust and privacy page
+  - elementId: pageno
+    elementType: text
+    bounds: [900, 512, 36, 16]
+    content:
+      style: "$small"
+      align: [right, middle]
+      wrap: false
+      text: "11"

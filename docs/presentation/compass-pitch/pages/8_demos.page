@@ -1,0 +1,93 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [80, 48, 500, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: "06 — USE CASE COVERAGE: THREE DEMOS, FIVE MINUTES"
+  - elementId: d1-title
+    elementType: text
+    bounds: [80, 92, 470, 26]
+    content:
+      fontSize: 18
+      bold: true
+      color: "$text"
+      wrap: false
+      text: "Catch a missing API requirement"
+  - elementId: d1-body
+    elementType: text
+    bounds: [80, 122, 470, 74]
+    content:
+      style: "$body"
+      text: |
+        <p>The story says nothing about auth, errors or headers. Compass finds the project standard (standards/api-standard.md:10) and asks. Checks then flag the spec — no X-Correlation-Id, no 400 on POST, no auth. <span style="color:$warn"><strong>Verdict: Not accepted yet.</strong></span></p>
+  - elementId: d-sep1
+    elementType: line
+    bounds: [80, 204, 470, 2]
+    viewBox: [470, 2]
+    points: "0,1 470,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: d2-title
+    elementType: text
+    bounds: [80, 218, 470, 26]
+    content:
+      fontSize: 18
+      bold: true
+      color: "$text"
+      wrap: false
+      text: "Reject a fix without reproduction evidence"
+  - elementId: d2-body
+    elementType: text
+    bounds: [80, 248, 470, 74]
+    content:
+      style: "$body"
+      text: |
+        <p>Tests run on temporary copies; your files are never changed. A fix with no failing-then-passing regression test is rejected. The fix with that test is <span style="color:$primary"><strong>accepted with evidence</strong></span> — reproducible, reviewable, honest.</p>
+  - elementId: d-sep2
+    elementType: line
+    bounds: [80, 330, 470, 2]
+    viewBox: [470, 2]
+    points: "0,1 470,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: d3-title
+    elementType: text
+    bounds: [80, 344, 470, 26]
+    content:
+      fontSize: 18
+      bold: true
+      color: "$text"
+      wrap: false
+      text: "A test that catches a seeded defect"
+  - elementId: d3-body
+    elementType: text
+    bounds: [80, 374, 470, 74]
+    content:
+      style: "$body"
+      text: |
+        <p>A generated test detects the planted defect at auth.py:35. Smoke tests that pass on broken code are flagged as weak, with security candidates reported — a synthetic credential and shell=True.</p>
+  - elementId: shot
+    elementType: image
+    bounds: [600, 110, 300, 275]
+    src: "media/api-6-evidence.png"
+    fit: {mode: cover}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: shot-cap
+    elementType: text
+    bounds: [600, 396, 300, 36]
+    content:
+      style: "$small"
+      text: |
+        <p>Evidence step in the workflow coach — checks with imported results and file:line citations.</p>
+  - elementId: pageno
+    elementType: text
+    bounds: [900, 500, 36, 16]
+    content:
+      style: "$small"
+      align: [right, middle]
+      wrap: false
+      text: "08"

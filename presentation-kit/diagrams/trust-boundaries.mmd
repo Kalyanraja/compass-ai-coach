@@ -1,0 +1,18 @@
+flowchart TB
+  subgraph Private["Private zone — never aggregated"]
+    ENG[Engineer]
+    PDB[(private.db<br/>feedback + history)]
+  end
+  subgraph Shared["Shared zone — k-anonymous only"]
+    SDB[(signals.db<br/>metadata, read-only)]
+    AGG[Aggregator<br/>k ≥ 5 · differencing protection]
+    MGR[Manager / leader view]
+  end
+  ENG --> PDB
+  ENG --> SDB
+  SDB --> AGG
+  AGG -->|patterns shared by 5+ engineers only<br/>no ids · no drill-down · suppressed teams excluded| MGR
+  PDB -. physically separate file<br/>aggregator never opens it .- AGG
+
+  style PDB fill:#101a2e,stroke:#2dd4bf,stroke-dasharray: 5 5
+  style AGG fill:#101a2e,stroke:#2dd4bf

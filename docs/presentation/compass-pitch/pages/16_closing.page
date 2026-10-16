@@ -1,0 +1,64 @@
+pageType: final
+background:
+  type: gradient
+  gradientType: linear
+  angle: 120
+  stops:
+    - {position: 0, color: "#0B1220"}
+    - {position: 1, color: "#070B14"}
+elements:
+  - elementId: watermark
+    elementType: icon
+    bounds: [660, 240, 260, 260]
+    iconName: "fas:compass"
+    fill: {type: solid, color: "#2DD4BF"}
+    opacity: 0.08
+  - elementId: kicker
+    elementType: text
+    bounds: [80, 130, 500, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: "THE ASK"
+  - elementId: manifesto
+    elementType: text
+    bounds: [76, 164, 780, 120]
+    content:
+      fontSize: 40
+      bold: true
+      color: "$text"
+      lineHeight: 1.25
+      text: |
+        <p>Give every engineer a coach —</p>
+        <p>not a <span style="color:$warn">scorecard</span>.</p>
+  - elementId: rule
+    elementType: line
+    bounds: [80, 300, 560, 2]
+    viewBox: [560, 2]
+    points: "0,1 560,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: run
+    elementType: text
+    bounds: [80, 320, 620, 66]
+    content:
+      style: "$body"
+      fontSize: 15
+      text: |
+        <p>Try it: double-click <span style="color:$text">Start-Coach.bat</span> — or <span style="color:$text">python -m compass</span> on any OS. No install, no keys, no internet.</p>
+        <p>Demo video, PPT guidelines and diagrams: <span style="color:$text">presentation-kit/</span> in this repository.</p>
+  - elementId: repo
+    elementType: text
+    bounds: [80, 470, 620, 22]
+    content:
+      style: "$small"
+      wrap: false
+      text: |
+        <p><a href="https://github.com/Kalyanraja/compass-ai-coach">github.com/Kalyanraja/compass-ai-coach</a>  ·  MIT license</p>
+  - elementId: pageno
+    elementType: text
+    bounds: [900, 512, 36, 16]
+    content:
+      style: "$small"
+      align: [right, middle]
+      wrap: false
+      text: "16"

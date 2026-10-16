@@ -1,0 +1,283 @@
+pageType: content
+background:
+  type: solid
+  color: $bg
+elements:
+- elementId: kicker
+  elementType: text
+  bounds:
+  - 80
+  - 48
+  - 500
+  - 20
+  content:
+    style: $kicker
+    wrap: false
+    text: 08 — SOLUTION ARCHITECTURE
+- elementId: band1-label
+  elementType: text
+  bounds:
+  - 80
+  - 92
+  - 200
+  - 18
+  content:
+    style: $small
+    color: $primary
+    letterSpacing: 2
+    bold: true
+    wrap: false
+    text: INPUTS
+- elementId: band1
+  elementType: shape
+  bounds:
+  - 80
+  - 112
+  - 560
+  - 56
+  shapeName: rect
+  fill:
+    type: solid
+    color: $bg2
+  border:
+    style: solid
+    width: 1
+    color: $line
+- elementId: band1-text
+  elementType: text
+  bounds:
+  - 96
+  - 112
+  - 530
+  - 56
+  content:
+    fontSize: 13
+    color: $text
+    align:
+    - left
+    - middle
+    wrap: false
+    text: Synthetic usage + delivery signals  ·  Jira story, paste or CSV
+- elementId: arrow1
+  elementType: line
+  bounds:
+  - 356
+  - 172
+  - 2
+  - 26
+  viewBox:
+  - 2
+  - 26
+  points: 1,0 1,26
+  arrow:
+  - null
+  - null
+  border:
+    style: solid
+    width: 2
+    color: $primary
+- elementId: band2-label
+  elementType: text
+  bounds:
+  - 80
+  - 204
+  - 300
+  - 18
+  content:
+    style: $small
+    color: $primary
+    letterSpacing: 2
+    bold: true
+    wrap: false
+    text: PYTHON STANDARD LIBRARY — compass/
+- elementId: band2
+  elementType: shape
+  bounds:
+  - 80
+  - 224
+  - 560
+  - 96
+  shapeName: rect
+  fill:
+    type: solid
+    color: $bg2
+  border:
+    style: solid
+    width: 1
+    color: $line
+- elementId: band2-text
+  elementType: text
+  bounds:
+  - 96
+  - 232
+  - 530
+  - 80
+  content:
+    fontSize: 13
+    color: $text
+    lineHeight: 1.6
+    align:
+    - left
+    - middle
+    text: |
+      <p>Recommendation engine (11 named rules) · Aggregator (k-anonymity, no ids)</p>
+      <p>Prompt coach · Tool router · Evaluation · Compliance scanner</p>
+- elementId: arrow2
+  elementType: line
+  bounds:
+  - 356
+  - 324
+  - 2
+  - 26
+  viewBox:
+  - 2
+  - 26
+  points: 1,0 1,26
+  arrow:
+  - null
+  - null
+  border:
+    style: solid
+    width: 2
+    color: $primary
+- elementId: band3-label
+  elementType: text
+  bounds:
+  - 80
+  - 356
+  - 300
+  - 18
+  content:
+    style: $small
+    color: $primary
+    letterSpacing: 2
+    bold: true
+    wrap: false
+    text: OFFLINE WEB UI — web/ (VANILLA JS)
+- elementId: band3
+  elementType: shape
+  bounds:
+  - 80
+  - 376
+  - 560
+  - 56
+  shapeName: rect
+  fill:
+    type: solid
+    color: $bg2
+  border:
+    style: solid
+    width: 1
+    color: $line
+- elementId: band3-text
+  elementType: text
+  bounds:
+  - 96
+  - 376
+  - 530
+  - 56
+  content:
+    fontSize: 13
+    color: $text
+    align:
+    - left
+    - middle
+    wrap: false
+    text: Engineer (private)  ·  Manager / leader (aggregated)  ·  Enablement
+- elementId: db1
+  elementType: shape
+  bounds:
+  - 672
+  - 112
+  - 120
+  - 88
+  shapeName: can
+  fill:
+    type: solid
+    color: $bg2
+  border:
+    style: solid
+    width: 1
+    color: $line
+- elementId: db1t
+  elementType: text
+  bounds:
+  - 672
+  - 140
+  - 120
+  - 40
+  content:
+    fontSize: 11
+    color: $dim
+    align:
+    - center
+    - middle
+    lineHeight: 1.3
+    text: signals.db read-only metadata
+- elementId: db2
+  elementType: shape
+  bounds:
+  - 672
+  - 256
+  - 120
+  - 88
+  shapeName: can
+  fill:
+    type: solid
+    color: $bg2
+  border:
+    style: dash
+    width: 1
+    color: $primary
+- elementId: db2t
+  elementType: text
+  bounds:
+  - 672
+  - 284
+  - 120
+  - 40
+  content:
+    fontSize: 11
+    color: $primary
+    align:
+    - center
+    - middle
+    lineHeight: 1.3
+    text: private.db engineer-owned, never aggregated
+- elementId: kit
+  elementType: text
+  bounds:
+  - 672
+  - 380
+  - 208
+  - 52
+  content:
+    fontSize: 12
+    color: $dim
+    lineHeight: 1.4
+    text: '+ agent-kit files: prompts, skills and playbooks dropped into any repo'
+- elementId: note
+  elementType: text
+  bounds:
+  - 80
+  - 458
+  - 800
+  - 60
+  content:
+    style: $body
+    text: |
+      <p>Two physically separated stores — feedback never reaches aggregation. Role-based API with HMAC-signed sessions; every response is scoped by the session. Full diagrams and request flows: docs/architecture.md.</p>
+- elementId: pageno
+  elementType: text
+  bounds:
+  - 900
+  - 512
+  - 36
+  - 16
+  content:
+    style: $small
+    align:
+    - right
+    - middle
+    wrap: false
+    text: '10'

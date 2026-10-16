@@ -1,0 +1,92 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [80, 48, 400, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: "02 — THE GAP"
+  - elementId: claim
+    elementType: text
+    bounds: [80, 84, 800, 46]
+    content:
+      style: "$claim"
+      wrap: false
+      text: |
+        <p>Usage dashboards measure <span style="color:$warn">how much</span> AI is used.</p>
+  - elementId: claim2
+    elementType: text
+    bounds: [80, 136, 800, 46]
+    content:
+      fontSize: 30
+      bold: true
+      color: "$primary"
+      wrap: false
+      text: |
+        <p>Nothing tells an engineer what to do next.</p>
+  - elementId: col1-head
+    elementType: text
+    bounds: [80, 210, 360, 22]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$dim"
+      letterSpacing: 2
+      wrap: false
+      text: WHAT TEAMS SEE TODAY
+  - elementId: col1-body
+    elementType: text
+    bounds: [80, 242, 360, 130]
+    content:
+      style: "$body"
+      text: |
+        <ul><li>License seats and token counts</li><li>Who used which tool, how often</li><li>Charts that invite ranking people</li><li>Generic training, same for everyone</li></ul>
+  - elementId: vline
+    elementType: line
+    bounds: [480, 210, 2, 165]
+    viewBox: [2, 165]
+    points: "1,0 1,165"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: col2-head
+    elementType: text
+    bounds: [520, 210, 360, 22]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$primary"
+      letterSpacing: 2
+      wrap: false
+      text: WHAT TEAMS ACTUALLY NEED
+  - elementId: col2-body
+    elementType: text
+    bounds: [520, 242, 360, 130]
+    content:
+      style: "$body"
+      color: "$text"
+      text: |
+        <ul><li>Which workflow fits which task</li><li>Whether the AI output is correct</li><li>One evidence-backed next step, privately</li><li>Practices shared only as team patterns</li></ul>
+  - elementId: sep
+    elementType: line
+    bounds: [80, 396, 800, 2]
+    viewBox: [800, 2]
+    points: "0,1 800,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: privacy
+    elementType: text
+    bounds: [80, 414, 800, 56]
+    content:
+      style: "$body"
+      text: |
+        <p>And there is a second problem: individual-level usage data creates a privacy trap. SPACE guidance — activity metrics must never be used alone to reward or penalize. When engineers fear evaluation, they hide real usage and coaching fails before it starts.</p>
+  - elementId: pageno
+    elementType: text
+    bounds: [900, 500, 36, 16]
+    content:
+      style: "$small"
+      align: [right, middle]
+      wrap: false
+      text: "03"

@@ -1,0 +1,71 @@
+pageType: cover
+background:
+  type: gradient
+  gradientType: linear
+  angle: 120
+  stops:
+    - {position: 0, color: "#0B1220"}
+    - {position: 1, color: "#070B14"}
+elements:
+  - elementId: watermark
+    elementType: icon
+    bounds: [640, 90, 300, 300]
+    iconName: "fas:compass"
+    fill: {type: solid, color: "#2DD4BF"}
+    opacity: 0.08
+  - elementId: kicker
+    elementType: text
+    bounds: [80, 120, 500, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: HACKATHON PITCH · AI ENGINEERING ENABLEMENT
+  - elementId: title
+    elementType: text
+    bounds: [76, 150, 560, 90]
+    content:
+      fontSize: 72
+      bold: true
+      color: "$text"
+      wrap: false
+      letterSpacing: 2
+      text: Compass
+  - elementId: tagline
+    elementType: text
+    bounds: [80, 252, 620, 60]
+    content:
+      fontSize: 22
+      color: "$primary"
+      lineHeight: 1.35
+      text: |
+        <p>Trusted, private workflow coaching for GenAI adoption.</p>
+  - elementId: rule
+    elementType: line
+    bounds: [80, 330, 560, 2]
+    viewBox: [560, 2]
+    points: "0,1 560,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: facts
+    elementType: text
+    bounds: [80, 348, 620, 60]
+    content:
+      style: "$body"
+      text: |
+        <p>Works fully offline  ·  No API keys, no MCP, no cloud  ·  Standard-library Python  ·  MIT license</p>
+        <p>Coaches <span style="color:$text">how</span> AI is used — never scores, ranks or profiles people</p>
+  - elementId: repo
+    elementType: text
+    bounds: [80, 470, 620, 20]
+    content:
+      style: "$small"
+      wrap: false
+      text: |
+        <p><a href="https://github.com/Kalyanraja/compass-ai-coach">github.com/Kalyanraja/compass-ai-coach</a></p>
+  - elementId: pageno
+    elementType: text
+    bounds: [900, 500, 36, 16]
+    content:
+      style: "$small"
+      align: [right, middle]
+      wrap: false
+      text: "01"

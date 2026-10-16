@@ -1,0 +1,82 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [80, 48, 500, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: "12 — NFRs & OPERATIONAL GOVERNANCE"
+  - elementId: c1-head
+    elementType: text
+    bounds: [80, 92, 400, 20]
+    content: {fontSize: 13, bold: true, color: "$primary", letterSpacing: 2, wrap: false, text: "SCALABILITY & PERFORMANCE"}
+  - elementId: c1-body
+    elementType: text
+    bounds: [80, 120, 400, 130]
+    content:
+      style: "$body"
+      fontSize: 13
+      text: |
+        <ul><li>Single-user laptop today; modular services scale to team and portfolio deployments</li><li>Local-first: no network latency, no quota, works on a plane</li><li>Context budgeter keeps agent packages ~15k tokens vs ~454k full-repo paste (estimates)</li><li>0 inference cost — the deterministic core never calls a model</li></ul>
+  - elementId: c2-head
+    elementType: text
+    bounds: [520, 92, 400, 20]
+    content: {fontSize: 13, bold: true, color: "$primary", letterSpacing: 2, wrap: false, text: "SECURITY & COMPLIANCE"}
+  - elementId: c2-body
+    elementType: text
+    bounds: [520, 120, 400, 130]
+    content:
+      style: "$body"
+      fontSize: 13
+      text: |
+        <ul><li>HMAC-signed sessions; every API scoped by role — no parameter selects another user</li><li>Access audit (role, path, status), security headers, schema allow-list</li><li>PII/code free-text scan, synthetic-source check, no-ranking API check</li><li>Real scanners via approval flow: gitleaks, Semgrep (local rules), Spectral</li></ul>
+  - elementId: mid-sep
+    elementType: line
+    bounds: [80, 268, 800, 2]
+    viewBox: [800, 2]
+    points: "0,1 800,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: c3-head
+    elementType: text
+    bounds: [80, 288, 400, 20]
+    content: {fontSize: 13, bold: true, color: "$primary", letterSpacing: 2, wrap: false, text: "RELIABILITY & RESILIENCE"}
+  - elementId: c3-body
+    elementType: text
+    bounds: [80, 316, 400, 130]
+    content:
+      style: "$body"
+      fontSize: 13
+      text: |
+        <ul><li>74/74 tests on CI (Windows + Linux, Python 3.9 & 3.12)</li><li>Degrades gracefully: no Jira, no scanners, no network — core still works</li><li>Time-bounded external calls; never blocks the coaching loop</li><li>Deterministic synthetic fixtures — reproducible demos and evals</li></ul>
+  - elementId: c4-head
+    elementType: text
+    bounds: [520, 288, 400, 20]
+    content: {fontSize: 13, bold: true, color: "$primary", letterSpacing: 2, wrap: false, text: "OPERATIONAL & ADOPTION READINESS"}
+  - elementId: c4-body
+    elementType: text
+    bounds: [520, 316, 400, 130]
+    content:
+      style: "$body"
+      fontSize: 13
+      text: |
+        <ul><li>One double-click to run; 8-question setup; doctor command verifies the environment</li><li>Recommendation in 2 interactions, ready prompt in 3</li><li>MIT license, NOTICE for third-party material, version-controlled with CI</li><li>Fully documented: README, setup, user guide, assumptions, limitations</li></ul>
+  - elementId: src
+    elementType: text
+    bounds: [80, 470, 800, 26]
+    content:
+      style: "$small"
+      wrap: false
+      text: |
+        <p>Complete NFR checklist, performance figures and operational model: docs/nfr-security.md.</p>
+  - elementId: pageno
+    elementType: text
+    bounds: [900, 512, 36, 16]
+    content:
+      style: "$small"
+      align: [right, middle]
+      wrap: false
+      text: "14"

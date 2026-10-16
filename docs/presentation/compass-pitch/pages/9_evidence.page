@@ -1,0 +1,107 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [80, 48, 500, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: "07 — TESTING EVIDENCE"
+  - elementId: claim
+    elementType: text
+    bounds: [80, 80, 800, 40]
+    content:
+      fontSize: 24
+      bold: true
+      color: "$text"
+      wrap: false
+      text: |
+        <p>Measured, not promised. <span style="color:$dim; font-size:14px">(the team wrote the evals — treat them as regression tests, not held-out accuracy)</span></p>
+  - elementId: m1-num
+    elementType: text
+    bounds: [80, 140, 160, 58]
+    content: {fontSize: 40, bold: true, color: "$primary", wrap: false, text: "74/74"}
+  - elementId: m1-label
+    elementType: text
+    bounds: [80, 198, 160, 56]
+    content: {style: "$body", fontSize: 12, text: "unit and workflow tests pass, AC1–AC14 plus security-boundary and egress-blocked cases"}
+  - elementId: m-sep1
+    elementType: line
+    bounds: [256, 140, 2, 120]
+    viewBox: [2, 120]
+    points: "1,0 1,120"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: m2-num
+    elementType: text
+    bounds: [280, 140, 160, 58]
+    content: {fontSize: 40, bold: true, color: "$primary", wrap: false, text: "25/25"}
+  - elementId: m2-label
+    elementType: text
+    bounds: [280, 198, 160, 56]
+    content: {style: "$body", fontSize: 12, text: "recommendation-quality eval against a target of 80%, plus 37/37 personas, 16/16 routing"}
+  - elementId: m-sep2
+    elementType: line
+    bounds: [456, 140, 2, 120]
+    viewBox: [2, 120]
+    points: "1,0 1,120"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: m3-num
+    elementType: text
+    bounds: [480, 140, 160, 58]
+    content: {fontSize: 40, bold: true, color: "$primary", wrap: false, text: "0"}
+  - elementId: m3-label
+    elementType: text
+    bounds: [480, 198, 160, 56]
+    content: {style: "$body", fontSize: 12, text: "tokens used by the coaching core — the deterministic engine needs no model, no API, no cloud"}
+  - elementId: m-sep3
+    elementType: line
+    bounds: [656, 140, 2, 120]
+    viewBox: [2, 120]
+    points: "1,0 1,120"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: m4-num
+    elementType: text
+    bounds: [680, 140, 210, 58]
+    content: {fontSize: 40, bold: true, color: "$primary", wrap: false, text: "15k vs 454k"}
+  - elementId: m4-label
+    elementType: text
+    bounds: [680, 198, 210, 56]
+    content: {style: "$body", fontSize: 12, text: "estimated context tokens for a Deep work package vs pasting the whole 386-file repo — labeled estimates"}
+  - elementId: bottom-sep
+    elementType: line
+    bounds: [80, 280, 800, 2]
+    viewBox: [800, 2]
+    points: "0,1 800,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: detail
+    elementType: text
+    bounds: [80, 300, 430, 170]
+    content:
+      style: "$body"
+      text: |
+        <ul><li>Real scanners through the approval flow: gitleaks 8.30.1, Semgrep 1.181.0 (local rules), Spectral 6.17.0</li><li>CI on Windows and Linux, Python 3.9 and 3.12</li><li>Egress-blocked tests: no network needed, ever</li><li>Security-boundary tests: role APIs, k-anonymity and no-ranking behavior are tested, not hoped for</li></ul>
+  - elementId: shot
+    elementType: image
+    bounds: [550, 300, 330, 170]
+    src: "media/api-2-facts.png"
+    fit: {mode: cover}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: src
+    elementType: text
+    bounds: [80, 486, 700, 26]
+    content:
+      style: "$small"
+      wrap: false
+      text: |
+        <p>Method and raw outputs: docs/measurements.md and reports/ in the repository.</p>
+  - elementId: pageno
+    elementType: text
+    bounds: [900, 512, 36, 16]
+    content:
+      style: "$small"
+      align: [right, middle]
+      wrap: false
+      text: "09"

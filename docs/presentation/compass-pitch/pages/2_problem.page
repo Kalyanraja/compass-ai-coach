@@ -1,0 +1,104 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [80, 48, 400, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: "01 — THE PROBLEM"
+  - elementId: claim
+    elementType: text
+    bounds: [80, 84, 460, 158]
+    content:
+      style: "$claim"
+      text: |
+        <p>Every engineer already has AI tools.</p>
+        <p>Adoption was never the bottleneck — <span style="color:$primary">guidance</span> is.</p>
+  - elementId: claim-body
+    elementType: text
+    bounds: [80, 262, 440, 96]
+    content:
+      style: "$body"
+      text: |
+        <p>Engineers have Copilot, Claude Code and Devin. What they lack is project-aware guidance: which workflow fits which task, and whether the AI output is actually correct.</p>
+  - elementId: vline
+    elementType: line
+    bounds: [566, 90, 2, 350]
+    viewBox: [2, 350]
+    points: "1,0 1,350"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: stat1-num
+    elementType: text
+    bounds: [600, 78, 300, 62]
+    content:
+      style: "$bignum"
+      wrap: false
+      text: 90%
+  - elementId: stat1-label
+    elementType: text
+    bounds: [600, 140, 290, 42]
+    content:
+      style: "$body"
+      text: |
+        <p>of developers use AI (DORA 2025); median 2 hours a day</p>
+  - elementId: stat-sep1
+    elementType: line
+    bounds: [600, 192, 290, 2]
+    viewBox: [290, 2]
+    points: "0,1 290,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: stat2-num
+    elementType: text
+    bounds: [600, 204, 300, 62]
+    content:
+      style: "$bignum"
+      color: "$warn"
+      wrap: false
+      text: "−7.2%"
+  - elementId: stat2-label
+    elementType: text
+    bounds: [600, 266, 290, 42]
+    content:
+      style: "$body"
+      text: |
+        <p>delivery stability lost per 25% rise in AI adoption (DORA 2024)</p>
+  - elementId: stat-sep2
+    elementType: line
+    bounds: [600, 318, 290, 2]
+    viewBox: [290, 2]
+    points: "0,1 290,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: stat3-num
+    elementType: text
+    bounds: [600, 330, 300, 62]
+    content:
+      style: "$bignum"
+      color: "$warn"
+      wrap: false
+      text: "−19%"
+  - elementId: stat3-label
+    elementType: text
+    bounds: [600, 392, 290, 42]
+    content:
+      style: "$body"
+      text: |
+        <p>speed for experienced devs on familiar code — while feeling 20% faster (METR 2025)</p>
+  - elementId: src
+    elementType: text
+    bounds: [80, 490, 700, 30]
+    content:
+      style: "$small"
+      text: |
+        <p>Sources: DORA State of DevOps 2024 & 2025; METR randomized controlled trial 2025. Also: underspecified prompts cut first-try correctness by 20–30% (research brief, repo docs/research/evidence.md).</p>
+  - elementId: pageno
+    elementType: text
+    bounds: [900, 500, 36, 16]
+    content:
+      style: "$small"
+      align: [right, middle]
+      wrap: false
+      text: "02"

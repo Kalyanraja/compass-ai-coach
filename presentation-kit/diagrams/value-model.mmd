@@ -1,0 +1,31 @@
+flowchart LR
+  subgraph Inputs["Inputs (all labeled)"]
+    N[Number of engineers N]
+    E[Engaged share E<br/>assumption]
+    H[Hours saved / week H<br/>assumption]
+    W[Working weeks W = 46<br/>assumption]
+    R[Loaded rate R ≈ $112<br/>derived from BLS]
+  end
+  V["Annual capacity value<br/>V = N × E × H × W × R"]
+  subgraph Scenarios["Scenarios @ N = 1,000"]
+    C[Conservative<br/>30% · 0.5 h → $0.77M · ROI 415%]
+    X[Expected<br/>50% · 1.5 h → $3.86M · ROI 2,476%]
+    O[Optimistic<br/>70% · 3.0 h → $10.8M · ROI 7,113%]
+  end
+  CAVEAT["Saved time = capacity, not cash<br/>quality upside excluded (conservative)<br/>report pilot results as association"]
+
+  N --> V
+  E --> V
+  H --> V
+  W --> V
+  R --> V
+  V --> C
+  V --> X
+  V --> O
+  C --> CAVEAT
+  X --> CAVEAT
+  O --> CAVEAT
+
+  style E fill:#16233c,stroke:#fbbf24
+  style H fill:#16233c,stroke:#fbbf24
+  style CAVEAT fill:#101a2e,stroke:#2dd4bf

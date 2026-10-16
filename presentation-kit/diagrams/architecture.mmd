@@ -1,0 +1,30 @@
+flowchart LR
+  subgraph Inputs
+    S[Synthetic signals<br/>GenAI usage + PR/CI metadata]
+    J[Jira story or CSV export]
+  end
+  subgraph Stores
+    SDB[(signals.db<br/>read-only, record ids)]
+    PDB[(private.db<br/>feedback, history)]
+  end
+  subgraph Services["compass/ (Python stdlib)"]
+    E[Recommendation engine<br/>rules + persona context]
+    A[Aggregator<br/>k-anonymity, no ids]
+    PC[Prompt coach<br/>classify, gaps, questions]
+    R[Tool router]
+    EV[Evaluation + compliance]
+  end
+  subgraph UI["web/ (vanilla JS, offline)"]
+    EN[Engineer view - private]
+    MG[Manager / leader view - aggregated]
+    EB[Enablement view]
+  end
+  K[agent-kit files<br/>prompts, skills, playbooks]
+
+  S --> SDB --> E --> EN
+  PDB <--> EN
+  PDB --> E
+  SDB --> A --> MG
+  J --> PC --> R --> K
+  R --> EN
+  SDB --> EV --> EB

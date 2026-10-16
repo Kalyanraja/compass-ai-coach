@@ -1,0 +1,80 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [80, 48, 500, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: "10 — SCORING RUBRIC MAPPING"
+  - elementId: table
+    elementType: table
+    bounds: [80, 88, 800, 392]
+    columnWidths: [0.10, 0.30, 0.60]
+    rowHeights: [0.10, 0.18, 0.18, 0.18, 0.18, 0.18]
+    style:
+      cellStyle:
+        fontSize: 11.5
+        color: "$dim"
+        lineHeight: 1.35
+        align: [left, middle]
+        border: [null, null, {style: solid, width: 1, color: "$line"}, null]
+      firstRowStyle:
+        color: "$primary"
+        bold: true
+        fontSize: 12
+        letterSpacing: 1
+        border: [null, null, {style: solid, width: 1, color: "$primary"}, null]
+    rows:
+      - - text: "WEIGHT"
+        - text: "CRITERION"
+        - text: "WHERE THE EVIDENCE LIVES"
+      - - text: "30%"
+          color: "$primary"
+          bold: true
+          fontSize: 16
+        - text: "Problem fit, innovation & user value"
+        - text: "Problem + severity data (p.2), current vs future state (p.4), solution overview (p.5), competitive differentiation (p.6), engineer journey (p.7), use-case demos (p.8)"
+      - - text: "25%"
+          color: "$primary"
+          bold: true
+          fontSize: 16
+        - text: "Business impact & implementation potential"
+        - text: "Transparent value model with labeled assumptions and ROI scenarios (p.13), pilot path (p.15), LOB reusability — stack-agnostic kit installs into any repo"
+      - - text: "20%"
+          color: "$primary"
+          bold: true
+          fontSize: 16
+        - text: "Technology excellence + AI"
+        - text: "Testing evidence and eval results (p.9), architecture (p.10), responsible-AI guardrails (p.11), 0-token deterministic core, prompt strategy: 54-prompt library + 27 anti-patterns"
+      - - text: "15%"
+          color: "$primary"
+          bold: true
+          fontSize: 16
+        - text: "Demo & delivery readiness"
+        - text: "Working demo — Start-Coach.bat (p.8, p.16), demo video in presentation-kit/, repo: README, setup, user guide, deployment, assumptions, limitations, CI"
+      - - text: "10%"
+          color: "$primary"
+          bold: true
+          fontSize: 16
+        - text: "NFRs & operational governance"
+        - text: "Scalability, security, reliability, performance, operational and adoption readiness (p.14); NFR checklist in docs/nfr-security.md"
+  - elementId: src
+    elementType: text
+    bounds: [80, 494, 800, 26]
+    content:
+      style: "$small"
+      wrap: false
+      text: |
+        <p>Full rubric-to-evidence traceability: docs/rubric-mapping.md (every row, every artifact).</p>
+  - elementId: pageno
+    elementType: text
+    bounds: [900, 512, 36, 16]
+    content:
+      style: "$small"
+      align: [right, middle]
+      wrap: false
+      text: "12"

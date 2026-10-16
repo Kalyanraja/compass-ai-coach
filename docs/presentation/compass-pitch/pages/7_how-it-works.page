@@ -1,0 +1,466 @@
+pageType: content
+background:
+  type: solid
+  color: $bg
+elements:
+- elementId: kicker
+  elementType: text
+  bounds:
+  - 80
+  - 48
+  - 500
+  - 20
+  content:
+    style: $kicker
+    wrap: false
+    text: 05 — THE ENGINEER JOURNEY
+- elementId: claim
+  elementType: text
+  bounds:
+  - 80
+  - 82
+  - 800
+  - 42
+  content:
+    fontSize: 24
+    bold: true
+    color: $text
+    wrap: false
+    text: |
+      <p>One guided loop: from goal to <span style="color:$primary">accepted with evidence</span>.</p>
+- elementId: c1
+  elementType: shape
+  bounds:
+  - 84
+  - 170
+  - 54
+  - 54
+  shapeName: ellipse
+  border:
+    style: solid
+    width: 2
+    color: $primary
+- elementId: c1n
+  elementType: text
+  bounds:
+  - 84
+  - 170
+  - 54
+  - 54
+  content:
+    fontSize: 20
+    bold: true
+    color: $primary
+    align:
+    - center
+    - middle
+    wrap: false
+    text: '1'
+- elementId: c1t
+  elementType: text
+  bounds:
+  - 64
+  - 236
+  - 94
+  - 52
+  content:
+    fontSize: 12
+    color: $text
+    align:
+    - center
+    - top
+    lineHeight: 1.25
+    text: Goal
+- elementId: a1
+  elementType: line
+  bounds:
+  - 142
+  - 196
+  - 66
+  - 2
+  viewBox:
+  - 66
+  - 2
+  points: 0,1 66,1
+  arrow:
+  - null
+  - null
+  border:
+    style: solid
+    width: 2
+    color: $line
+- elementId: c2
+  elementType: shape
+  bounds:
+  - 212
+  - 170
+  - 54
+  - 54
+  shapeName: ellipse
+  border:
+    style: solid
+    width: 2
+    color: $primary
+- elementId: c2n
+  elementType: text
+  bounds:
+  - 212
+  - 170
+  - 54
+  - 54
+  content:
+    fontSize: 20
+    bold: true
+    color: $primary
+    align:
+    - center
+    - middle
+    wrap: false
+    text: '2'
+- elementId: c2t
+  elementType: text
+  bounds:
+  - 186
+  - 236
+  - 106
+  - 66
+  content:
+    fontSize: 12
+    color: $text
+    align:
+    - center
+    - top
+    lineHeight: 1.25
+    text: Project facts with file:line sources
+- elementId: a2
+  elementType: line
+  bounds:
+  - 270
+  - 196
+  - 66
+  - 2
+  viewBox:
+  - 66
+  - 2
+  points: 0,1 66,1
+  arrow:
+  - null
+  - null
+  border:
+    style: solid
+    width: 2
+    color: $line
+- elementId: c3
+  elementType: shape
+  bounds:
+  - 340
+  - 170
+  - 54
+  - 54
+  shapeName: ellipse
+  border:
+    style: solid
+    width: 2
+    color: $primary
+- elementId: c3n
+  elementType: text
+  bounds:
+  - 340
+  - 170
+  - 54
+  - 54
+  content:
+    fontSize: 20
+    bold: true
+    color: $primary
+    align:
+    - center
+    - middle
+    wrap: false
+    text: '3'
+- elementId: c3t
+  elementType: text
+  bounds:
+  - 314
+  - 236
+  - 106
+  - 66
+  content:
+    fontSize: 12
+    color: $text
+    align:
+    - center
+    - top
+    lineHeight: 1.25
+    text: Up to 3 missing questions
+- elementId: a3
+  elementType: line
+  bounds:
+  - 398
+  - 196
+  - 66
+  - 2
+  viewBox:
+  - 66
+  - 2
+  points: 0,1 66,1
+  arrow:
+  - null
+  - null
+  border:
+    style: solid
+    width: 2
+    color: $line
+- elementId: c4
+  elementType: shape
+  bounds:
+  - 468
+  - 170
+  - 54
+  - 54
+  shapeName: ellipse
+  border:
+    style: solid
+    width: 2
+    color: $primary
+- elementId: c4n
+  elementType: text
+  bounds:
+  - 468
+  - 170
+  - 54
+  - 54
+  content:
+    fontSize: 20
+    bold: true
+    color: $primary
+    align:
+    - center
+    - middle
+    wrap: false
+    text: '4'
+- elementId: c4t
+  elementType: text
+  bounds:
+  - 442
+  - 236
+  - 106
+  - 66
+  content:
+    fontSize: 12
+    color: $text
+    align:
+    - center
+    - top
+    lineHeight: 1.25
+    text: Right tool for the task — even “no AI”
+- elementId: a4
+  elementType: line
+  bounds:
+  - 526
+  - 197
+  - 112
+  - 90
+  viewBox:
+  - 112
+  - 90
+  points: 0,0 60,0 60,90 112,90
+  curve: round
+  arrow:
+  - null
+  - null
+  border:
+    style: solid
+    width: 2
+    color: $line
+- elementId: c5
+  elementType: shape
+  bounds:
+  - 642
+  - 232
+  - 54
+  - 54
+  shapeName: ellipse
+  border:
+    style: solid
+    width: 2
+    color: $primary
+- elementId: c5n
+  elementType: text
+  bounds:
+  - 642
+  - 232
+  - 54
+  - 54
+  content:
+    fontSize: 20
+    bold: true
+    color: $primary
+    align:
+    - center
+    - middle
+    wrap: false
+    text: '5'
+- elementId: c5t
+  elementType: text
+  bounds:
+  - 616
+  - 298
+  - 106
+  - 66
+  content:
+    fontSize: 12
+    color: $text
+    align:
+    - center
+    - top
+    lineHeight: 1.25
+    text: Work package sized to budget
+- elementId: a5
+  elementType: line
+  bounds:
+  - 700
+  - 258
+  - 66
+  - 2
+  viewBox:
+  - 66
+  - 2
+  points: 66,1 0,1
+  arrow:
+  - null
+  - null
+  border:
+    style: solid
+    width: 2
+    color: $line
+- elementId: c6
+  elementType: shape
+  bounds:
+  - 770
+  - 232
+  - 54
+  - 54
+  shapeName: ellipse
+  border:
+    style: solid
+    width: 2
+    color: $primary
+- elementId: c6n
+  elementType: text
+  bounds:
+  - 770
+  - 232
+  - 54
+  - 54
+  content:
+    fontSize: 20
+    bold: true
+    color: $primary
+    align:
+    - center
+    - middle
+    wrap: false
+    text: '6'
+- elementId: c6t
+  elementType: text
+  bounds:
+  - 744
+  - 298
+  - 106
+  - 66
+  content:
+    fontSize: 12
+    color: $text
+    align:
+    - center
+    - top
+    lineHeight: 1.25
+    text: Local checks + imported evidence
+- elementId: a6
+  elementType: line
+  bounds:
+  - 620
+  - 289
+  - 72
+  - 120
+  viewBox:
+  - 72
+  - 120
+  points: 72,0 20,0 20,120 0,120
+  curve: round
+  arrow:
+  - null
+  - null
+  border:
+    style: solid
+    width: 2
+    color: $line
+- elementId: c7
+  elementType: shape
+  bounds:
+  - 468
+  - 355
+  - 54
+  - 54
+  shapeName: ellipse
+  fill:
+    type: solid
+    color: $primary
+- elementId: c7n
+  elementType: text
+  bounds:
+  - 468
+  - 355
+  - 54
+  - 54
+  content:
+    fontSize: 20
+    bold: true
+    color: '#0B1220'
+    align:
+    - center
+    - middle
+    wrap: false
+    text: '7'
+- elementId: c7t
+  elementType: text
+  bounds:
+  - 432
+  - 421
+  - 126
+  - 66
+  content:
+    fontSize: 12
+    color: $primary
+    bold: true
+    align:
+    - center
+    - top
+    lineHeight: 1.25
+    text: Verdict · next action · one lesson
+- elementId: note
+  elementType: text
+  bounds:
+  - 80
+  - 470
+  - 700
+  - 44
+  content:
+    style: $body
+    text: |
+      <p>Three guided workflows today — feature/API change, UAT defect investigation, meaningful test creation — plus a shared security stage. <span style="color:$text">The decision core is deterministic: explainable, testable, and it uses zero tokens.</span></p>
+- elementId: pageno
+  elementType: text
+  bounds:
+  - 900
+  - 500
+  - 36
+  - 16
+  content:
+    style: $small
+    align:
+    - right
+    - middle
+    wrap: false
+    text: '07'

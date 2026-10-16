@@ -1,0 +1,98 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [80, 48, 500, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: "13 — IMPLEMENTATION ROADMAP"
+  - elementId: tl
+    elementType: line
+    bounds: [110, 190, 740, 2]
+    viewBox: [740, 2]
+    points: "0,1 740,1"
+    border: {style: solid, width: 2, color: "$line"}
+  - elementId: dot1
+    elementType: shape
+    bounds: [102, 182, 18, 18]
+    shapeName: ellipse
+    fill: {type: solid, color: "$primary"}
+  - elementId: dot2
+    elementType: shape
+    bounds: [466, 182, 18, 18]
+    shapeName: ellipse
+    fill: {type: solid, color: "$bg"}
+    border: {style: solid, width: 2, color: "$primary"}
+  - elementId: dot3
+    elementType: shape
+    bounds: [830, 182, 18, 18]
+    shapeName: ellipse
+    fill: {type: solid, color: "$bg"}
+    border: {style: solid, width: 2, color: "$primary"}
+  - elementId: p1-head
+    elementType: text
+    bounds: [80, 90, 240, 26]
+    content: {fontSize: 17, bold: true, color: "$primary", wrap: false, text: "Phase 1 · Done — MVP"}
+  - elementId: p1-body
+    elementType: text
+    bounds: [80, 118, 250, 60]
+    content: {style: "$body", fontSize: 12, text: "3 working workflows + shared security stage, agent kit, evals and CI"}
+  - elementId: p1-list
+    elementType: text
+    bounds: [80, 220, 250, 170]
+    content:
+      style: "$body"
+      fontSize: 12
+      text: |
+        <ul><li>Private coaching with evidence-cited recommendations</li><li>k-anonymous team insights, non-causal statistics</li><li>Prompt coach + tool routing</li><li>74 acceptance and boundary tests</li></ul>
+  - elementId: p2-head
+    elementType: text
+    bounds: [444, 90, 240, 26]
+    content: {fontSize: 17, bold: true, color: "$text", wrap: false, text: "Phase 2 · Pilot (4–6 wks)"}
+  - elementId: p2-body
+    elementType: text
+    bounds: [444, 118, 250, 60]
+    content: {style: "$body", fontSize: 12, text: "2–3 volunteer teams; authorized metadata only — no code, no prompt text"}
+  - elementId: p2-list
+    elementType: text
+    bounds: [444, 220, 250, 170]
+    content:
+      style: "$body"
+      fontSize: 12
+      text: |
+        <ul><li>Privacy & risk review; SSO replaces demo picker</li><li>Kit installed in pilot repos</li><li>Team-level before/after measurement</li><li>Success: ≥60% find it useful; review rounds and CI first-pass improve — reported as association</li></ul>
+  - elementId: p3-head
+    elementType: text
+    bounds: [808, 90, 130, 26]
+    content: {fontSize: 17, bold: true, color: "$text", wrap: false, text: "Phase 3 · Scale"}
+  - elementId: p3-body
+    elementType: text
+    bounds: [700, 118, 200, 60]
+    content: {style: "$body", fontSize: 12, text: "From pilot to platform"}
+  - elementId: p3-list
+    elementType: text
+    bounds: [700, 220, 200, 170]
+    content:
+      style: "$body"
+      fontSize: 12
+      text: |
+        <ul><li>VS Code extension shell</li><li>More workflows: review, docs, modernization</li><li>Org-wide kit distribution via .github repo</li><li>Approved Jira connectors</li></ul>
+  - elementId: future
+    elementType: text
+    bounds: [80, 440, 800, 56]
+    content:
+      style: "$body"
+      text: |
+        <p>Future: held-out evals from authorized pilot data · regression analysis with confidence intervals · localized practice content · opt-in “share my practice”, reviewed before publishing.</p>
+  - elementId: pageno
+    elementType: text
+    bounds: [900, 512, 36, 16]
+    content:
+      style: "$small"
+      align: [right, middle]
+      wrap: false
+      text: "15"

@@ -1,0 +1,100 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [80, 48, 500, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: "11 — BUSINESS IMPACT & ROI"
+  - elementId: claim
+    elementType: text
+    bounds: [80, 84, 800, 44]
+    content:
+      fontSize: 24
+      bold: true
+      color: "$text"
+      wrap: false
+      text: |
+        <p>A transparent value model — <span style="color:$primary">assumptions stay assumptions</span>.</p>
+  - elementId: formula
+    elementType: text
+    bounds: [80, 140, 800, 34]
+    content:
+      fontSize: 17
+      color: "$dim"
+      wrap: false
+      text: |
+        <p>Annual value V = N × E × H × W × R <span style="font-size:12px">(engineers · engaged share · hours saved/week · 46 weeks · loaded rate ≈ $112)</span></p>
+  - elementId: table
+    elementType: table
+    bounds: [80, 190, 800, 180]
+    columnWidths: [0.24, 0.16, 0.16, 0.22, 0.22]
+    rowHeights: [0.22, 0.26, 0.26, 0.26]
+    style:
+      cellStyle:
+        fontSize: 12
+        color: "$dim"
+        align: [left, middle]
+        border: [null, null, {style: solid, width: 1, color: "$line"}, null]
+      firstRowStyle:
+        color: "$primary"
+        bold: true
+        fontSize: 12
+        letterSpacing: 1
+        border: [null, null, {style: solid, width: 1, color: "$primary"}, null]
+    rows:
+      - - text: "SCENARIO @ 1,000 ENGINEERS"
+        - text: "ENGAGED (E)"
+        - text: "H/WEEK (H)"
+        - text: "CAPACITY VALUE/YR"
+        - text: "ROI @ C = $150K"
+      - - text: "Conservative"
+        - text: "30% · assumption"
+        - text: "0.5 · assumption"
+        - text: "$0.77M"
+        - text: "415%"
+      - - text: "Expected"
+          color: "$text"
+          bold: true
+        - text: "50% · assumption"
+          color: "$text"
+        - text: "1.5 · assumption"
+          color: "$text"
+        - text: "$3.86M"
+          color: "$text"
+          bold: true
+        - text: "2,476%"
+          color: "$primary"
+          bold: true
+      - - text: "Optimistic"
+        - text: "70% · assumption"
+        - text: "3.0 · assumption"
+        - text: "$10.8M"
+        - text: "7,113%"
+  - elementId: caveats
+    elementType: text
+    bounds: [80, 392, 800, 108]
+    content:
+      style: "$body"
+      text: |
+        <ul><li>Saved time is <strong>capacity, not cash</strong>; quality upside is excluded — the model stays conservative. Plausibility: 0.5 h/week ≈ 1.2% of a working week, below the 2.5% flaky tests alone consume.</li><li>Adoption needs <strong>no new licenses or infrastructure</strong> — stdlib Python. A 4–6 week pilot on 2–3 volunteer teams measures team-level before/after, reported as association.</li><li>Reusable across LOBs: the stack-agnostic agent kit drops into any repo; context covers Java, .NET, Python, TypeScript, Playwright.</li></ul>
+  - elementId: src
+    elementType: text
+    bounds: [80, 508, 800, 22]
+    content:
+      style: "$small"
+      wrap: false
+      text: |
+        <p>Sources for every cited figure: docs/research/evidence.md. Full model and stress case (C = $500K): docs/business-case.md.</p>
+  - elementId: pageno
+    elementType: text
+    bounds: [900, 512, 36, 16]
+    content:
+      style: "$small"
+      align: [right, middle]
+      wrap: false
+      text: "13"

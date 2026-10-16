@@ -1,0 +1,109 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [80, 48, 400, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: "03 — THE PRODUCT"
+  - elementId: claim
+    elementType: text
+    bounds: [80, 84, 470, 104]
+    content:
+      fontSize: 23
+      bold: true
+      color: "$text"
+      lineHeight: 1.3
+      text: |
+        <p>Compass: a coach that runs on your machine, knows your project, and works with the tools you already have.</p>
+  - elementId: exp1-icon
+    elementType: icon
+    bounds: [80, 216, 22, 22]
+    iconName: "fas:route"
+    fill: {type: solid, color: "$primary"}
+  - elementId: exp1
+    elementType: text
+    bounds: [116, 210, 420, 58]
+    content:
+      style: "$body"
+      text: |
+        <p><span style="font-size:16px; color:$text"><strong>Workflow coach</strong></span> — goal, project facts with file:line sources, up to 3 missing questions, the approved tool, a sized work package, then evidence and a verdict.</p>
+  - elementId: exp-sep1
+    elementType: line
+    bounds: [80, 276, 460, 2]
+    viewBox: [460, 2]
+    points: "0,1 460,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: exp2-icon
+    elementType: icon
+    bounds: [80, 292, 22, 22]
+    iconName: "fas:user-shield"
+    fill: {type: solid, color: "$primary"}
+  - elementId: exp2
+    elementType: text
+    bounds: [116, 286, 420, 58]
+    content:
+      style: "$body"
+      text: |
+        <p><span style="font-size:16px; color:$text"><strong>Private coaching</strong></span> — the next best action from usage and delivery signals. Observation, action, rationale with sources. Only the engineer sees it.</p>
+  - elementId: exp-sep2
+    elementType: line
+    bounds: [80, 352, 460, 2]
+    viewBox: [460, 2]
+    points: "0,1 460,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: exp3-icon
+    elementType: icon
+    bounds: [80, 368, 22, 22]
+    iconName: "fas:people-group"
+    fill: {type: solid, color: "$primary"}
+  - elementId: exp3
+    elementType: text
+    bounds: [116, 362, 420, 58]
+    content:
+      style: "$body"
+      text: |
+        <p><span style="font-size:16px; color:$text"><strong>Team insights</strong></span> — k-anonymous patterns (k ≥ 5) with differencing protection. No drill-down to people, no ranking.</p>
+  - elementId: exp-sep3
+    elementType: line
+    bounds: [80, 428, 460, 2]
+    viewBox: [460, 2]
+    points: "0,1 460,1"
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: exp4-icon
+    elementType: icon
+    bounds: [80, 444, 22, 22]
+    iconName: "fas:toolbox"
+    fill: {type: solid, color: "$primary"}
+  - elementId: exp4
+    elementType: text
+    bounds: [116, 438, 420, 58]
+    content:
+      style: "$body"
+      text: |
+        <p><span style="font-size:16px; color:$text"><strong>Agent kit</strong></span> — drop-in Copilot instructions, Claude Code skills, Devin playbooks and a 54-prompt library for any repository.</p>
+  - elementId: shot
+    elementType: image
+    bounds: [600, 130, 330, 302]
+    src: "media/2-coach.png"
+    fit: {mode: cover}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: shot-cap
+    elementType: text
+    bounds: [600, 444, 330, 20]
+    content:
+      style: "$small"
+      wrap: false
+      text: The coach UI — private next-best actions
+  - elementId: pageno
+    elementType: text
+    bounds: [900, 500, 36, 16]
+    content:
+      style: "$small"
+      align: [right, middle]
+      wrap: false
+      text: "04"

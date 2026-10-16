@@ -1,0 +1,93 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [80, 44, 500, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: "04 — DIFFERENTIATION"
+  - elementId: claim
+    elementType: text
+    bounds: [80, 74, 800, 40]
+    content:
+      fontSize: 24
+      bold: true
+      color: "$text"
+      wrap: false
+      text: |
+        <p>Engineer-first, evidence-cited, private — <span style="color:$primary">not another dashboard</span>.</p>
+  - elementId: table
+    elementType: table
+    bounds: [80, 126, 800, 344]
+    columnWidths: [0.20, 0.20, 0.20, 0.20, 0.20]
+    rowHeights: [0.10, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15]
+    style:
+      cellStyle:
+        fontSize: 10.5
+        color: "$dim"
+        lineHeight: 1.3
+        align: [left, middle]
+        border: [null, null, {style: solid, width: 1, color: "$line"}, null]
+      firstRowStyle:
+        color: "$text"
+        bold: true
+        fontSize: 11
+        border: [null, null, {style: solid, width: 1, color: "$primary"}, null]
+      lastColumnStyle:
+        color: "$text"
+        fill: {type: solid, color: "#101A2E"}
+    rows:
+      - - text: ""
+        - text: "Copilot usage metrics"
+        - text: "MS AI Engineering Coach"
+        - text: "Eng-intelligence platforms"
+        - text: "COMPASS"
+      - - text: "Primary user"
+        - text: "Admins"
+        - text: "Individual engineer"
+        - text: "Leaders"
+        - text: "Engineer first, then manager"
+      - - text: "Signals"
+        - text: "AI telemetry"
+        - text: "Local AI session logs"
+        - text: "Delivery + adoption"
+        - text: "AI usage patterns + delivery signals"
+      - - text: "Output"
+        - text: "Charts"
+        - text: "Prompt-hygiene rules"
+        - text: "Dashboards"
+        - text: "Next-best practice, with cited evidence and a ready prompt"
+      - - text: "Manager visibility"
+        - text: "User-level available"
+        - text: "None"
+        - text: "Team, often individual"
+        - text: "k-anonymous only, no drill-down"
+      - - text: "Scores or ranks people"
+        - text: "Possible"
+        - text: "Personal scores"
+        - text: "Varies"
+        - text: "None — by design and by test"
+      - - text: "New licenses or cloud"
+        - text: "Included"
+        - text: "No"
+        - text: "Yes"
+        - text: "No"
+  - elementId: src
+    elementType: text
+    bounds: [80, 484, 800, 26]
+    content:
+      style: "$small"
+      text: |
+        <p>Platforms referenced: DX, LinearB, Jellyfish, Swarmia, Faros, Flow. Full table with sources: docs/business-case.md. Prior art reused with attribution: NOTICE.md.</p>
+  - elementId: pageno
+    elementType: text
+    bounds: [900, 512, 36, 16]
+    content:
+      style: "$small"
+      align: [right, middle]
+      wrap: false
+      text: "06"
