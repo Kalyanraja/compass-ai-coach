@@ -1,0 +1,14 @@
+{
+  "checked": "2026-10-16",
+  "note": "Links and licenses for the seven design tools. Third-party content is not bundled; see TOOLS.md.",
+  "tools": [
+    { "id": "scrolltide", "name": "Scrolltide", "kind": "paid prompt and template library", "url": "https://www.scrolltide.co/", "license": "commercial; personal and client use", "price": "$39/month, $144/year, $299 lifetime", "bundled": false },
+    { "id": "navbar-gallery", "name": "Navbar Gallery", "kind": "inspiration gallery", "url": "https://www.navbar.gallery/", "license": "designs belong to their sites", "price": "free (per third-party listing)", "bundled": false },
+    { "id": "3dicons", "name": "3D Icons (3dicons)", "kind": "icon library", "url": "https://3dicons.co/", "license": "CC0-1.0", "price": "free", "bundled": false },
+    { "id": "framer", "name": "Framer", "kind": "no-code website builder", "url": "https://www.framer.com/", "license": "commercial SaaS", "price": "free and paid plans (not re-checked)", "bundled": false },
+    { "id": "rive", "name": "Rive", "kind": "interactive animation editor + runtime", "url": "https://rive.app/", "license": "web runtime MIT; editor commercial", "price": "free and paid plans", "bundled": false },
+    { "id": "spline", "name": "Spline", "kind": "3D web design tool", "url": "https://spline.design/", "license": "commercial; runtime package lists no OSS license", "price": "free and paid plans", "bundled": false },
+    { "id": "untitled-ui", "name": "Untitled UI", "kind": "UI kit / design system (React + Tailwind)", "url": "https://www.untitledui.com/", "repo": "https://github.com/untitleduico/react", "license": "open-source components MIT; PRO separate", "price": "free core, paid PRO", "bundled": false },
+    { "id": "compass-loaders", "name": "Compass loaders", "kind": "loading and thinking animations", "url": "../loaders/index.html", "license": "MIT (this repository)", "price": "free", "bundled": true }
+  ]
+}

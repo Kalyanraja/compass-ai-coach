@@ -1,0 +1,157 @@
+/* Compass loaders: simple, real-looking loading and "thinking" states.
+   Plain CSS, no dependencies, no CDN. Prefix: .cl-
+   Colors come from CSS variables, so they follow the Compass theme
+   (web/styles.css) and switch with light/dark automatically.
+   Every animation stops when the user asks for reduced motion. */
+
+:root {
+  --cl-accent: var(--sea, #1F6F78);
+  --cl-accent-2: var(--amber, #B8741A);
+  --cl-ink: var(--ink, #18303A);
+  --cl-muted: var(--muted, #557079);
+  --cl-track: var(--line, #C9D7D9);
+  --cl-surface: var(--paper, #FFFFFF);
+  --cl-wash: var(--sea-wash, #DCECEC);
+  --cl-ok: var(--ok, #2F7D4F);
+  --cl-speed: 1;            /* raise to slow everything down, e.g. 1.3 */
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cl-accent: var(--sea, #4FB3BC);
+    --cl-accent-2: var(--amber, #E2A54C);
+    --cl-ink: var(--ink, #E3EEEF);
+    --cl-muted: var(--muted, #9DB4B9);
+    --cl-track: var(--line, #2C4249);
+    --cl-surface: var(--paper, #16262C);
+    --cl-wash: var(--sea-wash, #1D3A40);
+    --cl-ok: var(--ok, #5DBB86);
+  }
+}
+
+/* Screen-reader text for every loader: put the status in .cl-sr */
+.cl-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* 1. Thinking dots ------------------------------------------------------- */
+.cl-dots { display: inline-flex; gap: 6px; align-items: center; height: 18px; }
+.cl-dots span { width: 8px; height: 8px; border-radius: 50%; background: var(--cl-accent);
+  animation: cl-dot calc(1.2s * var(--cl-speed)) ease-in-out infinite; }
+.cl-dots span:nth-child(2) { animation-delay: .15s; }
+.cl-dots span:nth-child(3) { animation-delay: .3s; }
+@keyframes cl-dot { 0%, 80%, 100% { transform: translateY(0); opacity: .35; } 40% { transform: translateY(-6px); opacity: 1; } }
+
+/* 2. Shimmer label ("Thinking...") --------------------------------------- */
+.cl-shimmer { font-weight: 600; color: transparent;
+  background: linear-gradient(90deg, var(--cl-muted) 0%, var(--cl-muted) 40%, var(--cl-ink) 50%, var(--cl-muted) 60%, var(--cl-muted) 100%);
+  background-size: 250% 100%; -webkit-background-clip: text; background-clip: text;
+  animation: cl-shimmer calc(2s * var(--cl-speed)) linear infinite; }
+@keyframes cl-shimmer { from { background-position: 100% 0; } to { background-position: -150% 0; } }
+
+/* 3. Rotating status messages (needs loaders.js: Loaders.rotate) ---------- */
+.cl-rotate { display: inline-flex; align-items: center; gap: 10px; color: var(--cl-ink); }
+.cl-rotate .cl-msg { transition: opacity .25s ease, transform .25s ease; }
+.cl-rotate .cl-msg.is-out { opacity: 0; transform: translateY(-4px); }
+
+/* 4. Compass needle ------------------------------------------------------ */
+.cl-compass { position: relative; width: 44px; height: 44px; border-radius: 50%;
+  border: 3px solid var(--cl-accent); background: var(--cl-surface); box-sizing: border-box; }
+.cl-compass::before { content: ""; position: absolute; inset: 5px; border-radius: 50%; border: 1px dashed var(--cl-track); }
+.cl-compass i { position: absolute; left: 50%; top: 50%; width: 6px; height: 30px; margin: -15px 0 0 -3px;
+  background: linear-gradient(to bottom, var(--cl-accent-2) 0 50%, var(--cl-muted) 50% 100%);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  animation: cl-needle calc(2.4s * var(--cl-speed)) cubic-bezier(.45,.05,.25,1) infinite; }
+.cl-compass b { position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: var(--cl-ink); }
+@keyframes cl-needle { 0% { transform: rotate(-60deg); } 30% { transform: rotate(50deg); } 55% { transform: rotate(10deg); } 75% { transform: rotate(38deg); } 100% { transform: rotate(-60deg); } }
+
+/* 5. Step checklist (real progress; drive with Loaders.steps) ------------ */
+.cl-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; color: var(--cl-muted); }
+.cl-steps li { display: flex; align-items: center; gap: 10px; }
+.cl-steps li::before { content: ""; flex: 0 0 16px; height: 16px; border-radius: 50%; border: 2px solid var(--cl-track); box-sizing: border-box; }
+.cl-steps li.is-active { color: var(--cl-ink); font-weight: 600; }
+.cl-steps li.is-active::before { border-color: var(--cl-accent); border-right-color: transparent; animation: cl-spin calc(.8s * var(--cl-speed)) linear infinite; }
+.cl-steps li.is-done { color: var(--cl-ink); }
+.cl-steps li.is-done::before { border-color: var(--cl-ok); background: var(--cl-ok)
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat; }
+
+/* 6. Skeleton placeholders ---------------------------------------------- */
+.cl-skel { display: grid; gap: 10px; }
+.cl-skel > * { height: 12px; border-radius: 6px; background: var(--cl-wash); position: relative; overflow: hidden; }
+.cl-skel .cl-skel-title { height: 18px; width: 55%; }
+.cl-skel .cl-skel-line.short { width: 70%; }
+.cl-skel > *::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+  animation: cl-sweep calc(1.4s * var(--cl-speed)) ease-in-out infinite; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cl-skel > *::after { background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent); } }
+@keyframes cl-sweep { to { transform: translateX(100%); } }
+
+/* 7. Indeterminate progress bar ---------------------------------------- */
+.cl-bar { height: 4px; border-radius: 2px; background: var(--cl-track); overflow: hidden; position: relative; }
+.cl-bar::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 35%; border-radius: 2px; background: var(--cl-accent);
+  animation: cl-bar calc(1.3s * var(--cl-speed)) ease-in-out infinite; }
+@keyframes cl-bar { 0% { transform: translateX(-100%); } 100% { transform: translateX(290%); } }
+/* Determinate version: set style="--value: 40%" */
+.cl-bar.is-determinate::after { animation: none; width: var(--value, 0%); transition: width .3s ease; }
+
+/* 8. Spinner ring ------------------------------------------------------- */
+.cl-spinner { width: 22px; height: 22px; border-radius: 50%; border: 3px solid var(--cl-track); border-top-color: var(--cl-accent);
+  animation: cl-spin calc(.8s * var(--cl-speed)) linear infinite; box-sizing: border-box; display: inline-block; }
+.cl-spinner.sm { width: 14px; height: 14px; border-width: 2px; }
+@keyframes cl-spin { to { transform: rotate(360deg); } }
+
+/* 9. Breathing orb ("AI is working") ------------------------------------ */
+.cl-orb { width: 28px; height: 28px; border-radius: 50%; position: relative;
+  background: radial-gradient(circle at 35% 35%, var(--cl-surface) 0 8%, var(--cl-accent) 45%, var(--cl-accent-2) 100%);
+  animation: cl-breathe calc(2.2s * var(--cl-speed)) ease-in-out infinite; }
+.cl-orb::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid var(--cl-accent); opacity: 0;
+  animation: cl-ripple calc(2.2s * var(--cl-speed)) ease-out infinite; }
+@keyframes cl-breathe { 0%, 100% { transform: scale(.92); } 50% { transform: scale(1.06); } }
+@keyframes cl-ripple { 0% { transform: scale(.8); opacity: .6; } 100% { transform: scale(1.5); opacity: 0; } }
+
+/* 10. Chat typing bubble ------------------------------------------------ */
+.cl-typing { display: inline-flex; align-items: center; gap: 5px; padding: 10px 14px; border-radius: 16px 16px 16px 4px;
+  background: var(--cl-wash); }
+.cl-typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--cl-muted); animation: cl-fade calc(1.2s * var(--cl-speed)) infinite; }
+.cl-typing span:nth-child(2) { animation-delay: .2s; }
+.cl-typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes cl-fade { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
+
+/* 11. Streaming text with caret (Loaders.stream) ------------------------ */
+.cl-stream { color: var(--cl-ink); }
+.cl-stream::after { content: ""; display: inline-block; width: 2px; height: 1.05em; margin-left: 2px; vertical-align: -0.15em;
+  background: var(--cl-accent); animation: cl-caret 1s steps(1) infinite; }
+.cl-stream.is-done::after { display: none; }
+@keyframes cl-caret { 50% { opacity: 0; } }
+
+/* 12. Orbit ------------------------------------------------------------- */
+.cl-orbit { width: 34px; height: 34px; position: relative; animation: cl-spin calc(1.6s * var(--cl-speed)) linear infinite; }
+.cl-orbit span { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--cl-accent); }
+.cl-orbit span:nth-child(1) { top: 0; left: 13px; }
+.cl-orbit span:nth-child(2) { bottom: 3px; left: 2px; background: var(--cl-accent-2); }
+.cl-orbit span:nth-child(3) { bottom: 3px; right: 2px; opacity: .5; }
+
+/* 13. Working card (soft glowing border while a task runs) -------------- */
+.cl-working { border-radius: 12px; padding: 16px; border: 2px solid transparent;
+  background: linear-gradient(var(--cl-surface), var(--cl-surface)) padding-box,
+    conic-gradient(from var(--cl-angle, 0deg), var(--cl-track), var(--cl-accent), var(--cl-accent-2), var(--cl-track) 40%, var(--cl-track)) border-box;
+  animation: cl-angle calc(2.6s * var(--cl-speed)) linear infinite; }
+@property --cl-angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes cl-angle { to { --cl-angle: 360deg; } }
+
+/* 14. Bars -------------------------------------------------------------- */
+.cl-bars { display: inline-flex; gap: 3px; align-items: flex-end; height: 18px; }
+.cl-bars span { width: 4px; height: 100%; border-radius: 2px; background: var(--cl-accent); transform-origin: bottom;
+  animation: cl-eq calc(1s * var(--cl-speed)) ease-in-out infinite; }
+.cl-bars span:nth-child(2) { animation-delay: .15s; } .cl-bars span:nth-child(3) { animation-delay: .3s; } .cl-bars span:nth-child(4) { animation-delay: .45s; }
+@keyframes cl-eq { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+
+/* Inline button state: <button class="cl-btn is-busy"><span class="cl-spinner sm"></span> Building...</button> */
+.cl-btn.is-busy { pointer-events: none; opacity: .85; display: inline-flex; align-items: center; gap: 8px; }
+
+/* Respect reduced motion: keep the state visible, stop the movement. */
+@media (prefers-reduced-motion: reduce) {
+  [class^="cl-"], [class^="cl-"] *, [class^="cl-"]::before, [class^="cl-"]::after,
+  [class*=" cl-"], [class*=" cl-"] *, [class*=" cl-"]::before, [class*=" cl-"]::after {
+    animation-duration: 0s !important; animation-iteration-count: 1 !important; transition: none !important;
+  }
+  .cl-shimmer { color: var(--cl-ink); background: none; }
+  .cl-steps li.is-active::before { border-right-color: var(--cl-accent); }
+}

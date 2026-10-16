@@ -85,7 +85,7 @@ docs/               Architecture, workflow coach design, setup, Jira, offline to
 
 ## Documentation
 
-- **Start here:** [Setup](docs/setup.md) · [User guide](docs/user-guide.md) · [Demo script](docs/demo-script.md) · [Presentation (.pptx)](docs/presentation/Compass-Hackathon.pptx)
+- **Start here:** [Setup](docs/setup.md) · [User guide](docs/user-guide.md) · [Demo script](docs/demo-script.md) · [Presentation (.pptx)](docs/presentation/Compass-Hackathon.pptx) · [Design kit: loaders, tools, prompts (.zip)](downloads/compass-design-kit.zip)
 - **Design:** [Architecture](docs/architecture.md) · [Workflow coach design and decisions](docs/workflow-coach.md) · [Data dictionary](docs/data-dictionary.md)
 - **Evidence:** [Measurements](docs/measurements.md) · [Implementation report](docs/IMPLEMENTATION-REPORT.md) · [Acceptance criteria traceability](docs/acceptance-criteria.md) · [Testing](docs/testing.md) · [Eval report](reports/eval-report.md)
 - **Judging:** [Scoring rubric mapping](docs/rubric-mapping.md) · [Business case](docs/business-case.md) · [NFRs and security](docs/nfr-security.md) · [Responsible AI](docs/responsible-ai.md) · [Roadmap](docs/roadmap.md)

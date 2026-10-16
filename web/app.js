@@ -14,9 +14,27 @@
   }
 
   // ---------------------------------------------------------------- api
+  // Loading feedback: a thin top bar after 300 ms, and a spinning compass on the button that started the request.
+  var pending = 0, barTimer = null, clicked = null;
+  document.addEventListener("click", function (ev) {
+    var b = ev.target.closest && ev.target.closest("button");
+    clicked = b && !b.hasAttribute("data-close") ? b : null;
+    setTimeout(function () { clicked = null; }, 0);
+  }, true);
+  function startLoad(btn) {
+    if (++pending === 1) barTimer = setTimeout(function () { document.body.classList.add("is-loading"); }, 300);
+    if (btn) { btn._wasDisabled = btn.disabled; btn.disabled = true; btn.classList.add("is-loading"); btn.setAttribute("aria-busy", "true"); }
+  }
+  function endLoad(btn) {
+    pending = Math.max(0, pending - 1);
+    if (!pending) { clearTimeout(barTimer); document.body.classList.remove("is-loading"); }
+    if (btn) { btn.disabled = !!btn._wasDisabled; btn.classList.remove("is-loading"); btn.removeAttribute("aria-busy"); }
+  }
   function api(method, path, body) {
     var headers = { "Content-Type": "application/json" };
     if (state.token) headers.Authorization = "Bearer " + state.token;
+    var btn = clicked; clicked = null;
+    startLoad(btn);
     return fetch(path, { method: method, headers: headers, body: body ? JSON.stringify(body) : undefined })
       .then(function (r) {
         return r.json().then(function (j) {
@@ -24,7 +42,12 @@
           if (!r.ok) throw new Error(j.error || ("Request failed (" + r.status + ")"));
           return j;
         });
-      });
+      })
+      .then(function (j) { endLoad(btn); return j; }, function (e) { endLoad(btn); throw e; });
+  }
+  // Compass needle loader for panels and pages. It fades in after a short delay, so fast loads show nothing.
+  function compassLoader(text) {
+    return '<div class="page-loading" role="status"><div class="cl-compass" aria-hidden="true"><i></i><b></b></div><p>' + esc(text || "Loading...") + "</p></div>";
   }
 
   // ---------------------------------------------------------------- helpers
@@ -57,18 +80,26 @@
   function closeModal() { document.getElementById("modal").hidden = true; }
 
   // ---------------------------------------------------------------- nav
+  // Main navigation keeps only the everyday pages; reference pages live in the footer.
   var NAV = {
-    engineer: [["#/coach", "My coaching"], ["#/workflow", "Workflow coach"], ["#/practices", "Practices"], ["#/mydata", "My data"], ["#/catalog", "Tool catalog"], ["#/setup", "Setup"], ["#/trust", "How it works"]],
-    manager: [["#/team", "Team insights"], ["#/workflow", "Workflow coach"], ["#/practices", "Practices"], ["#/trust", "How it works"]],
-    leader: [["#/org", "Portfolio insights"], ["#/practices", "Practices"], ["#/catalog", "Tool catalog"], ["#/trust", "How it works"]],
-    enablement: [["#/enable", "Enablement"], ["#/workflow", "Workflow coach"], ["#/catalog", "Tool catalog"], ["#/practices", "Practices"], ["#/setup", "Setup"], ["#/trust", "How it works"]]
+    engineer: [["#/coach", "My coaching"], ["#/workflow", "Workflow coach"], ["#/practices", "Practices"], ["#/mydata", "My data"]],
+    manager: [["#/team", "Team insights"], ["#/workflow", "Workflow coach"], ["#/practices", "Practices"]],
+    leader: [["#/org", "Portfolio insights"], ["#/practices", "Practices"]],
+    enablement: [["#/enable", "Enablement"], ["#/workflow", "Workflow coach"], ["#/practices", "Practices"]]
+  };
+  var FOOT = {
+    engineer: [["#/setup", "Setup"], ["#/catalog", "Tool catalog"], ["#/trust", "How it works"]],
+    manager: [["#/trust", "How it works"]],
+    leader: [["#/catalog", "Tool catalog"], ["#/trust", "How it works"]],
+    enablement: [["#/setup", "Setup"], ["#/catalog", "Tool catalog"], ["#/trust", "How it works"]]
   };
   function renderNav() {
-    var links = state.role ? NAV[state.role] : [["#/setup", "Setup"], ["#/catalog", "Tool catalog"], ["#/trust", "How it works"]];
+    var links = state.role ? NAV[state.role] : [];
+    var foot = state.role ? FOOT[state.role] : [["#/setup", "Setup"], ["#/catalog", "Tool catalog"], ["#/trust", "How it works"]];
     var cur = (location.hash || "#/").split("?")[0];
-    document.getElementById("nav").innerHTML = links.map(function (l) {
-      return '<a href="' + l[0] + '"' + (cur === l[0] ? ' aria-current="page"' : "") + ">" + esc(l[1]) + "</a>";
-    }).join("");
+    var a = function (l) { return '<a href="' + l[0] + '"' + (cur === l[0] ? ' aria-current="page"' : "") + ">" + esc(l[1]) + "</a>"; };
+    document.getElementById("nav").innerHTML = links.map(a).join("");
+    document.getElementById("foot").innerHTML = '<span>Compass &middot; synthetic data only</span><nav aria-label="More">' + foot.map(a).join("") + "</nav>";
     document.getElementById("who").innerHTML = state.role
       ? '<span>Signed in as <strong>' + esc(state.display) + '</strong></span><button class="btn ghost small" data-action="signout">Switch role</button>'
       : '<span class="small">Demo with synthetic data</span>';
@@ -172,8 +203,8 @@
     var o = r.outcome_to_monitor;
     var kit = r.kit || {};
     return '<article class="rec" id="rec-' + esc(r.rec_key) + '">' +
-      '<div class="rec-head spread"><div><div class="row small"><span class="tag">' + esc(r.practice_code) + '</span><span class="tag plain">' + esc(r.action_type) + ' action</span><span class="tag plain">' + esc(r.workflow.replace("_", " ")) + '</span>' +
-      (r.my_feedback ? '<span class="tag amber">you marked: ' + esc(r.my_feedback.replace("_", " ")) + '</span>' : '') + '</div>' +
+      '<div class="rec-head spread"><div>' +
+      (r.my_feedback ? '<div class="row small"><span class="tag amber">you marked: ' + esc(r.my_feedback.replace("_", " ")) + '</span></div>' : '') +
       '<h3 style="margin-top:.4rem">' + esc(r.practice_title) + '</h3></div>' +
       '<div class="tool-pill" title="Recommended tool">Use: ' + esc(r.recommended_tool.label) + '</div></div>' +
       '<div class="bearing">' +
@@ -465,8 +496,10 @@
   };
   var NEED = { "#/coach": ["engineer"], "#/mydata": ["engineer"], "#/team": ["manager"], "#/org": ["leader"], "#/enable": ["enablement"],
     "#/prompt": ["engineer", "manager", "enablement", "leader"], "#/practices": ["engineer", "manager", "leader", "enablement"] };
+  var LOAD_TEXT = { "#/coach": "Finding your next best actions...", "#/team": "Aggregating team patterns...", "#/org": "Aggregating portfolio patterns...",
+    "#/enable": "Running quality and compliance checks...", "#/trust": "Loading how it works...", "#/practices": "Loading practices...", "#/mydata": "Loading your data..." };
   window.Compass = { api: api, esc: esc, view: view, toast: toast, copy: copy, openModal: openModal, closeModal: closeModal,
-    privacyBar: privacyBar, state: state, toolName: toolName };
+    privacyBar: privacyBar, state: state, toolName: toolName, compassLoader: compassLoader };
   var EXTRA = window.CompassRoutes || {};
   Object.keys(EXTRA).forEach(function (k) { ROUTES_[k] = EXTRA[k].view; if (EXTRA[k].roles) NEED[k] = EXTRA[k].roles; });
   function router() {
@@ -481,6 +514,7 @@
     if (h === "#/" && state.role) { h = state.pendingDeepLink ? state.pendingDeepLink.split("?")[0] : NAV[state.role][0][0]; }
     if (full.split("?")[0] !== h) { location.hash = h; return; }
     renderNav();
+    $main.innerHTML = compassLoader(LOAD_TEXT[h] || "Loading...");
     ROUTES_[h](query);
   }
   window.addEventListener("hashchange", router);

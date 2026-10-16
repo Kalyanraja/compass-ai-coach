@@ -236,3 +236,26 @@ pre.prompt { white-space: pre-wrap; background: var(--chart); border: 1px solid 
 .linkbtn { background: none; border: 0; padding: 0; color: var(--sea); cursor: pointer; text-decoration: underline; font: inherit; }
 pre.prompt .hl { background: var(--amber-wash); display: inline-block; width: 100%; }
 @media (max-width: 860px) { .wf-grid { grid-template-columns: 1fr; } .wf-steps { position: static; } }
+
+/* ---------- loading states (see web/loaders.css) ---------- */
+.topload { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 50; overflow: hidden; opacity: 0; transition: opacity .2s; pointer-events: none; }
+.topload::after { content: ""; position: absolute; top: 0; bottom: 0; width: 35%; background: var(--sea); animation: cl-bar 1.3s ease-in-out infinite; }
+body.is-loading .topload { opacity: 1; }
+.page-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .75rem; min-height: 180px; color: var(--muted);
+  opacity: 0; animation: pl-in .2s ease .25s forwards; }
+.page-loading p { margin: 0; }
+@keyframes pl-in { to { opacity: 1; } }
+.btn.is-loading { cursor: progress; opacity: .9; }
+.btn.is-loading::before { content: ""; display: inline-block; width: 14px; height: 14px; margin-right: .45rem; vertical-align: -2px; box-sizing: border-box;
+  border-radius: 50%; border: 2px solid currentColor; background: linear-gradient(currentColor, currentColor) center / 2px 65% no-repeat;
+  animation: cl-needle 1.8s cubic-bezier(.45,.05,.25,1) infinite; }
+@media (prefers-reduced-motion: reduce) { .topload::after, .btn.is-loading::before, .page-loading { animation: none; opacity: 1; } }
+
+/* ---------- footer with reference links ---------- */
+.foot { max-width: 1180px; margin: 0 auto; padding: 1rem 1.25rem 2rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); }
+.foot nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+.foot a { color: var(--muted); }
+.foot a[aria-current="page"], .foot a:hover { color: var(--sea-deep); }
+.page-loading .cl-compass { width: 56px; height: 56px; }
+.page-loading .cl-compass i { height: 40px; margin-top: -20px; }

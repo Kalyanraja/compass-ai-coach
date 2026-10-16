@@ -53,3 +53,7 @@ See [agent-kit/README.md](../agent-kit/README.md). In short, run `agent-kit\inst
 7. **Result and lesson:** each acceptance criterion is passed, failed or not checked, with evidence. You also get the next action, one lesson and a short exercise. Delete the journey when you're done.
 
 For tasks outside the three workflows (documents, emails, SQL, refactors), use **Quick prompt**. Copilot and Claude Code are approved for office work.
+
+## Navigation and loading
+- The top bar shows only everyday pages. **Setup**, **Tool catalog** and **How it works** are in the footer.
+- Waits longer than a moment show a thin bar at the top. The button you pressed shows a spinning compass, and longer jobs (local checks, fix verification, Jira) show a compass loader that says what is running. Reduced-motion settings are respected.

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compass Loaders</title>
+<style>
+  :root {
+    --chart: #EDF2F2; --paper: #FFFFFF; --ink: #18303A; --muted: #557079; --line: #C9D7D9;
+    --sea: #1F6F78; --sea-wash: #DCECEC; --amber: #B8741A; --ok: #2F7D4F;
+    --font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono: "Cascadia Mono", Consolas, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --chart: #0F1C21; --paper: #16262C; --ink: #E3EEEF; --muted: #9DB4B9; --line: #2C4249; --sea: #4FB3BC; --sea-wash: #1D3A40; --amber: #E2A54C; --ok: #5DBB86; }
+  }
+  :root[data-theme="dark"] { --chart: #0F1C21; --paper: #16262C; --ink: #E3EEEF; --muted: #9DB4B9; --line: #2C4249; --sea: #4FB3BC; --sea-wash: #1D3A40; --amber: #E2A54C; --ok: #5DBB86; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--chart); color: var(--ink); font: 15px/1.5 var(--font); }
+  header { max-width: 1120px; margin: 0 auto; padding: 32px 16px 8px; display: flex; gap: 16px; align-items: end; justify-content: space-between; flex-wrap: wrap; }
+  h1 { margin: 0; font-size: 28px; letter-spacing: -.01em; }
+  header p { margin: 4px 0 0; color: var(--muted); max-width: 640px; }
+  .tools { display: flex; gap: 8px; }
+  button { font: inherit; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  button:hover { border-color: var(--sea); }
+  main { max-width: 1120px; margin: 0 auto; padding: 16px; display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .card { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .demo { min-height: 96px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: var(--chart); padding: 16px; }
+  .demo.left { justify-content: flex-start; }
+  h2 { margin: 0; font-size: 16px; }
+  .use { margin: 0; color: var(--muted); font-size: 13px; }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  code.cls { font: 12px var(--mono); color: var(--muted); }
+  pre { display: none; margin: 0; padding: 10px; background: var(--chart); border-radius: 8px; overflow: auto; font: 12px/1.45 var(--mono); white-space: pre-wrap; word-break: break-word; }
+  .card.open pre { display: block; }
+  footer { max-width: 1120px; margin: 0 auto; padding: 8px 16px 40px; color: var(--muted); font-size: 13px; }
+</style>
+<link rel="stylesheet" href="loaders.css">
+</head>
+<body>
+<header>
+  <div>
+    <h1>Compass loaders</h1>
+    <p>Fourteen simple loading and "thinking" states. Plain CSS and a tiny helper script, no dependencies. They follow light and dark mode and stop moving when reduced motion is on.</p>
+  </div>
+  <div class="tools">
+    <button id="theme" type="button">Toggle theme</button>
+    <button id="slow" type="button">Slow motion</button>
+  </div>
+</header>
+
+<main id="grid"></main>
+
+<footer>Rule of thumb: under 300 ms show nothing, under 2 s use a spinner or dots, longer waits show what is happening (steps, rotating messages or a progress bar). Never fake progress.</footer>
+
+<script src="loaders.js"></script>
+<script>
+const LOADERS = [
+  { name: "Thinking dots", cls: ".cl-dots", use: "Short AI waits next to a message or button.",
+    html: '<div class="cl-dots" role="status"><span></span><span></span><span></span><span class="cl-sr">Thinking</span></div>' },
+  { name: "Shimmer label", cls: ".cl-shimmer", use: "A quiet “Thinking…” line where the answer will appear.",
+    html: '<span class="cl-shimmer" role="status">Thinking…</span>' },
+  { name: "Rotating status", cls: ".cl-rotate + Loaders.rotate", use: "Waits of 3 to 15 s where every message stays true.",
+    html: '<div class="cl-rotate" id="rot"><span class="cl-spinner sm" aria-hidden="true"></span><span class="cl-msg"></span></div>',
+    init: () => Loaders.rotate(document.getElementById("rot"), ["Reading project files…", "Checking facts and sources…", "Sizing the work package…"]) },
+  { name: "Compass needle", cls: ".cl-compass", use: "Brand moment: first load, or “finding the right tool”.",
+    html: '<div class="cl-compass" role="status"><i></i><b></b><span class="cl-sr">Finding direction</span></div>' },
+  { name: "Step checklist", cls: ".cl-steps + Loaders.steps", use: "Multi-step jobs with real progress, like running checks.", left: true,
+    html: '<ol class="cl-steps" id="steps"><li>Secret scan</li><li>Risky code patterns</li><li>OpenAPI rules</li><li>Approved tests</li></ol>',
+    init: () => { const l = document.getElementById("steps"); let s = Loaders.steps(l), n = 0; setInterval(() => { if (n < 4) { s.next(); n++; } else { n = 0; s = Loaders.steps(l); } }, 1100); } },
+  { name: "Skeleton", cls: ".cl-skel", use: "Cards and results whose layout you already know.", left: true,
+    html: '<div class="cl-skel" style="width:100%" aria-busy="true" aria-label="Loading results"><div class="cl-skel-title"></div><div class="cl-skel-line"></div><div class="cl-skel-line short"></div></div>' },
+  { name: "Progress bar", cls: ".cl-bar / .is-determinate", use: "Top-of-panel activity; switch to determinate when you know the %.",
+    html: '<div style="width:100%;display:grid;gap:14px"><div class="cl-bar" role="progressbar" aria-label="Loading"></div><div class="cl-bar is-determinate" id="det" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="--value:0%"></div></div>',
+    init: () => { const d = document.getElementById("det"); let v = 0; setInterval(() => { v = v >= 100 ? 0 : v + 10; d.style.setProperty("--value", v + "%"); d.setAttribute("aria-valuenow", v); }, 400); } },
+  { name: "Spinner", cls: ".cl-spinner", use: "The classic. Buttons, small panels, anything under 2 s.",
+    html: '<span class="cl-spinner" role="status"><span class="cl-sr">Loading</span></span>' },
+  { name: "Breathing orb", cls: ".cl-orb", use: "An assistant that is “working” in the background.",
+    html: '<div class="cl-orb" role="status"><span class="cl-sr">Working</span></div>' },
+  { name: "Typing bubble", cls: ".cl-typing", use: "Chat-style replies, before the first word arrives.", left: true,
+    html: '<div class="cl-typing" role="status"><span></span><span></span><span></span><span class="cl-sr">Assistant is typing</span></div>' },
+  { name: "Streaming text", cls: ".cl-stream + Loaders.stream", use: "Reveal an answer as it arrives, with a caret.", left: true,
+    html: '<p id="streamed" style="margin:0"></p>',
+    init: () => { const el = document.getElementById("streamed"); const go = () => Loaders.stream(el, "Use GitHub Copilot in agent mode. Two acceptance criteria are missing, so answer those first.").then(() => setTimeout(go, 1800)); go(); } },
+  { name: "Orbit", cls: ".cl-orbit", use: "Compact, playful indicator for empty states.",
+    html: '<div class="cl-orbit" role="status"><span></span><span></span><span></span><span class="cl-sr">Loading</span></div>' },
+  { name: "Working card", cls: ".cl-working", use: "Highlight the one card whose task is running.", left: true,
+    html: '<div class="cl-working" style="width:100%"><strong>Running local checks</strong><div class="use" style="margin-top:4px">Static only. Your code is not executed.</div></div>' },
+  { name: "Bars", cls: ".cl-bars", use: "Listening, recording or streaming activity.",
+    html: '<div class="cl-bars" role="status"><span></span><span></span><span></span><span></span><span class="cl-sr">Working</span></div>' },
+  { name: "Busy button", cls: ".cl-btn.is-busy + Loaders.busy", use: "Disable and label the button the user just pressed.",
+    html: '<button id="bb" type="button">Build work package</button>',
+    init: () => { const b = document.getElementById("bb"); b.addEventListener("click", () => { const k = Loaders.busy(b, "Building…"); setTimeout(k.stop, 2000); }); } },
+];
+
+const grid = document.getElementById("grid");
+for (const l of LOADERS) {
+  const card = document.createElement("section");
+  card.className = "card";
+  card.innerHTML = `<div class="demo ${l.left ? "left" : ""}">${l.html}</div>
+    <div class="row"><h2></h2><button type="button" class="show">Code</button></div>
+    <p class="use"></p><code class="cls"></code><pre></pre>`;
+  card.querySelector("h2").textContent = l.name;
+  card.querySelector(".use").textContent = l.use;
+  card.querySelector(".cls").textContent = l.cls;
+  card.querySelector("pre").textContent = l.html;
+  card.querySelector(".show").addEventListener("click", async (e) => {
+    card.classList.toggle("open");
+    try { await navigator.clipboard.writeText(l.html); e.target.textContent = "Copied"; setTimeout(() => e.target.textContent = "Code", 1200); } catch (_) {}
+  });
+  grid.appendChild(card);
+  if (l.init) l.init();
+}
+document.getElementById("theme").addEventListener("click", () => {
+  const r = document.documentElement;
+  const dark = r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  r.dataset.theme = dark ? "light" : "dark";
+});
+document.getElementById("slow").addEventListener("click", (e) => {
+  const r = document.documentElement.style;
+  const slow = r.getPropertyValue("--cl-speed") === "3";
+  r.setProperty("--cl-speed", slow ? "1" : "3");
+  e.target.textContent = slow ? "Slow motion" : "Normal speed";
+});
+</script>
+</body>
+</html>

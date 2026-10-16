@@ -28,9 +28,9 @@
   // ------------------------------------------------------------------ main view
   function workflowView(query) {
     W.query = query || {};
-    var html = '<div class="spread"><div><h1>Workflow coach</h1><p class="lead">Goal, project facts, missing questions, the right approved tool, a reviewed work package, evidence, and one lesson. Runs locally with no API keys.</p></div>' +
-      '<div class="row"><a class="btn ghost small" href="#/prompt">Quick prompt for other tasks</a></div></div>' +
-      C().privacyBar("Session-only and local", "Project files are read only from folders you allow in Setup. Nothing is stored after this session, and nothing is sent to any assistant: you copy the work package yourself.") +
+    var html = '<div class="spread"><div><h1>Workflow coach</h1><p class="lead">Right tool. Sharp prompt. Proven result.</p></div>' +
+      '<div class="row"><a class="btn ghost small" href="#/prompt">Quick prompt</a></div></div>' +
+      C().privacyBar("Local and session-only. Nothing is sent anywhere unless you copy it.") +
       '<div class="wf-grid"><nav class="wf-steps" aria-label="Steps" id="wf-steps"></nav><section id="wf-body" class="stack"></section></div>';
     C().view(html);
     renderSteps();
@@ -43,7 +43,7 @@
     el.innerHTML = '<ol class="wf-steplist">' + STEPS.map(function (s) {
       var enabled = s[0] === 1 || W.j;
       return '<li><button class="wf-step' + (W.step === s[0] ? " on" : "") + '" data-wf="go" data-step="' + s[0] + '"' + (enabled ? "" : " disabled") +
-        '><span class="n">' + s[0] + '</span><span><strong>' + esc(s[1]) + '</strong><span class="small muted">' + esc(s[2]) + "</span></span></button></li>";
+        ' title="' + esc(s[2]) + '"><span class="n">' + s[0] + '</span><span><strong>' + esc(s[1]) + "</strong></span></button></li>";
     }).join("") + "</ol>" + (W.j ? '<p class="small muted" style="margin-top:.75rem">Project: <strong>' + esc(W.j.project_name) + '</strong><br>Workflow: ' + esc(W.j.workflow.title) + ' v' + esc(W.j.workflow.version) + '</p><button class="btn ghost small" data-wf="reset">Start a new task</button>' : "");
   }
 
@@ -121,11 +121,12 @@
       document.getElementById("wf-jira-list").innerHTML = '<label for="wf-jira-token">Jira token for this session only (not saved)</label><input type="text" id="wf-jira-token" autocomplete="off"><p class="small muted">Prefer setting the ' + esc(W.jira.token_env) + ' environment variable before starting Compass.</p>';
       return;
     }
+    document.getElementById("wf-jira-list").innerHTML = C().compassLoader("Fetching " + (key || "the issue") + " from Jira...");
     C().api("POST", "/api/jira/issue", { key: key, token: jiraToken() }).then(function (i) {
       document.getElementById("wf-goal").value = i.key + ": " + i.text;
       document.getElementById("wf-jira-list").innerHTML = '<p class="small">Fetched <strong>' + esc(i.key) + "</strong> (" + esc(i.issue_type) + ", " + esc(i.status) + "). Review the text below; it is not stored.</p>";
       guess();
-    }).catch(function (e) { C().toast(e.message); });
+    }).catch(function (e) { document.getElementById("wf-jira-list").innerHTML = ""; C().toast(e.message); });
   }
 
   function start() {
@@ -216,7 +217,8 @@
   }
   function buildPkg() {
     var b = (document.querySelector('input[name="p-budget"]:checked') || {}).value || "balanced";
-    C().api("POST", "/api/wf/package", { id: W.j.id, budget: b, include: W.incl, exclude: W.excl }).then(function (p) { W.pkg = p; renderPkg(); }).catch(function (e) { C().toast(e.message); });
+    var out = document.getElementById("p-out"); if (out) out.innerHTML = C().compassLoader("Sizing your work package...");
+    C().api("POST", "/api/wf/package", { id: W.j.id, budget: b, include: W.incl, exclude: W.excl }).then(function (p) { W.pkg = p; renderPkg(); }).catch(function (e) { if (out) out.innerHTML = ""; if (W.pkg) renderPkg(); C().toast(e.message); });
   }
   function renderPkg() {
     var p = W.pkg, c = p.comparison;
@@ -398,13 +400,19 @@
       var blob = new Blob([W.pkg.text], { type: "text/markdown" }), url = URL.createObjectURL(blob), link = document.createElement("a");
       link.href = url; link.download = "work-package-" + W.j.workflow.id + ".md"; document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(url);
     }
-    else if (a === "checks") api("POST", "/api/wf/checks", { id: W.j.id, approve_tests: document.getElementById("e-tests").checked }).then(function (j) { W.j = j; renderChecks(); C().toast("Checks finished"); }).catch(function (e) { C().toast(e.message); });
+    else if (a === "checks") {
+      document.getElementById("e-checks").innerHTML = C().compassLoader(document.getElementById("e-tests").checked ? "Running local checks and your approved tests..." : "Running local checks...");
+      api("POST", "/api/wf/checks", { id: W.j.id, approve_tests: document.getElementById("e-tests").checked }).then(function (j) { W.j = j; renderChecks(); C().toast("Checks finished"); }).catch(function (e) { renderChecks(); C().toast(e.message); });
+    }
     else if (a === "import") {
       api("POST", "/api/wf/import", { id: W.j.id, kind: document.getElementById("e-kind").value, label: document.getElementById("e-label").value, text: document.getElementById("e-text").value })
         .then(function (j) { W.j = j; renderChecks(); C().toast("Imported"); }).catch(function (e) { C().toast(e.message); });
     }
     else if (a === "load-diff") api("GET", "/api/wf/file?id=" + W.j.id + "&path=" + encodeURIComponent(t.getAttribute("data-path"))).then(function (f) { document.getElementById("e-diff").value = f.lines.join("\n") + "\n"; });
-    else if (a === "verify") api("POST", "/api/wf/verify-fix", { id: W.j.id, diff: document.getElementById("e-diff").value, approve_tests: true }).then(function (j) { W.j = j; renderChecks(); C().toast("Fix verified on temporary copies"); }).catch(function (e) { C().toast(e.message); });
+    else if (a === "verify") {
+      document.getElementById("e-checks").innerHTML = C().compassLoader("Verifying the fix on temporary copies...");
+      api("POST", "/api/wf/verify-fix", { id: W.j.id, diff: document.getElementById("e-diff").value, approve_tests: true }).then(function (j) { W.j = j; renderChecks(); C().toast("Fix verified on temporary copies"); }).catch(function (e) { renderChecks(); C().toast(e.message); });
+    }
     else if (a === "import-diff-only") api("POST", "/api/wf/import", { id: W.j.id, kind: "diff", text: document.getElementById("e-diff").value }).then(function (j) { W.j = j; renderChecks(); C().toast("Diff imported without running tests"); }).catch(function (e) { C().toast(e.message); });
     else if (a === "delete") api("POST", "/api/wf/delete", { id: W.j.id }).then(function () { W.j = null; W.pkg = null; goStep(1); C().toast("Journey deleted"); });
     else if (a === "open-file") {
